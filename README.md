@@ -15,6 +15,8 @@ Repositório global de regras e configuração do [OpenCode](https://opencode.ai
    ```
 3. Verifique: `opencode`
 
+> Documentação oficial: [opencode.ai/docs/pt-br/windows-wsl/](https://opencode.ai/docs/pt-br/windows-wsl/)
+
 ### OpenChamber (IDE desktop)
 
 Instale o [OpenChamber](https://github.com/openchamber/openchamber/releases) (IDE desktop para OpenCode)
