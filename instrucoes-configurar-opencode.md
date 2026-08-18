@@ -13,20 +13,19 @@ Passos:
    Para cada arquivo .md encontrado, monte a URL raw:
    https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/rules/ARQUIVO.md
 
-3. Crie o arquivo %USERPROFILE%\.config\opencode\opencode.json com TODOS os arquivos .md descobertos no campo "instructions".
+3. Baixe o arquivo AGENTS.md da raiz deste repositório e salve como %USERPROFILE%\.config\opencode\AGENTS.md:
+   https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/AGENTS.md
+
+4. Crie o arquivo %USERPROFILE%\.config\opencode\opencode.json com TODOS os arquivos .md descobertos no campo "instructions".
    ATENÇÃO: mantenha o $schema exato, incluindo o cifrão — é um identificador do schema, não variável.
 
-   Exemplo (as URLs exatas dependem dos arquivos encontrados no passo 2):
-   {
-     "$schema": "https://opencode.ai/config.json",
-     "instructions": [
-       "https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/rules/principios.md",
-       "https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/rules/outra-regra.md"
-     ]
-   }
+   Use como modelo o arquivo opencode.json na raiz deste repositório:
+   https://github.com/SkyInformatica/opencode-instructions/blob/main/opencode.json
 
-4. Verifique se o arquivo foi criado corretamente lendo seu conteúdo.
+   Adapte model, small_model e instructions conforme necessário.
 
-5. Confirme que as URLs raw dos arquivos de regras estão acessíveis.
+5. Verifique se o arquivo foi criado corretamente lendo seu conteúdo.
+
+6. Confirme que as URLs raw dos arquivos de regras estão acessíveis.
 
 Pronto. Sempre que novas regras forem adicionadas ao repositório, repita este processo para atualizar o opencode.json local.
