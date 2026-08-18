@@ -5,7 +5,7 @@ Repositório global de regras e configuração do [OpenCode](https://opencode.ai
 ## Instalação
 
 1. Instale o [OpenCode](https://opencode.ai/download)
-2. Instale o [OpenChamber](https://github.com/openchamber/openchamber/releases)
+2. Instale o [OpenChamber](https://github.com/openchamber/openchamber/releases) (IDE desktop para OpenCode)
 3. Após instalado, configure skills e regras com o prompt abaixo
 
 ## Configurar o OpenCode global
