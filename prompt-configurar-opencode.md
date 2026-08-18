@@ -38,5 +38,3 @@ Passos:
 5. Verifique se os arquivos estão corretos lendo %USERPROFILE%\.config\opencode\opencode.json.
 
 6. Confirme que as URLs raw dos arquivos de regras estão acessíveis.
-
-Pronto. Todas as execuções são seguras: o que já existe não é duplicado nem sobrescrito.
