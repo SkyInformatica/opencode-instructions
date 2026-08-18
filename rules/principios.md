@@ -37,11 +37,13 @@ Código duplicado é bug futuro e é proibido como padrão. Regra usada em mais 
 
 ## Tipagem forte, enums e contratos
 
-- Para listas fechadas (status, tipos, modos), usar `Enum`/enums dedicados; não usar strings soltas.
+- Para listas fechadas (status, tipos, modos), usar `Enum`/enums dedicados; não usar strings soltas. Quando a linguagem não oferecer enum nativo, usar o equivalente mais forte disponível (union types, constantes agrupadas em estrutura imutável); strings soltas continuam proibidas.
 - Contratos explícitos, validados na borda do sistema (entrada e saída) e propagados de forma tipada internamente.
 - Mudanças de contrato exigem atualização coordenada (consumidores, testes e documentação).
 
 ## SOLID (design por responsabilidades)
+
+Em paradigmas não orientados a objetos (frontends funcionais, módulos procedurais), os mesmos princípios se aplicam via composição e contratos explícitos (props, assinaturas de funções, módulos).
 
 - Responsabilidade única: cada unidade tem um motivo principal para mudar (orquestração, regra de negócio, persistência, integrações externas, etc.).
 - Aberto/fechado: preferir extensão por composição em vez de editar muitos pontos do fluxo.
