@@ -6,11 +6,11 @@
 
 Ferramentas de IA para programação organizam regras, skills e comandos em pastas. Cada ferramenta usa um nome de pasta raiz diferente:
 
-| Ferramenta | Pasta raiz |
-| --- | --- |
-| OpenCode | `.opencode/` |
-| Claude Code | `.claude/` |
-| GPT Codex, Antigravity | `.agents/` |
+| Ferramenta             | Pasta raiz   |
+| ---------------------- | ------------ |
+| OpenCode               | `.opencode/` |
+| Claude Code            | `.claude/`   |
+| GPT Codex, Antigravity | `.agents/`   |
 
 O OpenCode reconhece as três convenções. Se existirem múltiplas, a ordem de precedência é `.agents/` → `.claude/` → `.opencode/`. Dentro da pasta raiz, a estrutura de subpastas é a mesma: `rules/`, `skills/`, `commands/`.
 
@@ -41,6 +41,7 @@ Em toda sessão, o OpenCode carrega no contexto do agente:
    - Global: `%USERPROFILE%\.config\opencode\AGENTS.md` (ou `%USERPROFILE%\.claude\CLAUDE.md` se não houver)
 
    Apenas o `AGENTS.md` da **raiz do projeto** é carregado automaticamente. `AGENTS.md` em subpastas (ex.: `backend/AGENTS.md`) é ignorado a menos que referenciado explicitamente em `instructions`.
+
 2. **Campo `instructions` do `opencode.json`** — permite globs de arquivos locais e **URLs remotas** (timeout 5s). Combinadas com o `AGENTS.md`. É o mecanismo que usamos para carregar principios.md remotamente no `opencode.json` global.
 3. **Configuração (`opencode.json`)** — define modelo, provedor, MCPs, plugins e permissões. Lida em dois níveis (mesclados):
    - Global: `%USERPROFILE%\.config\opencode\opencode.json`
@@ -59,19 +60,6 @@ Links oficiais: [Regras](https://opencode.ai/docs/pt-br/rules/) · [Configuraç�
 │   │   └── frontend-playbook/
 │   │       └── SKILL.md
 └── opencode.json
-```
-
-`opencode.json` (projeto — só MCPs, sem `instructions` locais):
-
-```json
-{
-  "$schema": "https://opencode.ai/config.json",
-  "mcp": {
-    "agno-docs":    { "type": "remote", "url": "https://docs.agno.com/mcp", "enabled": true },
-    "copilotkit":   { "type": "remote", "url": "https://mcp.copilotkit.ai/sse", "enabled": true },
-    "openai-docs":  { "type": "remote", "url": "https://developers.openai.com/mcp", "enabled": true }
-  }
-}
 ```
 
 O `AGENTS.md` na raiz carrega automaticamente o contexto do produto. Os principios.md são carregados remotamente pelo `instructions` do `opencode.json` global. Skills carregam detalhes operacionais sob demanda.
@@ -99,11 +87,11 @@ Skills são instruções **carregadas sob demanda** pela ferramenta `skill` do O
 
 **Por que separar regras de skills?** Regras consomem tokens em toda sessão; skills só quando ativadas. Instruções extensas e específicas (playbooks, guias de integração) devem ficar em skills para economizar contexto. Exemplo real do projeto **Sk.AI**:
 
-| Skill | O que faz |
-| --- | --- |
-| `backend-playbook` | Playbook do backend: arquitetura, autenticação, domínios, integrações. |
-| `frontend-playbook` | Playbook do frontend: roteamento, autenticação, consumo de API. |
-| `deploy` | Publicação da aplicação em homologação/produção. |
+| Skill               | O que faz                                                              |
+| ------------------- | ---------------------------------------------------------------------- |
+| `backend-playbook`  | Playbook do backend: arquitetura, autenticação, domínios, integrações. |
+| `frontend-playbook` | Playbook do frontend: roteamento, autenticação, consumo de API.        |
+| `deploy`            | Publicação da aplicação em homologação/produção.                       |
 
 Skills do projeto ficam em `.opencode/skills/` (commitadas). Skills globais (caveman, ponytail) ficam em `%USERPROFILE%\.config\opencode\skills\`.
 
