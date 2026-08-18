@@ -2,6 +2,12 @@
 
 Repositório global de regras e configuração do [OpenCode](https://opencode.ai) para a **Sky Informática**.
 
+## Instalação
+
+1. Instale o [OpenCode](https://opencode.ai/download)
+2. Instale o [OpenChamber](https://github.com/openchamber/openchamber/releases)
+3. Após instalado, configure skills e regras com o prompt abaixo
+
 ## Configurar o OpenCode global
 
 Em uma sessão do OpenCode, use o prompt abaixo:
