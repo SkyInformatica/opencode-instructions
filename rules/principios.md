@@ -3,7 +3,7 @@ description: "Princípios inegociáveis (sempre): Library First, DRY, SOLID, KIS
 alwaysApply: true
 ---
 
-# Princípios do projeto (sky_ia_api)
+# Princípios de engenharia — Sky Informática
 
 ## Princípios essenciais (sempre)
 
@@ -103,14 +103,6 @@ Segurança e previsibilidade são requisitos; simplicidade é a estratégia padr
 - Configurações sensíveis devem vir de variáveis de ambiente; nunca commitar `.env` real e manter `env-example` atualizado quando aplicável.
 - Preferir mudanças pequenas, locais e testáveis; justificar complexidade quando inevitável.
 - Otimização apenas quando necessário: medir antes e documentar a motivação.
-
-## Ambiente de desenvolvimento
-
-- Considerar macOS como ambiente padrão de desenvolvimento.
-- Fornecer comandos e instruções específicas para macOS quando aplicável.
-- Usar caminhos no formato Unix/macOS.
-- Priorizar ferramentas nativas do macOS quando fizer sentido.
-- Preferir `brew` para instalações locais quando aplicável.
 
 ## Testes e validação
 
