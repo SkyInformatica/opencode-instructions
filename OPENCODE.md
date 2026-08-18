@@ -126,3 +126,5 @@ Plugin "dev sênior preguiçoso": escolhe sempre a solução mais simples (stdli
 ## Ambiente desktop: IDE OpenChamber
 
 Para ambiente desktop, use a IDE **OpenChamber** ([site](https://openchamber.dev/) · [docs](https://docs.openchamber.dev/)) — workspace visual sobre o OpenCode que mostra e controla o trabalho do agente (sessões isoladas, revisão de diffs, terminais, progresso), reaproveitando o mesmo setup de regras, skills e `opencode.json`.
+
+> **Observação:** OpenChamber depende do comando `opencode` disponível no terminal (OpenCode CLI). No Windows, instale o OpenCode via WSL para que o `opencode` esteja acessível.
