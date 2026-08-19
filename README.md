@@ -1,4 +1,4 @@
-# opencode-instructions
+# README
 
 Repositório global de regras e configuração do [OpenCode](https://opencode.ai) para a **Sky Informática**.
 
@@ -44,6 +44,7 @@ siga as instrucoes do arquivo https://github.com/SkyInformatica/opencode-instruc
 Isso configurará automaticamente:
 
 - **`%USERPROFILE%\.config\opencode\opencode.json`** — modelo e small_model do agente, `instructions` apontando para todas as regras em `rules/` deste repositório
+- **`%USERPROFILE%\.config\opencode\rules\`** — regras da Sky (principios, svn, Delphi)
 - **`%USERPROFILE%\.config\opencode\skills\`** — skills da Sky (C#, Delphi)
 
 Tudo carregado remotamente, sem copiar arquivos para cada projeto. O prompt é seguro para executar múltiplas vezes: nunca duplica nem sobrescreve configurações existentes.
