@@ -3,6 +3,7 @@
   "model": "opencode/deepseek-v4-flash-free",
   "small_model": "opencode/deepseek-v4-flash-free",
   "instructions": [
-    "https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/rules/principios.md"
+    "https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/rules/principios.md",
+    "https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/rules/svn.md"
   ]
 }
