@@ -81,6 +81,26 @@ Em uma sessão do OpenCode, use o prompt:
 siga as instrucoes do arquivo https://github.com/SkyInformatica/opencode-instructions/blob/main/prompt-instalar-caveman-opencode.md para instalar o caveman
 ```
 
+### RTK (compressão de output de bash)
+
+Proxy CLI que intercepta comandos shell e comprime a saída antes do agente ler, reduzindo até 90% do output de bash (git, cargo, npm, docker, etc.).
+
+Em uma sessão do OpenCode, use o prompt:
+
+```
+siga as instrucoes do arquivo https://github.com/SkyInformatica/opencode-instructions/blob/main/prompt-instalar-rtk-opencode.md para instalar o RTK
+```
+
+### PonyTail (código mínimo)
+
+Skill que força o agente a escrever apenas o necessário — YAGNI, stdlib primeiro, KISS. Reduz ~54% de código gerado (ate 94%) e ~20% de custo.
+
+Em uma sessão do OpenCode, use o prompt:
+
+```
+siga as instrucoes do arquivo https://github.com/SkyInformatica/opencode-instructions/blob/main/prompt-instalar-ponytail-opencode.md para instalar o PonyTail
+```
+
 ## Projetos Sky
 
 Cada projeto mantém seu `AGENTS.md` (contexto de produto) e `.opencode/skills/` (playbooks). As regras globais vêm do repositório central automaticamente.
