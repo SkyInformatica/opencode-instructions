@@ -42,3 +42,9 @@ Passos:
 6. Ao final, mostre o estado atual da instalação:
    - Exiba o conteúdo completo de %USERPROFILE%\.config\opencode\opencode.json formatado.
    - Exiba a árvore de pastas e arquivos em %USERPROFILE%\.config\opencode\ (skills, plugins, commands, agents, etc.) com `dir /s /b` ou equivalente.
+
+Logs:
+- Para ver o que o Rehydra interceptou, execute OpenCode com `opencode --log-level DEBUG`
+- Logs ficam em %LOCALAPPDATA%\opencode\log\
+- Formato: `INFO service=rehydra scrubbed={"SECRET_NAME":2} messageCount=3`
+- Mostra: quantos secrets/PII foram scrubbed, quais tools tiveram args rehydrated
