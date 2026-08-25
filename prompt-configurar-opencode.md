@@ -101,6 +101,7 @@ Este passo pode ser executado várias vezes. Sempre atualiza o `opencode.json` g
 | Qwen3.6 Plus | `qwen3.6-plus` |
 | Grok 4.5 | `grok-4.5` |
 | Grok 4.6 | `grok-4.6` |
+| Grok Build 0.1 | `grok-build-0.1` |
 | MiniMax M2.5 | `minimax-m2.5` |
 | MiniMax M2.7 | `minimax-m2.7` |
 | MiniMax M3 | `minimax-m3` |
@@ -138,6 +139,7 @@ Este passo pode ser executado várias vezes. Sempre atualiza o `opencode.json` g
           "qwen3.6-plus",
           "grok-4.5",
           "grok-4.6",
+          "grok-build-0.1",
           "minimax-m2.5",
           "minimax-m2.7",
           "minimax-m3",
@@ -154,5 +156,5 @@ Este passo pode ser executado várias vezes. Sempre atualiza o `opencode.json` g
 6. Salve o arquivo.
 
 7. Confirme o resultado: leia e exiba o `%USERPROFILE%\.config\opencode\opencode.json` final formatado, verificando que:
-     - O `whitelist` do provider `opencode` contém exatamente os 25 IDs listados.
+     - O `whitelist` do provider `opencode` contém exatamente os 26 IDs listados.
    - Nenhuma outra configuração foi removida ou alterada.
