@@ -4,9 +4,16 @@ Repositório global de regras e configuração do [OpenCode](https://opencode.ai
 
 ## Instalação
 
-### OpenChamber (IDE desktop)
+### OpenCode Desktop (Windows)
 
-Instale o [OpenChamber](https://github.com/openchamber/openchamber/releases) (IDE desktop para OpenCode)
+Baixe e instale a versão desktop do OpenCode para Windows — não precisa de WSL:
+
+- Instalador NSIS (64-bit): [opencode.ai/br/download/stable/windows-x64-nsis](https://opencode.ai/br/download/stable/windows-x64-nsis)
+- Demais plataformas: [opencode.ai/br/download](https://opencode.ai/br/download)
+
+### OpenChamber (IDE desktop — recomendado)
+
+O [OpenChamber](https://github.com/openchamber/openchamber/releases) é a IDE desktop para OpenCode e o padrão sugerido pela Sky por ser bem mais completo que o OpenCode Desktop. Ele usa o OpenCode instalado no passo anterior como backend.
 
 ### Autenticar no OpenCode Zen
 
