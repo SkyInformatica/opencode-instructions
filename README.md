@@ -1,5 +1,7 @@
 # README
 
+> **Novo no OpenCode?** Leia o [guia completo de setup opencode.md](opencode.md) antes de prosseguir.
+
 Repositório global de regras e configuração do [OpenCode](https://opencode.ai) para a **Sky Informática**.
 
 ## Instalação
