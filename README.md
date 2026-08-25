@@ -53,7 +53,7 @@ Tudo carregado remotamente, sem copiar arquivos para cada projeto. O prompt é s
 
 ### Secret Redactor (proteção contra vazamento de segredos)
 
-Plugin que redacta chaves, tokens e strings de conexão antes de enviar ao LLM, prevenindo vazamento de dados sensíveis. Zero configuração após instalação.
+Plugin que anonimiza chaves, tokens e strings de conexão antes de enviar ao LLM, prevenindo vazamento de dados sensíveis. Zero configuração após instalação.
 
 Em uma sessão do OpenCode, use o prompt:
 
