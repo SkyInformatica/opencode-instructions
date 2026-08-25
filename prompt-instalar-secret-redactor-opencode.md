@@ -1,4 +1,4 @@
-Instale o plugin opencode-secret-redactor no OpenCode global da minha máquina. Tudo que já estiver configurado deve ser mantido — nunca duplicar, nunca sobrescrever configurações existentes.
+Instale o plugin opencode-secret-redactor no OpenCode global da minha máquina Windows. Tudo que já estiver configurado deve ser mantido — nunca duplicar, nunca sobrescrever configurações existentes.
 
 Referência oficial:
 - https://github.com/casonadams/opencode-secret-redactor
@@ -12,22 +12,22 @@ O que o plugin faz:
 Passos:
 
 1. Verifique os pré-requisitos:
-   - A pasta ~/.config/opencode/ existe. Se não existir, crie-a.
-   - O arquivo ~/.config/opencode/opencode.json existe e é JSON válido. Se não existir, crie com pelo menos o $schema.
+   - A pasta %USERPROFILE%\.config\opencode\ existe. Se não existir, crie-a.
+   - O arquivo %USERPROFILE%\.config\opencode\opencode.json existe e é JSON válido. Se não existir, crie com pelo menos o $schema.
 
 2. Verifique se o plugin já está instalado:
-   - Leia ~/.config/opencode/opencode.json e verifique se o array `plugin` já contém uma entrada que comece com "opencode-secret-redactor".
+   - Leia %USERPROFILE%\.config\opencode\opencode.json e verifique se o array `plugin` já contém uma entrada que comece com "opencode-secret-redactor".
 
    Se já estiver instalado, pule para o passo 4 (verificação). Não reinstale nem duplique nada.
 
 3. Instale o plugin:
-   - Adicione "opencode-secret-redactor@0.5.1" ao array `plugin` existente no ~/.config/opencode/opencode.json.
+   - Adicione "opencode-secret-redactor@0.5.1" ao array `plugin` existente no %USERPROFILE%\.config\opencode\opencode.json.
    - Se o array `plugin` não existir, crie-o com o plugin como único elemento.
    - NUNCA remova, reordene ou altere outros plugins já presentes no array. Apenas adicione o novo item.
    - NUNCA altere outros campos do opencode.json (model, instructions, etc.).
 
 4. Verifique a instalação:
-   - Leia o ~/.config/opencode/opencode.json modificado e confirme:
+   - Leia o %USERPROFILE%\.config\opencode\opencode.json modificado e confirme:
      - JSON é válido (parseável).
      - O campo "plugin" contém "opencode-secret-redactor@0.5.1".
      - Todos os plugins e configurações anteriores continuam presentes e inalterados.
