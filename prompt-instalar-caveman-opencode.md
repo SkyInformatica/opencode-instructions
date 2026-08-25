@@ -7,6 +7,11 @@ Passos:
 
 1. Verifique os pré-requisitos:
    - Node.js 18 ou superior instalado (node --version). Se não houver, pare e me avise.
+   - Git disponível no PATH (git --version). O instalador roda via `npx` com um pacote hospedado no GitHub, e o npm precisa do executável `git` para baixá-lo. Sem git, o comando falha com `npm error syscall spawn git`.
+     - Antes de concluir que falta, verifique os locais padrão fora do PATH: `%ProgramFiles%\Git\cmd\git.exe` e `%LOCALAPPDATA%\Programs\Git\cmd\git.exe`.
+     - Se realmente não houver git, instale pelo winget:
+       winget install --id Git.Git -e --accept-source-agreements --accept-package-agreements --silent
+     - Após instalar, atualize o PATH da sessão atual (ou abra um terminal novo) e confirme com `git --version` antes de seguir.
    - A pasta %USERPROFILE%\.config\opencode\ existe. Se não existir, crie-a.
 
 2. Verifique se o Caveman já está instalado antes de qualquer alteração:
@@ -25,6 +30,7 @@ Passos:
      npx -y github:JuliusBrussee/caveman -- --only opencode --dry-run
    - O instalador escreve em %USERPROFILE%\.config\opencode\ (plugin, skills e bloco no AGENTS.md). Ele é seguro para reexecução, mas não use --force se já houver instalação.
    - Se o instalador falhar, pare e me informe o erro. Não tente instalação manual.
+     - Exceção: se a falha for `npm error syscall spawn git` (git ausente), trate conforme o passo 1 (instale o git via winget) e reexecute o instalador.
 
 4. Verifique a instalação:
    - %USERPROFILE%\.config\opencode\skills\caveman\SKILL.md existe.
