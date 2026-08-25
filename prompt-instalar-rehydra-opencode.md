@@ -1,27 +1,32 @@
-Instale o plugin opencode-secret-redactor no OpenCode global da minha máquina Windows. Tudo que já estiver configurado deve ser mantido — nunca duplicar, nunca sobrescrever configurações existentes.
+Instale o plugin @rehydra/opencode no OpenCode global da minha máquina Windows. Tudo que já estiver configurado deve ser mantido — nunca duplicar, nunca sobrescrever configurações existentes.
 
 Referência oficial:
-- https://github.com/casonadams/opencode-secret-redactor
+- https://docs.rehydra.ai/guides/opencode-plugin
 
 O que o plugin faz:
-- Intercepta a saída de ferramentas (bash, read) e detecta segredos (chaves AWS, tokens GitHub/GitLab, OpenAI/Anthropic, JWTs, strings de conexão, chaves privadas, etc.)
-- Substitui segredos por placeholders `🔒label🔓` antes de enviar ao LLM
-- Restaura valores originais automaticamente quando a ferramenta precisa executar com o valor real
-- Zero configuração necessária após instalação
+- Intercepta toda a conversa entre OpenCode e o LLM
+- Detecta PII (emails, telefones, CPFs, cartões) e secrets (API keys, JWTs, connection strings)
+- Detecta valores reais de variáveis de ambiente em arquivos `.env`
+- Substitui por placeholders antes de enviar ao LLM
+- Restaura valores reais antes de executar tools localmente
 
 Passos:
 
 1. Verifique os pré-requisitos:
    - A pasta %USERPROFILE%\.config\opencode\ existe. Se não existir, crie-a.
    - O arquivo %USERPROFILE%\.config\opencode\opencode.json existe e é JSON válido. Se não existir, crie com pelo menos o $schema.
+   - Node.js 18+ instalado (verifique com `node -v`).
 
 2. Verifique se o plugin já está instalado:
-   - Leia %USERPROFILE%\.config\opencode\opencode.json e verifique se o array `plugin` já contém uma entrada que comece com "opencode-secret-redactor".
+   - Leia %USERPROFILE%\.config\opencode\opencode.json e verifique se o array `plugin` já contém "@rehydra/opencode".
 
    Se já estiver instalado, pule para o passo 4 (verificação). Não reinstale nem duplique nada.
 
 3. Instale o plugin:
-   - Adicione "opencode-secret-redactor@0.5.1" ao array `plugin` existente no %USERPROFILE%\.config\opencode\opencode.json.
+   - IMPORTANTE: NÃO use `npm install -g`. O plugin deve ser instalado LOCALMENTE na pasta do OpenCode.
+   - Execute no prompt: `cd %USERPROFILE%\.config\opencode && npm install @rehydra/opencode`
+   - Isso instala o pacote em `%USERPROFILE%\.config\opencode\node_modules\@rehydra\opencode\`
+   - Adicione "@rehydra/opencode" ao array `plugin` existente no %USERPROFILE%\.config\opencode\opencode.json.
    - Se o array `plugin` não existir, crie-o com o plugin como único elemento.
    - NUNCA remova, reordene ou altere outros plugins já presentes no array. Apenas adicione o novo item.
    - NUNCA altere outros campos do opencode.json (model, instructions, etc.).
@@ -29,7 +34,7 @@ Passos:
 4. Verifique a instalação:
    - Leia o %USERPROFILE%\.config\opencode\opencode.json modificado e confirme:
      - JSON é válido (parseável).
-     - O campo "plugin" contém "opencode-secret-redactor@0.5.1".
+     - O campo "plugin" contém "@rehydra/opencode".
      - Todos os plugins e configurações anteriores continuam presentes e inalterados.
 
 5. Me informe o resultado: o que foi adicionado, o que já existia e foi preservado, e que o plugin está ativo (sem necessidade de configuração extra).

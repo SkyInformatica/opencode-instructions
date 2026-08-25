@@ -61,6 +61,16 @@ Em uma sessão do OpenCode, use o prompt:
 siga as instrucoes do arquivo https://github.com/SkyInformatica/opencode-instructions/blob/main/prompt-instalar-secret-redactor-opencode.md para instalar o plugin
 ```
 
+### Rehydra (anonimização de PII e secrets)
+
+Plugin oficial que detecta e anonimiza PII (emails, telefones, CPFs, cartões) e secrets (API keys, JWTs, connection strings) antes de enviar ao LLM. Também detecta valores reais de variáveis de ambiente em arquivos `.env`.
+
+Em uma sessão do OpenCode, use o prompt:
+
+```
+siga as instrucoes do arquivo https://github.com/SkyInformatica/opencode-instructions/blob/main/prompt-instalar-rehydra-opencode.md para instalar o plugin
+```
+
 ### Caveman (respostas compactas)
 
 Skill que comprime respostas do agente em formato terse/caveman, reduzindo tokens em ~65%.
