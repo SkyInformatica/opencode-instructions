@@ -31,7 +31,7 @@ Após instalado, configure com o prompt abaixo.
 A configuração pode ser feita via **OpenCode Desktop** ou **OpenChamber** — ambos usam o mesmo arquivo `opencode.json` global. Em uma sessão do OpenCode, use o prompt abaixo:
 
 ```
-siga as instrucoes do arquivo https://github.com/SkyInformatica/opencode-instructions/blob/main/prompt-configurar-opencode.md para configurar meu opencode
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para configurar meu opencode
 ```
 
 Isso configurará automaticamente:
@@ -51,7 +51,7 @@ Plugin que anonimiza chaves, tokens e strings de conexão antes de enviar ao LLM
 Em uma sessão do OpenCode, use o prompt:
 
 ```
-siga as instrucoes do arquivo https://github.com/SkyInformatica/opencode-instructions/blob/main/prompt-instalar-secret-redactor-opencode.md para instalar o plugin
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-instalar-secret-redactor-opencode.md para instalar o plugin
 ```
 
 ### Rehydra (anonimização de PII e secrets)
@@ -61,7 +61,7 @@ Plugin oficial que detecta e anonimiza PII (emails, telefones, CPFs, cartões) e
 Em uma sessão do OpenCode, use o prompt:
 
 ```
-siga as instrucoes do arquivo https://github.com/SkyInformatica/opencode-instructions/blob/main/prompt-instalar-rehydra-opencode.md para instalar o plugin
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-instalar-rehydra-opencode.md para instalar o plugin
 ```
 
 ### Caveman (respostas compactas)
@@ -71,7 +71,7 @@ Skill que comprime respostas do agente em formato terse/caveman, reduzindo token
 Em uma sessão do OpenCode, use o prompt:
 
 ```
-siga as instrucoes do arquivo https://github.com/SkyInformatica/opencode-instructions/blob/main/prompt-instalar-caveman-opencode.md para instalar o caveman
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-instalar-caveman-opencode.md para instalar o caveman
 ```
 
 ### RTK (compressão de output de bash)
@@ -81,7 +81,7 @@ Proxy CLI que intercepta comandos shell e comprime a saída antes do agente ler,
 Em uma sessão do OpenCode, use o prompt:
 
 ```
-siga as instrucoes do arquivo https://github.com/SkyInformatica/opencode-instructions/blob/main/prompt-instalar-rtk-opencode.md para instalar o RTK
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-instalar-rtk-opencode.md para instalar o RTK
 ```
 
 ### PonyTail (código mínimo)
@@ -91,7 +91,7 @@ Skill que força o agente a escrever apenas o necessário — YAGNI, stdlib prim
 Em uma sessão do OpenCode, use o prompt:
 
 ```
-siga as instrucoes do arquivo https://github.com/SkyInformatica/opencode-instructions/blob/main/prompt-instalar-ponytail-opencode.md para instalar o PonyTail
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-instalar-ponytail-opencode.md para instalar o PonyTail
 ```
 
 ## Projetos Sky
