@@ -4,24 +4,9 @@ Repositório global de regras e configuração do [OpenCode](https://opencode.ai
 
 ## Instalação
 
-### OpenCode Terminal (TUI) no Windows
-
-**WSL (recomendado):**
-
-1. PowerShell (Admin): `wsl --install`
-2. No WSL (Ubuntu):
-   ```bash
-   curl -fsSL https://opencode.ai/install | bash
-   ```
-3. Verifique: `opencode`
-
-> Documentação oficial: [opencode.ai/docs/pt-br/windows-wsl/](https://opencode.ai/docs/pt-br/windows-wsl/)
-
 ### OpenChamber (IDE desktop)
 
 Instale o [OpenChamber](https://github.com/openchamber/openchamber/releases) (IDE desktop para OpenCode)
-
-> **Observação:** OpenChamber depende do comando `opencode` no terminal (OpenCode CLI). No Windows, instale o OpenCode via WSL primeiro.
 
 ### Autenticar no OpenCode Zen
 
