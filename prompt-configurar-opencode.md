@@ -69,3 +69,90 @@ Passos:
 8. Ao final, mostre o estado atual da instalação:
    - Exiba o conteúdo completo de %USERPROFILE%\.config\opencode\opencode.json formatado.
    - Exiba a árvore de pastas e arquivos em %USERPROFILE%\.config\opencode\skills\ e %USERPROFILE%\.config\opencode\rules\ (se existir) com `dir /s /b` ou equivalente.
+
+---
+
+## Configurar whitelist de modelos do OpenCode Zen
+
+Este passo pode ser executado várias vezes. Sempre atualiza o `opencode.json` global habilitando somente os modelos da lista abaixo no provider `opencode` (Zen).
+
+**Modelos habilitados (whitelist):**
+
+| Modelo | ID |
+|---|---|
+| Big Pickle | `big-pickle` |
+| Claude Fable 5 | `claude-fable-5` |
+| Claude Opus 5 | `claude-opus-5` |
+| Claude Sonnet 5 | `claude-sonnet-5` |
+| GPT 5.4 Nano | `gpt-5.4-nano` |
+| GPT 5.6 Luna | `gpt-5.6-luna` |
+| GPT 5.6 Sol | `gpt-5.6-sol` |
+| GPT 5.6 Terra | `gpt-5.6-terra` |
+| Gemini 3.5 Flash Lite | `gemini-3.5-flash-lite` |
+| Gemini 3.6 Flash | `gemini-3.6-flash` |
+| Gemini 3.7 Flash | `gemini-3.7-flash` |
+| DeepSeek V4 Flash | `deepseek-v4-flash` |
+| DeepSeek V4 Pro | `deepseek-v4-pro` |
+| GLM 5.2 | `glm-5.2` |
+| Kimi K2.6 | `kimi-k2.6` |
+| Kimi K2.7 Code | `kimi-k2.7-code` |
+| Kimi K3 | `kimi-k3` |
+| Qwen3.5 Plus | `qwen3.5-plus` |
+| Qwen3.6 Plus | `qwen3.6-plus` |
+| Grok 4.5 | `grok-4.5` |
+| Grok 4.6 | `grok-4.6` |
+| MiniMax M2.5 | `minimax-m2.5` |
+| MiniMax M2.7 | `minimax-m2.7` |
+| MiniMax M3 | `minimax-m3` |
+| Ox Alpha Free | `x-preview-f-free` |
+
+**Passos:**
+
+1. Leia o `%USERPROFILE%\.config\opencode\opencode.json` atual.
+
+2. Garanta que exista a seção `provider.opencode` no JSON. Se não existir, crie com `{}`.
+
+3. Substitua (ou crie) o array `provider.opencode.whitelist` com exatamente a lista de IDs acima:
+   ```json
+   "provider": {
+     "opencode": {
+        "whitelist": [
+          "big-pickle",
+          "claude-fable-5",
+          "claude-opus-5",
+          "claude-sonnet-5",
+          "gpt-5.4-nano",
+          "gpt-5.6-luna",
+          "gpt-5.6-sol",
+          "gpt-5.6-terra",
+          "gemini-3.5-flash-lite",
+          "gemini-3.6-flash",
+          "gemini-3.7-flash",
+          "deepseek-v4-flash",
+          "deepseek-v4-pro",
+          "glm-5.2",
+          "kimi-k2.6",
+          "kimi-k2.7-code",
+          "kimi-k3",
+          "qwen3.5-plus",
+          "qwen3.6-plus",
+          "grok-4.5",
+          "grok-4.6",
+          "minimax-m2.5",
+          "minimax-m2.7",
+          "minimax-m3",
+          "x-preview-f-free"
+        ]
+     }
+   }
+   ```
+
+4. **Não remova** nenhum outro campo existente no `opencode.json` (`$schema`, `model`, `small_model`, `instructions`, `provider` com outros providers, etc.). Mantenha tudo que já existe — apenas garanta que `provider.opencode.whitelist` contenha exatamente a lista acima.
+
+5. Se já existia um `whitelist` no provider `opencode`, substitua pela lista acima (atualização idempotente).
+
+6. Salve o arquivo.
+
+7. Confirme o resultado: leia e exiba o `%USERPROFILE%\.config\opencode\opencode.json` final formatado, verificando que:
+     - O `whitelist` do provider `opencode` contém exatamente os 25 IDs listados.
+   - Nenhuma outra configuração foi removida ou alterada.
