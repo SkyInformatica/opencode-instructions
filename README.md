@@ -17,9 +17,10 @@ O [OpenChamber](https://github.com/openchamber/openchamber/releases) é a IDE de
 
 ### Autenticar no OpenCode Zen
 
-1. `opencode auth login`
-2. Selecione **opencode zen**
-3. Insira sua chave de API (da conta `@skyinformatica.com.br`)
+1. Abra o OpenChamber
+2. No menu **Settings**, procure a opção **Providers**
+3. Adicione o provider **opencode zen**
+4. Insira sua chave de API (da conta `@skyinformatica.com.br`)
 
 ### Configurar skills e regras
 
