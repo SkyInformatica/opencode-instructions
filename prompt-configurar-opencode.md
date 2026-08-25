@@ -63,3 +63,5 @@ Passos:
 5. Verifique se os arquivos estão corretos lendo %USERPROFILE%\.config\opencode\opencode.json.
 
 6. Confirme que as URLs raw dos arquivos de regras estão acessíveis (se aplicável).
+
+7. Me informe o resultado: o que foi instalado (regras e/ou skills adicionadas), o que já existia e foi preservado, e que o OpenCode está configurado para usar as regras remotas automaticamente (sem necessidade de configuração extra por projeto).

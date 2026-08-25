@@ -49,6 +49,28 @@ Isso configurará automaticamente:
 
 Tudo carregado remotamente, sem copiar arquivos para cada projeto. O prompt é seguro para executar múltiplas vezes: nunca duplica nem sobrescreve configurações existentes.
 
+## Instalar plugins
+
+### Secret Redactor (proteção contra vazamento de segredos)
+
+Plugin que redacta chaves, tokens e strings de conexão antes de enviar ao LLM, prevenindo vazamento de dados sensíveis. Zero configuração após instalação.
+
+Em uma sessão do OpenCode, use o prompt:
+
+```
+siga as instrucoes do arquivo https://github.com/SkyInformatica/opencode-instructions/blob/main/prompt-instalar-secret-redactor-opencode.md para instalar o plugin
+```
+
+### Caveman (respostas compactas)
+
+Skill que comprime respostas do agente em formato terse/caveman, reduzindo tokens em ~65%.
+
+Em uma sessão do OpenCode, use o prompt:
+
+```
+siga as instrucoes do arquivo https://github.com/SkyInformatica/opencode-instructions/blob/main/prompt-instalar-caveman-opencode.md para instalar o caveman
+```
+
 ## Projetos Sky
 
 Cada projeto mantém seu `AGENTS.md` (contexto de produto) e `.opencode/skills/` (playbooks). As regras globais vêm do repositório central automaticamente.
