@@ -9,9 +9,16 @@ Passos:
    - Node.js 18 ou superior instalado (node --version). Se não houver, pare e me avise.
    - Git disponível no PATH (git --version). O instalador roda via `npx` com um pacote hospedado no GitHub, e o npm precisa do executável `git` para baixá-lo. Sem git, o comando falha com `npm error syscall spawn git`.
      - Antes de concluir que falta, verifique os locais padrão fora do PATH: `%ProgramFiles%\Git\cmd\git.exe` e `%LOCALAPPDATA%\Programs\Git\cmd\git.exe`.
-     - Se realmente não houver git, instale pelo winget:
-       winget install --id Git.Git -e --accept-source-agreements --accept-package-agreements --silent
-     - Após instalar, atualize o PATH da sessão atual (ou abra um terminal novo) e confirme com `git --version` antes de seguir.
+      - Se realmente não houver git, instale pelo winget:
+        winget install --id Git.Git -e --accept-source-agreements --accept-package-agreements --silent
+      - Garanta que o git fique no **PATH persistido do Windows** (registro), não apenas na sessão atual. O instalador do Git normalmente já adiciona ao PATH do sistema, mas confirme; se um terminal novo (cmd/PowerShell fora desta sessão) ainda não reconhecer `git --version`, corrija assim (PowerShell, mesmo padrão do prompt do RTK):
+        ```powershell
+        $alvo = 'C:\Program Files\Git\cmd'
+        $path = ([Environment]::GetEnvironmentVariable('Path', 'User') -split ';' | Where-Object { $_ -and $_ -ne $alvo }) -join ';'
+        [Environment]::SetEnvironmentVariable('Path', "$path;$alvo", 'User')
+        ```
+        - Ajuste `$alvo` conforme a pasta real da instalação (`%LOCALAPPDATA%\Programs\Git\cmd` em instalação por usuário).
+      - Atualize o PATH da sessão atual e confirme com `git --version` antes de seguir; num terminal NOVO (cmd/PowerShell fora desta sessão), `where.exe git` deve apontar para a pasta da instalação.
    - A pasta %USERPROFILE%\.config\opencode\ existe. Se não existir, crie-a.
 
 2. Verifique se o Caveman já está instalado antes de qualquer alteração:
