@@ -16,7 +16,16 @@ Passos:
    - Se `rtk.exe` não estiver no PATH, baixe o binário pré-compilado:
      - Arquivo: `rtk-x86_64-pc-windows-msvc.zip` de https://github.com/rtk-ai/rtk/releases
      - Extraia e mova `rtk.exe` para `%USERPROFILE%\.local\bin\` (ou outro diretório no PATH).
-     - Verifique que `rtk --version` retorna a versão.
+      - IMPORTANTE: garantir que o diretório fique no **PATH persistido do Windows** (registro), não apenas na sessão atual. O comando pode funcionar dentro desta sessão do OpenCode e ainda assim falhar num cmd/PowerShell novo. Corrija assim (PowerShell):
+        ```powershell
+        $alvo = '%USERPROFILE%\.local\bin'
+        $path = ([Environment]::GetEnvironmentVariable('Path', 'User') -split ';' | Where-Object { $_ -and $_ -ne $alvo }) -join ';'
+        [Environment]::SetEnvironmentVariable('Path', "$path;$alvo", 'User')
+        ```
+        - Grava no registro (`HKCU\Environment`) como `REG_EXPAND_SZ`, expansível e portátil.
+        - Remove entradas vazias/duplicadas antes de gravar.
+        - `SetEnvironmentVariable` com escopo `'User'` já transmite `WM_SETTINGCHANGE` ao sistema.
+      - Confirme num **terminal NOVO** (os já abertos não enxergam a mudança): `where.exe rtk` deve apontar para `%USERPROFILE%\.local\bin\rtk.exe` e `rtk --version` deve retornar a versão.
    - Instale ripgrep (`rg`) se não estiver disponível — ele é necessário para alguns filtros:
      - `winget install BurntSushi.ripgrep.MSVC`
      - Verifique com `rg --version`.
@@ -42,6 +51,7 @@ Passos:
    - Se o RTK pedir consentimento de telemetria, responda "não" (não ativar telemetria).
 
 4. Verifique a instalação:
+   - Em um terminal NOVO (cmd ou PowerShell, fora desta sessão), `where.exe rtk` aponta para `%USERPROFILE%\.local\bin\rtk.exe` — confirma PATH persistido.
    - `rtk --version` retorna a versão correta.
    - `rtk init --show` confirma que o hook/plugin para OpenCode está ativo.
    - O `%USERPROFILE%\.config\rtk\config.toml` existe e é válido (TOML parseável).
