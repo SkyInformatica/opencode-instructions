@@ -17,7 +17,7 @@ O [OpenChamber](https://github.com/openchamber/openchamber/releases) é a IDE de
 
 ### Autenticar no OpenCode Zen
 
-1. Abra o OpenChamber
+1. Abra o OpenCode Desktop ou OpenChamber
 2. No menu **Settings**, procure a opção **Providers**
 3. Adicione o provider **opencode zen**
 4. Insira sua chave de API (da conta `@skyinformatica.com.br`)
@@ -28,7 +28,7 @@ Após instalado, configure com o prompt abaixo.
 
 ## Configurar o OpenCode global
 
-Em uma sessão do OpenCode, use o prompt abaixo:
+A configuração pode ser feita via **OpenCode Desktop** ou **OpenChamber** — ambos usam o mesmo arquivo `opencode.json` global. Em uma sessão do OpenCode, use o prompt abaixo:
 
 ```
 siga as instrucoes do arquivo https://github.com/SkyInformatica/opencode-instructions/blob/main/prompt-configurar-opencode.md para configurar meu opencode
