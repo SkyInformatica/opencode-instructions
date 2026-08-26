@@ -1,4 +1,6 @@
-Configure o OpenCode global na minha máquina Windows com as regras da Sky Informática. Tudo que já estiver configurado deve ser mantido — nunca duplicar, nunca sobrescrever configurações existentes.
+Configure o OpenCode global na minha máquina Windows com as regras da Sky Informática. Tudo que já estiver configurado deve ser mantido — nunca duplicar, nunca sobrescrever configurações existentes (opencode.json e demais configs). Exceção: regras e skills locais são sempre atualizadas com a versão do repositório, pois podem estar desatualizadas na máquina.
+
+**IMPORTANTE: o ambiente-alvo é SEMPRE Windows.** Mesmo que a máquina onde este prompt está sendo executado pareça outro sistema (ex.: macOS), trate o destino como Windows: use `%USERPROFILE%`, caminhos com `\` (ex.: `%USERPROFILE%\.config\opencode\`), comandos Windows (`dir /s /b`) e nunca caminhos/ comandos de Unix (`~/`, `/Users/...`, `ls -R`).
 
 **Antes de executar qualquer passo técnico, você DEVE perguntar ao usuário o seguinte:**
 
@@ -29,16 +31,17 @@ Passos:
 
 1. Verifique se a pasta %USERPROFILE%\.config\opencode\ existe. Se não existir, crie-a.
 
-2. **Se o escopo incluir regras**, descubra os arquivos .md na pasta rules/ do repositório:
+2. **Se o escopo incluir regras**, baixe as regras selecionadas da pasta rules/ do repositório para a pasta local de regras:
    https://github.com/SkyInformatica/opencode-instructions/tree/main/rules
 
    Liste o conteúdo da pasta rules via GitHub API:
    https://api.github.com/repos/SkyInformatica/opencode-instructions/contents/rules
 
-   Para cada regra selecionada pelo usuário, monte a URL raw:
-   https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/rules/ARQUIVO.md
-
-   Guarde estas URLs para usar no passo 4.
+   Para cada regra selecionada pelo usuário:
+   - Baixe sempre a versão atual do repositório:
+     https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/rules/ARQUIVO.md
+   - Se %USERPROFILE%\.config\opencode\rules\ARQUIVO.md já existir, sobrescreva com a versão baixada (a cópia local pode estar desatualizada).
+   - Se não existir, salve a versão baixada em %USERPROFILE%\.config\opencode\rules\ARQUIVO.md
 
 3. **Se o escopo incluir skills**, baixe as skills selecionadas da pasta skills/ do repositório para a pasta global de skills:
    https://github.com/SkyInformatica/opencode-instructions/tree/main/skills
@@ -46,14 +49,18 @@ Passos:
    Liste o conteúdo da pasta skills via GitHub API:
    https://api.github.com/repos/SkyInformatica/opencode-instructions/contents/skills
 
-   Para cada skill selecionada pelo usuário, verifique se %USERPROFILE%\.config\opencode\skills\SUBPASTA\SKILL.md já existe:
-   - Se existir, pule (já configurada).
-   - Se não existir, crie a pasta e baixe o SKILL.md:
-     https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/skills/SUBPASTA/SKILL.md
+   Para cada skill selecionada pelo usuário:
+   - Baixe sempre a versão atual do repositório:
+     https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/skills/<SUBPASTA>/SKILL.md
+   - Se %USERPROFILE%\.config\opencode\skills\<SUBPASTA>\SKILL.md já existir, sobrescreva com a versão baixada (a cópia local pode estar desatualizada).
+   - Se não existir, crie a pasta %USERPROFILE%\.config\opencode\skills\<SUBPASTA>\ e salve o SKILL.md baixado.
 
 4. **Se o escopo incluir regras**, configure o opencode.json global:
    - Se %USERPROFILE%\.config\opencode\opencode.json já existir, leia o conteúdo atual.
-     - Se alguma URL de regras descoberta no passo 2 ainda não estiver no array "instructions", adicione-a.
+     - Garanta que o array "instructions" contenha o padrão global (apenas uma vez, sem duplicar):
+       "~/.config/opencode/rules/*.md"
+       Esse wildcard carrega automaticamente todas as regras da pasta local, inclusive novas regras baixadas depois. Não liste arquivos de regra individualmente. Se o array ainda tiver URLs raw antigas do repositório (raw.githubusercontent.com/SkyInformatica/opencode-instructions/.../rules/...), remova-as e deixe apenas o wildcard.
+       Obs.: o "~" aqui é sintaxe interna do OpenCode (expandida por ele em qualquer SO, inclusive Windows) — escreva exatamente assim no JSON; não substitua por %USERPROFILE%.
      - Se "model" ou "small_model" não estiverem definidos, adicione usando opencode.json do repositório como sugestão.
      - Mantenha todo o resto inalterado ($schema, plugins, MCPs, permissões).
    - Se não existir, crie usando como modelo:
@@ -62,13 +69,13 @@ Passos:
 
 5. Verifique se os arquivos estão corretos lendo %USERPROFILE%\.config\opencode\opencode.json.
 
-6. Confirme que as URLs raw dos arquivos de regras estão acessíveis (se aplicável).
+6. Confirme que os arquivos de regras baixados existem em %USERPROFILE%\.config\opencode\rules\ e que o padrão "~/.config/opencode/rules/*.md" está no "instructions" do opencode.json.
 
-7. Me informe o resultado: o que foi instalado (regras e/ou skills adicionadas), o que já existia e foi preservado, e que o OpenCode está configurado para usar as regras remotas automaticamente (sem necessidade de configuração extra por projeto).
+7. Me informe o resultado: o que foi instalado, o que já existia e foi atualizado com a versão do repositório, o que já estava igual e não precisou de mudança, e que o OpenCode está configurado para carregar automaticamente todas as regras da pasta local via wildcard (sem necessidade de configuração extra por projeto ou ao adicionar novas regras).
 
 8. Ao final, mostre o estado atual da instalação:
    - Exiba o conteúdo completo de %USERPROFILE%\.config\opencode\opencode.json formatado.
-   - Exiba a árvore de pastas e arquivos em %USERPROFILE%\.config\opencode\skills\ e %USERPROFILE%\.config\opencode\rules\ (se existir) com `dir /s /b` ou equivalente.
+   - Exiba a árvore de pastas e arquivos em %USERPROFILE%\.config\opencode\skills\ e %USERPROFILE%\.config\opencode\rules\ (se existir) com `dir /s /b`.
 
 ---
 
