@@ -3,10 +3,12 @@ Configure o ambiente Windows para OpenCode, instalando as ferramentas essenciais
 Ferramentas essenciais:
 - **Node.js 18+** (necessário para plugins como Rehydra, Caveman e RTK)
 - **Git** (necessário para download de pacotes via npm/npx e versionamento)
+- **Microsoft Coreutils** (coreutils Unix nativos no Windows — ls, cat, cp, mv, rm, pwd, find, grep, etc. — necessário para comandos shell e RTK funcionarem corretamente)
 
 Referências oficiais:
 - Node.js: https://nodejs.org/
 - Git: https://git-scm.com/
+- Microsoft Coreutils: https://github.com/microsoft/coreutils
 
 Passos:
 
@@ -47,18 +49,30 @@ Passos:
    - Atualize o PATH da sessão atual.
    - Confirme: `git --version` deve retornar a versão instalada.
 
-4. Verificação final do ambiente:
-   - Abra um **terminal NOVO** (PowerShell ou cmd) para garantir que as variáveis de ambiente foram propagadas.
-   - Execute os seguintes comandos e confirme as saídas:
-     - `node -v`
-     - `npm -v`
-     - `git --version`
+4. Verifique e instale **Microsoft Coreutils**:
+   - Verifique se está instalado: `coreutils --version`.
+   - Se estiver disponível, pule para o passo 5.
+   - Se não houver, instale via winget (requer elevação admin):
+     ```powershell
+     winget install --id Microsoft.Coreutils -e --accept-source-agreements --accept-package-agreements
+     ```
+   - O instalador pode pedir confirmação de UAC. Após instalação, abra terminal novo.
+   - Confirme: `coreutils --version` deve retornar a versão.
+   - Estes comandos passam a estar disponíveis como executáveis reais no PATH: `ls`, `cat`, `cp`, `mv`, `rm`, `pwd`, `find`, `grep`, `sort`, `tee`, `sleep`, `uptime`, `hostname`.
 
-5. Me informe o resultado:
-   - O que foi instalado (Node.js e/ou Git) e as versões.
+5. Verificação final do ambiente:
+   - Abra um **terminal NOVO** (PowerShell ou cmd) para garantir que as variáveis de ambiente foram propagadas.
+    - Execute os seguintes comandos e confirme as saídas:
+      - `node -v`
+      - `npm -v`
+      - `git --version`
+      - `coreutils --version`
+
+6. Me informe o resultado:
+   - O que foi instalado (Node.js, Git, Microsoft Coreutils) e as versões.
    - O que já existia e foi preservado.
    - Confirmação de que o PATH está funcionando em terminais novos.
 
-6. Ao final, mostre o estado atual:
-   - Exiba a saída de `node -v`, `npm -v` e `git --version`.
+7. Ao final, mostre o estado atual:
+   - Exiba a saída de `node -v`, `npm -v`, `git --version` e `coreutils --version`.
    - Exiba o conteúdo atualizado da variável de ambiente `Path` do usuário (via PowerShell: `[Environment]::GetEnvironmentVariable('Path', 'User')`).
