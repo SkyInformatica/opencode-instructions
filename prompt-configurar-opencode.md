@@ -6,8 +6,7 @@ Configure o OpenCode global na minha máquina Windows com as regras da Sky Infor
 Antes de configurar o OpenCode, certifique-se de que as ferramentas essenciais estão instaladas e configuradas no PATH persistentemente. Siga as instruções do arquivo `prompt-configurar-ambiente-windows.md` (ou execute o comando abaixo para verificar/instalar automaticamente):
 1. **Node.js 18+**: Verifique com `node -v`. Se ausente ou inferior, instale via `winget install --id OpenJS.NodeJS.LTS -e --accept-source-agreements --accept-package-agreements --silent`.
 2. **Git**: Verifique com `git --version`. Se ausente, instale via `winget install --id Git.Git -e --accept-source-agreements --accept-package-agreements --silent`.
-3. **Microsoft Coreutils**: Verifique com `coreutils --version`. Se ausente, instale via `winget install --id Microsoft.Coreutils -e --accept-source-agreements --accept-package-agreements`. Necessário para comandos Unix (ls, cat, cp, mv, rm, find, grep etc.) funcionarem no Windows.
-4. **PATH**: Após instalação, garanta que os diretórios de instalação estejam no PATH do usuário (registro) e atualize a sessão atual.
+3. **PATH**: Após instalação, garanta que os diretórios de instalação estejam no PATH do usuário (registro) e atualize a sessão atual.
 
 **Antes de executar qualquer passo técnico, você DEVE perguntar ao usuário o seguinte:**
 

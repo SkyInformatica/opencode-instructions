@@ -39,7 +39,6 @@ siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/o
 Isso instalará (se necessário) e configurará no PATH:
 - **Node.js 18+** (necessário para plugins)
 - **Git** (necessário para npm/npx e versionamento)
-- **Microsoft Coreutils** (ls, cat, cp, mv, rm, find, grep etc. — necessário para shell e RTK no Windows)
 
 ## Configurar o OpenCode global
 
