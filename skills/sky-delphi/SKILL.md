@@ -80,15 +80,3 @@ Ative esta skill ao escrever, editar ou revisar código Delphi em projetos da Sk
 
 ## Controle de versão
 - Projetos Delphi (D5, D7, D10) usam SVN.
-
-## Referências e origem
-- Convenções Object Pascal (bibliotecas RTL/VCL da Embarcadero e style guides)
-  para prefixos T/I/E/F e campos F.
-- Compatibilidade Delphi 5/7 ↔ 10.2 via DLL (ABI estável, sem $IFDEF e retorno
-  JSON): decisão interna da equipe, registrada em 12/08/2026.
-- Código legado e política de warnings: ajuste para lidar com fontes legados
-  D5/D7, registrado em 12/08/2026.
-- Padrão de nomes em pt-BR: convenção interna da equipe de desenvolvimento.
-- Codificação somente em formatos aceitos pelo Delphi (ANSI/LATIN1 sem BOM ou
-  UTF-8 com BOM), sem UTF-8 sem BOM: regra registrada em 14/08/2026 após caso de
-  acentuação quebrada em SignerDLL.Api.InformacoesAssinatura.pas.
