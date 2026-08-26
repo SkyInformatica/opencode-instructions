@@ -147,6 +147,18 @@ Em uma sessão do OpenCode, use o prompt:
 siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-instalar-ponytail-opencode.md para instalar o PonyTail
 ```
 
+### Encoding Auto (arquivos ANSI/LATIN1)
+
+Plugin que resolve automaticamente o encoding de arquivos (ANSI/Windows-1252, UTF-8, etc.): no read detecta e decodifica (agente vê o texto correto, sem mojibake); no edit/write converte ANSI→UTF-8 antes, aplica e converte de volta pro encoding original — acentos preservados. Essencial para projetos Delphi que mantêm fontes em ANSI/LATIN1.
+
+Usa a versão ajustada pela Sky: corrige a corrupção de .pas ANSI (Windows-1252) e evita injeção de prefixo PowerShell em shell bash.
+
+Em uma sessão do OpenCode, use o prompt:
+
+```
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-instalar-encoding-auto-opencode.md para instalar o plugin
+```
+
 ## Projetos Sky
 
 Cada projeto mantém seu `AGENTS.md` (contexto de produto) e `.opencode/skills/` (playbooks). As regras globais vêm do repositório central automaticamente.
