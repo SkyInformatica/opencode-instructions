@@ -52,45 +52,40 @@ O prompt é interativo e perguntará o escopo desejado. Você pode personalizar 
 
 #### Exemplos de uso
 
-**Instalação completa (regras + skills):**
+**Instalação completa (regras + skills + modelos):**
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para configurar meu opencode
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para instalar todas as regras e skills da Sky
 ```
-Quando perguntar o escopo, responda `ambos` (ou deixe em branco). Depois, responda `todas` para regras e `todas` para skills.
 
-**Somente regras (sem skills):**
+**Somente skills (todas):**
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para configurar meu opencode
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para instalar somente as skills da Sky
 ```
-Quando perguntar o escopo, responda `somente regras`. Depois, responda `todas` ou informe nomes específicos.
 
-**Somente skills (sem regras):**
+**Somente regras (todas):**
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para configurar meu opencode
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para instalar somente as regras da Sky
 ```
-Quando perguntar o escopo, responda `somente skills`. Depois, responda `todas` ou informe nomes específicos.
 
 **Somente regras Delphi e SVN:**
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para configurar meu opencode
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para instalar somente as regras delphi e svn da Sky
 ```
-Quando perguntar o escopo, responda `somente regras`. Quando perguntar quais regras, responda `delphi, svn`.
 
 **Somente regras de princípios:**
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para configurar meu opencode
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para instalar somente a regra principios da Sky
 ```
-Quando perguntar o escopo, responda `somente regras`. Quando perguntar quais regras, responda `principios`.
 
 **Somente regras C# e Delphi:**
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para configurar meu opencode
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para instalar somente as regras csharp e delphi da Sky
 ```
-Quando perguntar o escopo, responda `somente regras`. Quando perguntar quais regras, responda `csharp, delphi`.
 
 **Somente configurar modelos (whitelist do Zen):**
-
-O prompt também configura a whitelist de modelos do OpenCode Zen. Basta seguir o prompt normalmente — ele sempre pergunta o escopo primeiro e só ativa os modelos após configurar regras/skills (ou não, se escolher pular).
+```
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para configurar somente os modelos do OpenCode Zen
+```
 
 Isso configurará automaticamente:
 
