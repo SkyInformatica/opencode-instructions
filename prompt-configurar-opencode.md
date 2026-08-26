@@ -2,6 +2,12 @@ Configure o OpenCode global na minha máquina Windows com as regras da Sky Infor
 
 **IMPORTANTE: o ambiente-alvo é SEMPRE Windows.** Mesmo que a máquina onde este prompt está sendo executado pareça outro sistema (ex.: macOS), trate o destino como Windows: use `%USERPROFILE%`, caminhos com `\` (ex.: `%USERPROFILE%\.config\opencode\`), comandos Windows (`dir /s /b`) e nunca caminhos/ comandos de Unix (`~/`, `/Users/...`, `ls -R`).
 
+**Pré-requisitos do Ambiente (Obrigatório):**
+Antes de configurar o OpenCode, certifique-se de que as ferramentas essenciais estão instaladas e configuradas no PATH persistentemente. Siga as instruções do arquivo `prompt-configurar-ambiente-windows.md` (ou execute o comando abaixo para verificar/instalar automaticamente):
+1. **Node.js 18+**: Verifique com `node -v`. Se ausente ou inferior, instale via `winget install --id OpenJS.NodeJS.LTS -e --accept-source-agreements --accept-package-agreements --silent`.
+2. **Git**: Verifique com `git --version`. Se ausente, instale via `winget install --id Git.Git -e --accept-source-agreements --accept-package-agreements --silent`.
+3. **PATH**: Após instalação, garanta que os diretórios de instalação (ex: `%ProgramFiles%\Git\cmd`, `%USERPROFILE%\AppData\Roaming\nvm\current`) estejam no PATH do usuário (registro) e atualize a sessão atual.
+
 **Antes de executar qualquer passo técnico, você DEVE perguntar ao usuário o seguinte:**
 
 A. **Escopo da instalação:**
@@ -61,11 +67,11 @@ Passos:
        "~/.config/opencode/rules/*.md"
        Esse wildcard carrega automaticamente todas as regras da pasta local, inclusive novas regras baixadas depois. Não liste arquivos de regra individualmente. Se o array ainda tiver URLs raw antigas do repositório (raw.githubusercontent.com/SkyInformatica/opencode-instructions/.../rules/...), remova-as e deixe apenas o wildcard.
        Obs.: o "~" aqui é sintaxe interna do OpenCode (expandida por ele em qualquer SO, inclusive Windows) — escreva exatamente assim no JSON; não substitua por %USERPROFILE%.
-     - Se "model" ou "small_model" não estiverem definidos, adicione usando opencode.json do repositório como sugestão.
+      - Se "model" ou "small_model" não estiverem definidos, defina ambos como `opencode/deepseek-v4-flash`.
      - Mantenha todo o resto inalterado ($schema, plugins, MCPs, permissões).
    - Se não existir, crie usando como modelo:
      https://github.com/SkyInformatica/opencode-instructions/blob/main/global/opencode.json
-     Adapte model, small_model e instructions conforme necessário.
+      Adapte model (`opencode/deepseek-v4-flash`), small_model (`opencode/deepseek-v4-flash`) e instructions conforme necessário.
 
 5. Verifique se os arquivos estão corretos lendo %USERPROFILE%\.config\opencode\opencode.json.
 

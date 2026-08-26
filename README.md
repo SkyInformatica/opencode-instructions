@@ -28,6 +28,18 @@ O [OpenChamber](https://github.com/openchamber/openchamber/releases) é a IDE de
 
 Após instalado, configure com o prompt abaixo.
 
+### Configurar Ambiente Windows (Git, Node.js)
+
+Antes de instalar plugins ou configurar regras, garanta que as ferramentas essenciais estão disponíveis. Em uma sessão do OpenCode, use o prompt:
+
+```
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-ambiente-windows.md para configurar o ambiente
+```
+
+Isso instalará (se necessário) e configurará no PATH:
+- **Node.js 18+** (necessário para plugins)
+- **Git** (necessário para npm/npx e versionamento)
+
 ## Configurar o OpenCode global
 
 A configuração pode ser feita via **OpenCode Desktop** ou **OpenChamber** — ambos usam o mesmo arquivo `opencode.json` global. Em uma sessão do OpenCode, use o prompt abaixo:
@@ -35,6 +47,50 @@ A configuração pode ser feita via **OpenCode Desktop** ou **OpenChamber** — 
 ```
 siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para configurar meu opencode
 ```
+
+O prompt é interativo e perguntará o escopo desejado. Você pode personalizar a instalação de diversas formas:
+
+#### Exemplos de uso
+
+**Instalação completa (regras + skills):**
+```
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para configurar meu opencode
+```
+Quando perguntar o escopo, responda `ambos` (ou deixe em branco). Depois, responda `todas` para regras e `todas` para skills.
+
+**Somente regras (sem skills):**
+```
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para configurar meu opencode
+```
+Quando perguntar o escopo, responda `somente regras`. Depois, responda `todas` ou informe nomes específicos.
+
+**Somente skills (sem regras):**
+```
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para configurar meu opencode
+```
+Quando perguntar o escopo, responda `somente skills`. Depois, responda `todas` ou informe nomes específicos.
+
+**Somente regras Delphi e SVN:**
+```
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para configurar meu opencode
+```
+Quando perguntar o escopo, responda `somente regras`. Quando perguntar quais regras, responda `delphi, svn`.
+
+**Somente regras de princípios:**
+```
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para configurar meu opencode
+```
+Quando perguntar o escopo, responda `somente regras`. Quando perguntar quais regras, responda `principios`.
+
+**Somente regras C# e Delphi:**
+```
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para configurar meu opencode
+```
+Quando perguntar o escopo, responda `somente regras`. Quando perguntar quais regras, responda `csharp, delphi`.
+
+**Somente configurar modelos (whitelist do Zen):**
+
+O prompt também configura a whitelist de modelos do OpenCode Zen. Basta seguir o prompt normalmente — ele sempre pergunta o escopo primeiro e só ativa os modelos após configurar regras/skills (ou não, se escolher pular).
 
 Isso configurará automaticamente:
 
