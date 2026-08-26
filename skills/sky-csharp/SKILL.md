@@ -61,6 +61,9 @@ Ative esta skill ao escrever, editar ou revisar código C# em projetos da Sky In
 - Respeitar o TargetFramework do projeto (ex.: SignerCOM é net481/C# 7.3); não usar sintaxe acima da versão configurada.
 - Testes: nomes de métodos em pt-BR no padrão Metodo_DeveResultadoEsperado (ex.: ObterCliente_DeveRetornarNullQuandoNaoExistir).
 
+## Controle de versão
+- Projetos C# usam Git.
+
 ## Referências e origem
 - Convenções da Microsoft .NET (naming guidelines oficiais): classes PascalCase,
   métodos PascalCase, parâmetros camelCase, prefixo I, arquivo = tipo.

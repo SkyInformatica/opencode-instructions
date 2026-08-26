@@ -78,6 +78,9 @@ Ative esta skill ao escrever, editar ou revisar código Delphi em projetos da Sk
   ({$WARN ... OFF} / pragma) somente com justificativa e escopo restrito.
 - Testes: nomes de casos em pt-BR no padrão Unidade_DeveResultadoEsperado.
 
+## Controle de versão
+- Projetos Delphi (D5, D7, D10) usam SVN.
+
 ## Referências e origem
 - Convenções Object Pascal (bibliotecas RTL/VCL da Embarcadero e style guides)
   para prefixos T/I/E/F e campos F.
