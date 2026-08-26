@@ -118,7 +118,7 @@ Este passo pode ser executado várias vezes. Sempre atualiza o `opencode.json` g
 | MiniMax M2.5 | `minimax-m2.5` |
 | MiniMax M2.7 | `minimax-m2.7` |
 | MiniMax M3 | `minimax-m3` |
-| Ox Alpha Free | `x-preview-f-free` |
+| Ox Alpha Free | `x-preview-f-free`, `ox-alpha` |
 
 **Passos:**
 
@@ -156,7 +156,8 @@ Este passo pode ser executado várias vezes. Sempre atualiza o `opencode.json` g
           "minimax-m2.5",
           "minimax-m2.7",
           "minimax-m3",
-          "x-preview-f-free"
+          "x-preview-f-free",
+          "ox-alpha"
         ]
      }
    }
