@@ -69,6 +69,83 @@ Os trackers definem o tipo de cada tarefa. Use o campo `tracker_id` para filtrar
 |----|---------|-----|
 | 9 | Teste | Tarefas de teste/QS |
 
+## Status das Tarefas
+
+Os status são identificados por `status_id`. São dois fluxos distintos: o das **tarefas de desenvolvimento** e o das **tarefas de testes (QS)**.
+
+### Status gerais
+
+| ID | Status | Fechado? |
+|----|--------|----------|
+| 1 | Nova | não |
+| 2 | Em andamento | não |
+| 7 | Interrompida | não |
+| 4 | Interrompida para analise | não |
+| 3 | Resolvida | sim |
+| 5 | Fechada | sim |
+| 8 | Cancelada | sim |
+| 41 | Continua proxima sprint | sim |
+
+### Status de testes (QS)
+
+| ID | Status | Fechado? |
+|----|--------|----------|
+| 44 | Teste OK | sim |
+| 45 | Teste NOK | sim |
+| 46 | Teste OK - Fechada | sim |
+| 47 | Teste NOK - Fechada | sim |
+| 48 | Fechada - cont retorno testes | sim |
+| 49 | Fechada - sem desenvolvimento | sim |
+
+### Fluxo das tarefas de desenvolvimento
+
+1. A tarefa nasce como **Nova** (1), ainda não desenvolvida — consideramos **Estoque**.
+2. Quando o desenvolvedor coloca a tarefa de **Defeito**, **Funcionalidade** ou **Conversão** em desenvolvimento, ela fica **Em andamento** (2). **Só pode haver uma tarefa de desenvolvimento em andamento por vez.**
+3. Quando o desenvolvimento é concluído, a tarefa vai para **Resolvida** (3).
+4. Após ser testada com sucesso, a tarefa é **Fechada** (5).
+
+Outros estados possíveis:
+- **Interrompida** (7): pausada momentaneamente para fazer outra tarefa e retomada depois.
+- **Interrompida para analise** (4): pausada porque precisa conversar com o coordenador do projeto para esclarecer dúvidas.
+- **Cancelada** (8): não será mais feita.
+
+### Tarefa não concluída na sprint (cópia)
+
+Se uma tarefa não for concluída na sprint, ela **continua na sprint seguinte**:
+
+1. É feita uma **cópia** da tarefa para a próxima sprint (a cópia fica registrada nas **relações entre tarefas** no Redmine).
+2. A tarefa atual fica com status **Continua proxima sprint** (41).
+3. A cópia segue o fluxo normal até ser **Resolvida** (3).
+4. Isso pode se repetir (2, 3 ou mais cópias). **Somente a última tarefa da cadeia de cópias** fica **Resolvida**; as anteriores (das sprints anteriores) ficam **Continua proxima sprint**.
+
+### Fluxo da equipe QS (testes)
+
+A equipe **QS** tem um projeto próprio no Redmine para organizar tarefas e sprints: **projeto ID 99**.
+
+Quando uma tarefa de desenvolvimento fica **Resolvida** (3), ela vai para os testes. É feita uma **cópia** dela para o projeto da equipe QS.
+
+A tarefa copiada para QS segue outro fluxo:
+
+1. Começa como **Nova** (1).
+2. Vai para **Em andamento** (2) enquanto o QS testa.
+3. Conclui como **Teste OK** (44) — se tudo funcionou — ou **Teste NOK** (45) — se houve alguma não conformidade.
+
+#### Teste NOK → Retorno de testes
+
+Quando o teste resulta **NOK**:
+
+1. É criada uma **cópia** da tarefa para correção, que volta para a equipe de desenvolvimento como tarefa do tipo **Retorno de testes** (tracker 21). Isso acontece **somente para tarefas originais de desenvolvimento** dos tipos **Defeito** ou **Funcionalidade**.
+2. A tarefa de testes que estava **Teste NOK** (45) é fechada com o status **Teste NOK - Fechada** (47).
+3. A tarefa de desenvolvimento que estava **Resolvida** também é fechada com o status **Continua proxima sprint** (41).
+4. O **Retorno de testes** reinicia todo o fluxo de desenvolvimento até que os testes concluam com **Teste OK**.
+
+#### Teste OK → Fechamento
+
+Quando o teste resulta **OK**, a tarefa está pronta para entrar em uma versão:
+
+1. A tarefa de desenvolvimento vai de **Resolvida** (3) para **Fechada** (5).
+2. A tarefa de testes é fechada com **Teste OK - Fechada** (46).
+
 ## Projetos e Equipes
 
 Os projetos do Redmine são organizados por equipe. Use os IDs abaixo para filtrar/associar tarefas:
