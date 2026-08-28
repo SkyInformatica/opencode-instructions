@@ -25,11 +25,11 @@ Passos:
      `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"`
      Isso instala em `%USERPROFILE%\.local\bin\` (arquivos `uv.exe` e `uvx.exe`). O instalador NÃO registra no PATH do Windows — por isso o config deve usar o caminho absoluto do `uvx.exe` (ver passo 3).
 
-2. Baixe o arquivo de instruções do Redmine:
+2. Baixe o arquivo de instruções do Redmine — **este passo roda SEMPRE, mesmo que o MCP já esteja instalado**:
    - Baixe a versão atual do repositório:
      https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/redmine-instructions.md
    - Salve em `%USERPROFILE%\.config\opencode\redmine-instructions.md`
-   - Se o arquivo já existir, sobrescreva com a versão baixada (a cópia local pode estar desatualizada). Esse arquivo é usado pela variável `REDMINE_REQUEST_INSTRUCTIONS` para dar contexto à tool `redmine_request`.
+   - Se o arquivo já existir, sobrescreva com a versão baixada — **não pule o download** quando o `mcp.redmine` já estiver configurado: o `redmine-instructions.md` local pode estar desatualizado e precisa ser sempre atualizado com uma nova cópia. Esse arquivo é usado pela variável `REDMINE_REQUEST_INSTRUCTIONS` para dar contexto à tool `redmine_request`.
 
 3. Configure o MCP no `opencode.json` global:
    - Leia `%USERPROFILE%\.config\opencode\opencode.json` (ou `opencode.jsonc`) e verifique se já existe a seção `mcp.redmine`.
@@ -56,7 +56,7 @@ Passos:
      }
      ```
    - Substitua `<USUARIO>` pelo nome de usuário real do Windows (mesmo do caminho do `opencode.json`) e `<API KEY INFORMADA PELO USUARIO>` pela chave fornecida no passo de credenciais.
-   - Se o bloco `mcp.redmine` JÁ existir, apenas garanta que os campos estejam corretos (URL https, chave, path do uvx, versão e instruções) sem duplicar nem remover nada.
+   - Se o bloco `mcp.redmine` JÁ existir, apenas garanta que os campos estejam corretos (URL https, chave, path do uvx, versão e instruções) sem duplicar nem remover nada. **Independente de o bloco já existir, o passo 2 (baixar e sobrescrever o `redmine-instructions.md`) deve ter sido executado** — o arquivo de instruções sempre deve refletir a versão mais recente do repositório.
    - Requisitos técnicos do comando (não altere):
      - `--python 3.12` é obrigatório: o `mcp-redmine` pin `pyyaml==6.0.2` não tem wheel para Python 3.14/3.13 no Windows e a build falha. Em 3.12 instala limpo.
      - Use o caminho absoluto `C:\Users\<USUARIO>\.local\bin\uvx.exe` porque o instalador do uv não adiciona ao PATH.
