@@ -67,7 +67,7 @@ Os trackers definem o tipo de cada tarefa. Use o campo `tracker_id` para filtrar
 
 | ID | Tracker | Uso |
 |----|---------|-----|
-| 9 | Teste | Tarefas de teste/QS |
+| 9 | Teste | Reservar horas e registrar o tempo dedicado aos testes entre pares na equipe de desenvolvimento |
 
 ## Status das Tarefas
 
@@ -146,12 +146,6 @@ Quando o teste resulta **OK**, a tarefa está pronta para entrar em uma versão:
 1. A tarefa de desenvolvimento vai de **Resolvida** (3) para **Fechada** (5).
 2. A tarefa de testes é fechada com **Teste OK - Fechada** (46).
 
-### Outros
-
-| ID | Tracker | Uso |
-|----|---------|-----|
-| 9 | Teste | Tarefas de teste/QS, inclui a reserva de horas para os testes entre pares na sprint |
-
 ## Prioridades das Tarefas
 
 As prioridades são identificadas por `priority_id`:
@@ -171,7 +165,7 @@ Toda sprint de desenvolvimento reserva horas para atividades complementares e im
 
 | Tracker | Nome da tarefa | Finalidade |
 |---------|----------------|------------|
-| Teste (9) | `Tarefa de testes - <nome do programador>` | Reservar horas e registrar o tempo gasto nos **testes entre pares** na equipe de desenvolvimento, feitos nas tarefas resolvidas **antes de encaminhar para o QS** |
+| Teste (9) | `Tarefa de testes - <nome do programador>` | Reservar horas e registrar o tempo dedicado a **testes entre pares** na equipe de desenvolvimento, nas tarefas resolvidas **antes de encaminhar para o QS**. Existe somente no desenvolvimento (não no QS). As tarefas de desenvolvimento testadas devem ser **relacionadas** à tarefa de testes, como evidência de quais tarefas foram testadas pelo programador |
 | Suporte (10) | `Tarefa de suporte - <nome do programador>` | Reservar e registrar horas do desenvolvedor que ajuda o **suporte** nos atendimentos do dia a dia |
 | Planejamento (11) | `Tarefa de planejamento - <nome do programador>` | Reservar e registrar horas de **atividades complementares** que não são desenvolvimento, suporte ou testes — planejamento e reuniões, e outras como resolver um problema na máquina, fazer merge para liberar uma versão, ou qualquer atividade administrativa |
 | Defeito (1) | `Tarefas nao planejadas - <nome do programador>` | **Reservar** horas para tarefas **imediatas** (prioridade Imediata) que não foram planejadas e vão aparecer durante a sprint |
