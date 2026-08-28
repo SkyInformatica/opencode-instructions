@@ -9,7 +9,12 @@ O servidor MCP do Redmine roda via `uvx` (pacote PyPI `mcp-redmine`) e expõe as
 
 **Credenciais do Redmine (Obrigatório):**
 1. **URL do Redmine** — use SEMPRE a URL padrão da Sky: `https://redmine.skyinformatica.com.br` (HTTPS, NÃO http).
-2. **API key do Redmine** — pergunte ao usuário. Se o usuário não informar a chave, solicite explicitamente: "Qual é a sua API key do Redmine? (Menu 'Minha conta' → 'Chave de acesso à API' no Redmine)". Não prossiga sem a chave.
+2. **API key do Redmine** — pergunte ao usuário. Se o usuário não informar a chave, oriente-o a gerá-la no próprio Redmine e aguarde ele fornecer a chave:
+   - Acesse `https://redmine.skyinformatica.com.br` e faça login.
+   - Vá na opção **"Minha Conta"** no canto superior esquerdo (ou acesse direto `https://redmine.skyinformatica.com.br/my/account`).
+   - No sidebar (painel lateral), vá na opção **"Chave de acesso à API"**.
+   - Gere uma chave se ainda não existir; se já existir, use a existente.
+   - Copie e informe a chave para continuar. Não prossiga sem a chave.
 
 Passos:
 
