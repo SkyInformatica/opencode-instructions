@@ -148,7 +148,11 @@ Quando o teste resulta **OK**, a tarefa está pronta para entrar em uma versão:
 
 ## Projetos e Equipes
 
-Os projetos do Redmine são organizados por equipe. Use os IDs abaixo para filtrar/associar tarefas:
+Os projetos do Redmine são organizados por equipe. Há **equipes de desenvolvimento** (cada uma com um projeto próprio) e a **equipe QS** (com um projeto próprio para suas tarefas de teste).
+
+### Equipes de desenvolvimento
+
+Cada equipe de desenvolvimento tem um projeto no Redmine. Use os IDs abaixo para filtrar/associar tarefas:
 
 | ID | Nome |
 |----|------|
@@ -158,6 +162,14 @@ Os projetos do Redmine são organizados por equipe. Use os IDs abaixo para filtr
 | 16 | Equipe Civil |
 | 9  | Equipe Imóveis |
 | 17 | Equipe TED |
+
+### Equipe QS
+
+A equipe QS (testes) também tem um projeto próprio no Redmine para organizar suas tarefas e sprints:
+
+| ID | Nome |
+|----|------|
+| 99 | QS |
 
 ## Convenções de API
 
