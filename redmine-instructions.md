@@ -146,6 +146,38 @@ Quando o teste resulta **OK**, a tarefa está pronta para entrar em uma versão:
 1. A tarefa de desenvolvimento vai de **Resolvida** (3) para **Fechada** (5).
 2. A tarefa de testes é fechada com **Teste OK - Fechada** (46).
 
+### Outros
+
+| ID | Tracker | Uso |
+|----|---------|-----|
+| 9 | Teste | Tarefas de teste/QS, inclui a reserva de horas para os testes entre pares na sprint |
+
+## Prioridades das Tarefas
+
+As prioridades são identificadas por `priority_id`:
+
+| ID | Prioridade | Padrão? |
+|----|-----------|---------|
+| 3 | Baixa | não |
+| 4 | Média | sim |
+| 6 | Alta | não |
+| 42 | Imediata | não |
+
+## Organização de cada Sprint de Desenvolvimento
+
+Toda sprint de desenvolvimento reserva horas para atividades complementares e imprevistos. Além das tarefas de desenvolvimento planejadas, a sprint é criada com uma tarefa complementar **por programador**, seguindo o padrão de nome abaixo.
+
+### Tarefas complementares criadas na sprint
+
+| Tracker | Nome da tarefa | Finalidade |
+|---------|----------------|------------|
+| Teste (9) | `Tarefa de testes - <nome do programador>` | Reservar horas e registrar o tempo gasto nos **testes entre pares** na equipe de desenvolvimento, feitos nas tarefas resolvidas **antes de encaminhar para o QS** |
+| Suporte (10) | `Tarefa de suporte - <nome do programador>` | Reservar e registrar horas do desenvolvedor que ajuda o **suporte** nos atendimentos do dia a dia |
+| Planejamento (11) | `Tarefa de planejamento - <nome do programador>` | Reservar e registrar horas de **atividades complementares** que não são desenvolvimento, suporte ou testes — planejamento e reuniões, e outras como resolver um problema na máquina, fazer merge para liberar uma versão, ou qualquer atividade administrativa |
+| Defeito (1) | `Tarefas nao planejadas - <nome do programador>` | **Reservar** horas para tarefas **imediatas** (prioridade Imediata) que não foram planejadas e vão aparecer durante a sprint |
+
+Padrão: o nome das tarefas complementares é sempre `Tarefa de <tipo> - <nome do programador>`.
+
 ## Projetos e Equipes
 
 Os projetos do Redmine são organizados por equipe. Há **equipes de desenvolvimento** (cada uma com um projeto próprio) e a **equipe QS** (com um projeto próprio para suas tarefas de teste).
