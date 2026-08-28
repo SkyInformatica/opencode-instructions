@@ -39,6 +39,7 @@ Este documento descreve o contexto do ambiente Redmine da Sky Informática para 
 - Normalmente a sprint atual é a **última** do projeto, mas confirme sempre pelo período, não pelo fato de ser a última listada.
 - **Virada do ano:** a última sprint do ano pode terminar na primeira semana do ano seguinte. Nesse caso, o ano do período final (`DD/MM`) pode ser diferente do `AAAA` do nome — a sprint `2026-18 (24/08 a 04/09)` ainda pertence a 2026 mesmo o fim sendo em setembro; use sempre o período para decidir, nunca só o ano.
 - **Exemplo:** se hoje é 28/08 e a Version `2026-18 (24/08 a 04/09)` existe, a sprint atual é a `2026-18`, pois 28/08 está dentro de 24/08 a 04/09.
+- **Sprints definidas em conjunto:** todos os projetos têm suas sprints definidas **juntas**, com os mesmos nomes e períodos. Se um projeto tem a sprint `2026-18 (24/08 a 04/09)`, **todos** os demais projetos também devem ter a sprint `2026-18 (24/08 a 04/09)`. O número e o período de cada sprint são idênticos entre projetos.
 
 ## Projetos e Equipes
 
