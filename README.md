@@ -159,6 +159,22 @@ Em uma sessão do OpenCode, use o prompt:
 siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-instalar-encoding-auto-opencode.md para instalar o plugin
 ```
 
+## Instalar MCP Redmine
+
+Servidor MCP que conecta o OpenCode ao Redmine da Sky, permitindo buscar/criar/atualizar tarefas, gerenciar sprints (Versions), lançar apontamentos de tempo, subir/baixar anexos e consultar a API completa via `redmine_request`.
+
+Configura o MCP global no `opencode.json` com:
+- **URL padrão**: `https://redmine.skyinformatica.com.br` (HTTPS)
+- **API key**: solicitada ao usuário no momento da instalação
+- **Instruções de contexto**: baixa `redmine-instructions.md` deste repositório para `%USERPROFILE%\.config\opencode\` e aponta `REDMINE_REQUEST_INSTRUCTIONS` para ele (paginação completa, formato de sprints/Versions, IDs de equipes)
+- Roda via `uvx` (Python 3.12 obrigatório), instalando `uv` automaticamente se necessário
+
+Em uma sessão do OpenCode, use o prompt:
+
+```
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-instalar-mcp-redmine-opencode.md para configurar o MCP do redmine
+```
+
 ## Projetos Sky
 
 Cada projeto mantém seu `AGENTS.md` (contexto de produto) e `.opencode/skills/` (playbooks). As regras globais vêm do repositório central automaticamente.
