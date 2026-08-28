@@ -28,6 +28,18 @@ Este documento descreve o contexto do ambiente Redmine da Sky Informática para 
 - **Exemplo:** `2026-11 (18/05 a 29/05)` = sprint número 11 de 2026, começando em 18/05 e terminando em 29/05.
 - Ao consultar ou associar tarefas a uma sprint, use o identificador da **Version** correspondente (busque pelo nome no formato acima).
 
+## Como descobrir a sprint atual
+
+- A sprint atual é determinada **pela data de hoje**, comparando com o período de cada Version.
+- As sprints têm sempre **duas semanas** e começam sempre em uma **segunda-feira**.
+- Para descobrir a sprint atual do projeto:
+  1. Consulte as Versions do projeto (ex.: `/projects/{id}/versions.json`).
+  2. Encontre a Version cujo período `(DD/MM a DD/MM)` **contém a data de hoje**.
+  3. Essa é a sprint atual.
+- Normalmente a sprint atual é a **última** do projeto, mas confirme sempre pelo período, não pelo fato de ser a última listada.
+- **Virada do ano:** a última sprint do ano pode terminar na primeira semana do ano seguinte. Nesse caso, o ano do período final (`DD/MM`) pode ser diferente do `AAAA` do nome — a sprint `2026-18 (24/08 a 04/09)` ainda pertence a 2026 mesmo o fim sendo em setembro; use sempre o período para decidir, nunca só o ano.
+- **Exemplo:** se hoje é 28/08 e a Version `2026-18 (24/08 a 04/09)` existe, a sprint atual é a `2026-18`, pois 28/08 está dentro de 24/08 a 04/09.
+
 ## Projetos e Equipes
 
 Os projetos do Redmine são organizados por equipe. Use os IDs abaixo para filtrar/associar tarefas:
