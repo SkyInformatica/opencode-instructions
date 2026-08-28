@@ -7,14 +7,15 @@ Referência oficial do servidor MCP:
 
 O servidor MCP do Redmine roda via `uvx` (pacote PyPI `mcp-redmine`) e expõe as tools `redmine_request`, `redmine_paths_list`, `redmine_paths_info`, `redmine_upload` e `redmine_download`.
 
-**Credenciais do Redmine (Obrigatório):**
+**Credenciais do Redmine:**
 1. **URL do Redmine** — use SEMPRE a URL padrão da Sky: `https://redmine.skyinformatica.com.br` (HTTPS, NÃO http).
-2. **API key do Redmine** — pergunte ao usuário. Se o usuário não informar a chave, oriente-o a gerá-la no próprio Redmine e aguarde ele fornecer a chave:
-   - Acesse `https://redmine.skyinformatica.com.br` e faça login.
-   - Vá na opção **"Minha Conta"** no canto superior esquerdo (ou acesse direto `https://redmine.skyinformatica.com.br/my/account`).
-   - No sidebar (painel lateral), vá na opção **"Chave de acesso à API"**.
-   - Gere uma chave se ainda não existir; se já existir, use a existente.
-   - Copie e informe a chave para continuar. Não prossiga sem a chave.
+2. **API key do Redmine** — **se o `mcp.redmine` já estiver configurado no `opencode.json`/`opencode.jsonc`, NÃO pergunte as credenciais novamente**: reutilize a API key já presente na configuração existente.
+   - Somente se o MCP ainda NÃO estiver configurado (ou não tiver API key no config), pergunte ao usuário. Se o usuário não informar a chave, oriente-o a gerá-la no próprio Redmine e aguarde ele fornecer a chave:
+     - Acesse `https://redmine.skyinformatica.com.br` e faça login.
+     - Vá na opção **"Minha Conta"** no canto superior esquerdo (ou acesse direto `https://redmine.skyinformatica.com.br/my/account`).
+     - No sidebar (painel lateral), vá na opção **"Chave de acesso à API"**.
+     - Gere uma chave se ainda não existir; se já existir, use a existente.
+     - Copie e informe a chave para continuar. Não prossiga sem a chave.
 
 Passos:
 
@@ -55,7 +56,7 @@ Passos:
        }
      }
      ```
-   - Substitua `<USUARIO>` pelo nome de usuário real do Windows (mesmo do caminho do `opencode.json`) e `<API KEY INFORMADA PELO USUARIO>` pela chave fornecida no passo de credenciais.
+   - Substitua `<USUARIO>` pelo nome de usuário real do Windows (mesmo do caminho do `opencode.json`) e `<API KEY INFORMADA PELO USUARIO>` pela chave: se o MCP já estava configurado, use a chave já existente na configuração; somente se não houver, use a chave fornecida no passo de credenciais.
    - Se o bloco `mcp.redmine` JÁ existir, apenas garanta que os campos estejam corretos (URL https, chave, path do uvx, versão e instruções) sem duplicar nem remover nada. **Independente de o bloco já existir, o passo 2 (baixar e sobrescrever o `redmine-instructions.md`) deve ter sido executado** — o arquivo de instruções sempre deve refletir a versão mais recente do repositório.
    - Requisitos técnicos do comando (não altere):
      - `--python 3.12` é obrigatório: o `mcp-redmine` pin `pyyaml==6.0.2` não tem wheel para Python 3.14/3.13 no Windows e a build falha. Em 3.12 instala limpo.
@@ -74,7 +75,7 @@ Passos:
    - Execute o comando do MCP com as variáveis de ambiente setadas para confirmar que sobe sem erro (deve iniciar e aguardar stdin; use timeout, ex.: `timeout 15`):
      ```
      set REDMINE_URL=https://redmine.skyinformatica.com.br
-     set REDMINE_API_KEY=<API KEY>
+     set REDMINE_API_KEY=<API KEY DO CONFIG EXISTENTE OU INFORMADA>
      set REDMINE_REQUEST_INSTRUCTIONS=%USERPROFILE%\.config\opencode\redmine-instructions.md
      "%USERPROFILE%\.local\bin\uvx.exe" --python 3.12 --from mcp-redmine==2026.8.1.2543 mcp-redmine
      ```
