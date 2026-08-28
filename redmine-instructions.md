@@ -49,7 +49,6 @@ Os projetos do Redmine são organizados por equipe. Use os IDs abaixo para filtr
 | 22 | Equipe Financeiro |
 | 21 | Equipe Notar |
 | 4  | Equipe Protesto |
-| 70 | Registral |
 | 16 | Equipe Civil |
 | 9  | Equipe Imóveis |
 | 17 | Equipe TED |
