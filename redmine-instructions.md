@@ -41,6 +41,34 @@ Este documento descreve o contexto do ambiente Redmine da Sky Informática para 
 - **Exemplo:** se hoje é 28/08 e a Version `2026-18 (24/08 a 04/09)` existe, a sprint atual é a `2026-18`, pois 28/08 está dentro de 24/08 a 04/09.
 - **Sprints definidas em conjunto:** todos os projetos têm suas sprints definidas **juntas**, com os mesmos nomes e períodos. Se um projeto tem a sprint `2026-18 (24/08 a 04/09)`, **todos** os demais projetos também devem ter a sprint `2026-18 (24/08 a 04/09)`. O número e o período de cada sprint são idênticos entre projetos.
 
+## Tipos de Tarefa (Trackers)
+
+Os trackers definem o tipo de cada tarefa. Use o campo `tracker_id` para filtrar/criar.
+
+### Tarefas de desenvolvimento
+
+| ID | Tracker | Uso |
+|----|---------|-----|
+| 1 | Defeito | Tarefas de correção de defeitos |
+| 2 | Funcionalidade | Tarefas de nova funcionalidade |
+| 5 | Conversão | Tarefas de implementação/envolvimento com a conversão do sistema durante a implantação de um novo cliente (converter os dados de um sistema que o cliente utilizava para o nosso sistema) |
+| 21 | Retorno de testes | Correção de um defeito encontrado pelo QS (testes), como continuação de uma tarefa anterior de defeito ou funcionalidade |
+
+### Tarefas complementares
+
+| ID | Tracker | Uso |
+|----|---------|-----|
+| 10 | Suporte | Registrar horas de apoio ao suporte |
+| 17 | Documentação | Registrar horas de elaboração de manuais e documentos |
+| 23 | Videos | Registrar horas de elaboração de vídeos de ajuda sobre o sistema |
+| 11 | Planejamento | Registrar horas de reuniões e outras tarefas que não se enquadram nas anteriores |
+
+### Outros
+
+| ID | Tracker | Uso |
+|----|---------|-----|
+| 9 | Teste | Tarefas de teste/QS |
+
 ## Projetos e Equipes
 
 Os projetos do Redmine são organizados por equipe. Use os IDs abaixo para filtrar/associar tarefas:
