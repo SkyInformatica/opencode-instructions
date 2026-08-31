@@ -91,9 +91,40 @@ Isso configurará automaticamente:
 
 - **`%USERPROFILE%\.config\opencode\opencode.json`** — modelo e small_model do agente, `instructions` apontando para todas as regras em `rules/` deste repositório
 - **`%USERPROFILE%\.config\opencode\rules\`** — regras da Sky (principios, svn, Delphi)
-- **`%USERPROFILE%\.config\opencode\skills\`** — skills da Sky (C#, Delphi)
+- **`%USERPROFILE%\.config\opencode\skills\`** — skills da Sky (C#, Delphi, preencher instruções de teste)
+- **`%USERPROFILE%\.config\opencode\agents\`** — agents da Sky (orquestrador, executor)
 
 Tudo carregado da pasta global (rules copiados da repo para `%USERPROFILE%\.config\opencode\rules\`), sem copiar arquivos para cada projeto. O prompt é seguro para executar múltiplas vezes: nunca duplica nem sobrescreve configurações existentes.
+
+## Agentes Orquestrador e Executor
+
+Estrutura de **dois agents complementares** para desenvolvimento guiado por plano aprovado:
+
+- **Orquestrador** (primário): planeja antes de codar, apresenta o plano para aprovação do usuário e só então executa. Decisão por complexidade: tarefa simples ele mesmo implementa na sessão; tarefa complexa delega ao executor.
+- **Executor** (subagente): implementa arquivo por arquivo, na ordem e escopo exatos do plano aprovado — sem mudar o que não está quebrado, sem expandir escopo.
+
+Instalam juntos com regras e skills pelo prompt de configuração:
+
+```
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para instalar somente os agents da Sky
+```
+
+### Como usar
+
+1. **Invoque o orquestrador**: no OpenCode, selecione o agent `orquestrador` (ou inicie a sessão mencionando "use o orquestrador"). O orquestrador é um agent **primário**, então pode ser escolhido como agente da sessão.
+2. **Receba o plano**: ele lê o código afetado e devolve um plano em pt-BR (arquivos, ordem, riscos) — sem editar nada.
+3. **Aprove ou ajuste**: revise o plano e confirme ("aprovado") ou peça mudanças. Só depois disso ele implementa.
+4. **Execução automática**: tarefa complexa é delegada ao subagente `executor` com o plano aprovado; tarefa simples o próprio orquestrador resolve na sessão.
+5. **Verificação**: ao final ele confere o diff e reporta o resultado — incluindo quando o código **não foi compilado** (build Delphi indisponível no ambiente, nunca reporta "compila" sem build).
+
+O `executor` também pode ser chamado diretamente via task tool com um plano já aprovado, quando você mesmo quer orquestrar a divisão do trabalho.
+
+### Vantagens da estrutura
+
+- **Plano antes do código**: tarefa complexa não sai codando direto; o orquestrador lê o código afetado, produz plano e espera aprovação — evita retrabalho e mudança de rumo no meio da implementação.
+- **Escopo travado**: executor segue o plano aprovado à risca; sem "melhorias" não solicitadas nem refatorações de código quebrado.
+- **Contexto focado por papel**: orquestrador mantém a visão geral (análise, riscos, ordem); executor recebe só o plano e os arquivos — cada um usa o modelo adequado (flash pra orquestrar, pro pra executar).
+- **Reuso em qualquer projeto**: agents ficam no config global e valem para todas as tarefas da máquina, sem configuração por projeto.
 
 ## Instalar plugins
 
@@ -183,5 +214,6 @@ Cada projeto mantém seu `AGENTS.md` (contexto de produto) e `.opencode/skills/`
 
 - `global/` — modelos de referência para config global do OpenCode (`opencode.json`)
 - `rules/` — regras de engenharia carregadas remotamente via `instructions`
-- `skills/` — skills globais da Sky (C#, Delphi)
+- `skills/` — skills globais da Sky (C#, Delphi, preencher instruções de teste)
+- `agents/` — agents globais da Sky (orquestrador, executor)
 - `OPENCODE.md` — guia completo de setup OpenCode

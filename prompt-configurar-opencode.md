@@ -11,11 +11,12 @@ Antes de configurar o OpenCode, certifique-se de que as ferramentas essenciais e
 **Antes de executar qualquer passo técnico, você DEVE perguntar ao usuário o seguinte:**
 
 A. **Escopo da instalação:**
-   Pergunte: "Deseja instalar regras, skills, ou ambos? (responda: 'somente regras', 'somente skills', ou deixe em branco para ambos)"
+   Pergunte: "Deseja instalar regras, skills, agents, ou combinação? (responda: 'somente regras', 'somente skills', 'somente agents', ou deixe em branco para todos)"
 
-   - Se usuário responder "somente regras" → pule todo passo relacionado a skills
-   - Se usuário responder "somente skills" → pule todo passo relacionado a regras
-   - Se usuário não informar / deixar em branco → considere ambos (regras + skills)
+   - Se usuário responder "somente regras" → pule todo passo relacionado a skills e agents
+   - Se usuário responder "somente skills" → pule todo passo relacionado a regras e agents
+   - Se usuário responder "somente agents" → pule todo passo relacionado a regras e skills
+   - Se usuário não informar / deixar em branco → considere todos (regras + skills + agents)
 
 B. **Se o escopo incluir regras:**
    Pergunte: "Quais regras deseja instalar? (informe os nomes separados por vírgula, ou 'todas')"
@@ -30,6 +31,13 @@ C. **Se o escopo incluir skills:**
    - Se usuário responder "todas" → instale todas as skills disponíveis na pasta skills/
    - Se usuário informar nomes específicos → instale apenas as skills com esses nomes
    - Se usuário não informar nada / deixar em branco → liste as skills disponíveis (consultando a pasta skills/ do repositório via GitHub API) e peça para o usuário escolher quais deseja. Repita a pergunta até obter uma resposta válida (nomes específicos ou "todas").
+
+D. **Se o escopo incluir agents:**
+   Pergunte: "Quais agents deseja instalar? (informe os nomes separados por vírgula, ou 'todos')"
+
+   - Se usuário responder "todos" → instale todos os agents disponíveis na pasta agents/
+   - Se usuário informar nomes específicos → instale apenas os agents com esses nomes
+   - Se usuário não informar nada / deixar em branco → liste os agents disponíveis (consultando a pasta agents/ do repositório via GitHub API) e peça para o usuário escolher quais deseja. Repita a pergunta até obter uma resposta válida (nomes específicos ou "todos").
 
 **Após obter as escolhas do usuário, execute os passos abaixo:**
 
@@ -61,6 +69,18 @@ Passos:
    - Se %USERPROFILE%\.config\opencode\skills\<SUBPASTA>\SKILL.md já existir, sobrescreva com a versão baixada (a cópia local pode estar desatualizada).
    - Se não existir, crie a pasta %USERPROFILE%\.config\opencode\skills\<SUBPASTA>\ e salve o SKILL.md baixado.
 
+3b. **Se o escopo incluir agents**, baixe os agents selecionados da pasta agents/ do repositório para a pasta global de agents:
+   https://github.com/SkyInformatica/opencode-instructions/tree/main/agents
+
+   Liste o conteúdo da pasta agents via GitHub API:
+   https://api.github.com/repos/SkyInformatica/opencode-instructions/contents/agents
+
+   Para cada agent selecionado pelo usuário:
+   - Baixe sempre a versão atual do repositório:
+     https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/agents/<SUBPASTA>.md
+   - Se %USERPROFILE%\.config\opencode\agents\<SUBPASTA>.md já existir, sobrescreva com a versão baixada (a cópia local pode estar desatualizada).
+   - Se não existir, crie a pasta %USERPROFILE%\.config\opencode\agents\ e salve o <SUBPASTA>.md baixado.
+
 4. **Se o escopo incluir regras**, configure o opencode.json global:
    - Se %USERPROFILE%\.config\opencode\opencode.json já existir, leia o conteúdo atual.
      - Garanta que o array "instructions" contenha o padrão global (apenas uma vez, sem duplicar):
@@ -76,13 +96,13 @@ Passos:
 
 5. Verifique se os arquivos estão corretos lendo %USERPROFILE%\.config\opencode\opencode.json.
 
-6. Confirme que os arquivos de regras baixados existem em %USERPROFILE%\.config\opencode\rules\ e que o padrão "~/.config/opencode/rules/*.md" está no "instructions" do opencode.json.
+6. Confirme que os arquivos de regras baixados existem em %USERPROFILE%\.config\opencode\rules\ e que o padrão "~/.config/opencode/rules/*.md" está no "instructions" do opencode.json. Confirme também que os agents selecionados existem em %USERPROFILE%\.config\opencode\agents\.
 
 7. Me informe o resultado: o que foi instalado, o que já existia e foi atualizado com a versão do repositório, o que já estava igual e não precisou de mudança, e que o OpenCode está configurado para carregar automaticamente todas as regras da pasta local via wildcard (sem necessidade de configuração extra por projeto ou ao adicionar novas regras).
 
 8. Ao final, mostre o estado atual da instalação:
    - Exiba o conteúdo completo de %USERPROFILE%\.config\opencode\opencode.json formatado.
-   - Exiba a árvore de pastas e arquivos em %USERPROFILE%\.config\opencode\skills\ e %USERPROFILE%\.config\opencode\rules\ (se existir) com `dir /s /b`.
+   - Exiba a árvore de pastas e arquivos em %USERPROFILE%\.config\opencode\skills\, %USERPROFILE%\.config\opencode\agents\ e %USERPROFILE%\.config\opencode\rules\ (se existir) com `dir /s /b`.
 
 ---
 
