@@ -17,11 +17,10 @@ Esse conteúdo é conteúdo de produto (direcionado ao usuário final), não é 
 
 ## Entrada
 
-Tudo é opcional. Sem entrada, usar o alvo atual (branch no Git, faixa de revisões no SVN).
+Tudo é opcional. Sem entrada, usar o alvo atual (branch ou arquivos pendentes).
 
-- Nome de uma branch (ex.: `restaurar-sessao-agno-chat`), no Git.
-- Faixa de commits (ex.: `4dd3569..HEAD`) ou lista de commits, no Git.
-- Id/revisão de commit ou faixa de revisões (ex.: `1234`, `1000:1200`), no SVN.
+- Nome de uma branch (ex.: `restaurar-sessao-agno-chat`).
+- Id de um commit (no SVN, número da revisão) ou a faixa entre dois (ex.: `4dd3569`, `4dd3569..HEAD`, `1234`, `1000:1200`).
 - Lista de arquivos alterados.
 - Instruções livres do usuário descrevendo o que foi feito ou o que deve ser considerado.
 
@@ -40,32 +39,18 @@ O sistema em uso fica registrado em `<pasta-da-skill>/config.json`:
 
 ## Passo 1 — Levantar as mudanças
 
-O VCS pode ser **Git** ou **SVN**. O arquivo `rules/svn.md` estará no **config global do usuário do OpenCode**, com os comandos equivalentes quando o projeto usar SVN (nunca usar comandos `git` nesse caso). Detectar o VCS do projeto (existência de `.git` ou `.svn`, ou instrução do usuário) e usar os comandos correspondentes.
+O VCS pode ser **Git** ou **SVN**. Detectar o VCS do projeto (existência de `.git` ou `.svn`, ou instrução do usuário). O alvo das mudanças pode ser definido de todas as formas (igual para Git e SVN):
 
-### Git
+- **Branch** — comparar com a base (no Git, a `main`; no SVN, o ponto de divergência da branch via `svn log --stop-on-copy`).
+- **Id do commit** (no SVN, número da revisão) ou a faixa entre dois commits/revisões.
+- **Arquivos pendentes para commit** — alterações ainda não commitadas da working copy.
+- Formas já descritas na seção "Entrada" (lista de arquivos alterados, instruções livres).
 
-Definir `ALVO` (branch informada ou `git rev-parse --abbrev-HEAD`) e comparar com a `main`:
+Usar os comandos do VCS do projeto. No Git, `git log`/`git diff`; no SVN, os comandos equivalentes (`svn log`, `svn diff`, `svn diff --summarize`, etc.), conforme as regras de VCS já carregadas no ambiente.
 
-```bash
-git log --no-merges --oneline main...HEAD
-git diff --name-status main...HEAD
-```
+Para uma branch já mesclada (Git), usar a faixa do merge commit (`git log --no-merges --oneline <merge>^1..<merge>^2`).
 
-Trocar `HEAD` pelo nome da branch quando ela não estiver ativa. Para uma branch já mesclada, usar a faixa do merge commit (`git log --no-merges --oneline <merge>^1..<merge>^2`).
-
-### SVN
-
-No SVN as mudanças são identificadas por **revisão (número de commit)** ou por **branch** (via `svn log --stop-on-copy` ou comparando com a base). O usuário pode informar uma **revisão ou faixa de revisões** (`svn diff -r <REV1>:<REV2>`) ou, como no Git, uma **branch** para comparar até o ponto de divergência. Sem entrada, usar a faixa entre a última revisão já conhecida e a revisão atual (`svn diff -r PREV:BASE`, ver `rules/svn.md`).
-
-```bash
-svn log -l 20               # histórico para achar a faixa de revisões
-svn log --diff -l 5         # log detalhado com o diff de cada revisão
-svn diff -r REV1:REV2       # diff entre duas revisões (name-status via --summarize)
-svn diff --summarize -r REV1:REV2   # só a lista de arquivos alterados
-svn diff -r REV:HEAD        # da revisão inicial até a atual
-```
-
-Trocar o nome de uma branch pela revisão ou faixa de revisões que o usuário informar. Não escrever a partir das mensagens de commit; ler o diff das mudanças candidatas para entender o que muda para quem usa o sistema.
+Não escrever a partir das mensagens de commit; ler o diff das mudanças candidatas para entender o que muda para quem usa o sistema.
 
 ## Passo 2 — Filtrar o que é relevante para o usuário
 
