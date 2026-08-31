@@ -17,10 +17,11 @@ Esse conteúdo é conteúdo de produto (direcionado ao usuário final), não é 
 
 ## Entrada
 
-Tudo é opcional. Sem entrada, usar a branch atual.
+Tudo é opcional. Sem entrada, usar o alvo atual (branch no Git, faixa de revisões no SVN).
 
-- Nome de uma branch (ex.: `restaurar-sessao-agno-chat`).
-- Faixa de commits (ex.: `4dd3569..HEAD`) ou lista de commits.
+- Nome de uma branch (ex.: `restaurar-sessao-agno-chat`), no Git.
+- Faixa de commits (ex.: `4dd3569..HEAD`) ou lista de commits, no Git.
+- Id/revisão de commit ou faixa de revisões (ex.: `1234`, `1000:1200`), no SVN.
 - Lista de arquivos alterados.
 - Instruções livres do usuário descrevendo o que foi feito ou o que deve ser considerado.
 
@@ -39,7 +40,11 @@ O sistema em uso fica registrado em `<pasta-da-skill>/config.json`:
 
 ## Passo 1 — Levantar as mudanças
 
-Definir `ALVO` (branch informada ou `git rev-parse --abbrev-ref HEAD`) e comparar com a `main`:
+O VCS pode ser **Git** ou **SVN**. O arquivo `rules/svn.md` estará no **config global do usuário do OpenCode**, com os comandos equivalentes quando o projeto usar SVN (nunca usar comandos `git` nesse caso). Detectar o VCS do projeto (existência de `.git` ou `.svn`, ou instrução do usuário) e usar os comandos correspondentes.
+
+### Git
+
+Definir `ALVO` (branch informada ou `git rev-parse --abbrev-HEAD`) e comparar com a `main`:
 
 ```bash
 git log --no-merges --oneline main...HEAD
@@ -48,7 +53,19 @@ git diff --name-status main...HEAD
 
 Trocar `HEAD` pelo nome da branch quando ela não estiver ativa. Para uma branch já mesclada, usar a faixa do merge commit (`git log --no-merges --oneline <merge>^1..<merge>^2`).
 
-Não escrever a partir das mensagens de commit. Ler o diff das mudanças candidatas para entender o que muda para quem usa o sistema.
+### SVN
+
+No SVN as mudanças são identificadas por **revisão (número de commit)** ou por **branch** (via `svn log --stop-on-copy` ou comparando com a base). O usuário pode informar uma **revisão ou faixa de revisões** (`svn diff -r <REV1>:<REV2>`) ou, como no Git, uma **branch** para comparar até o ponto de divergência. Sem entrada, usar a faixa entre a última revisão já conhecida e a revisão atual (`svn diff -r PREV:BASE`, ver `rules/svn.md`).
+
+```bash
+svn log -l 20               # histórico para achar a faixa de revisões
+svn log --diff -l 5         # log detalhado com o diff de cada revisão
+svn diff -r REV1:REV2       # diff entre duas revisões (name-status via --summarize)
+svn diff --summarize -r REV1:REV2   # só a lista de arquivos alterados
+svn diff -r REV:HEAD        # da revisão inicial até a atual
+```
+
+Trocar o nome de uma branch pela revisão ou faixa de revisões que o usuário informar. Não escrever a partir das mensagens de commit; ler o diff das mudanças candidatas para entender o que muda para quem usa o sistema.
 
 ## Passo 2 — Filtrar o que é relevante para o usuário
 
@@ -117,7 +134,7 @@ Procedimento:
 
 1. Buscar a tarefa: `GET /issues/{id}.json` e confirmar que existe.
 2. Validar que a tarefa usa o campo personalizado **"O que há de novo?"** (custom field id `42`). Conferir pelo `tracker` da tarefa — pelo padrão da Sky, os trackers que usam o campo são Defeito, Funcionalidade e Retorno de testes. Se o tracker não usar o campo, avisar que o campo 42 não se aplica àquela tarefa e não escrever.
-3. Escrever o texto do resultado no campo: `PUT /issues/{id}.json` com `custom_fields: [{ id: 42, value: "<texto do resultado>" }]`. O texto gravado é o mesmo resultado do Passo 4 (seções `## Novas funcionalidades e melhorias` / `## Correções`), sem cabeçalho de título. O campo é sobrescrito: o conteúdo anterior do campo 42 é substituído pelo novo texto.
+3. Escrever o texto do resultado no campo: `PUT /issues/{id}.json` com body `{ "issue": { "custom_fields": [{ "id": 42, "value": "<texto>" }] } }`. O texto gravado é o mesmo resultado do Passo 4 (seções `## Novas funcionalidades e melhorias` / `## Correções`), sem cabeçalho de título. O campo é sobrescrito: o conteúdo anterior do campo 42 é substituído pelo novo texto.
 4. Após gravar, confirmar ao usuário que o "O que há de novo" foi gravado na tarefa informada.
 
 ## Quando não gerar resultado
