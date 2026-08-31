@@ -60,15 +60,15 @@ Entra no arquivo apenas o que o usuário percebe ou o que muda a forma de trabal
 
 - Tela, aba, campo, botão, filtro ou opção nova ou removida.
 - Mudança de comportamento visível (o que o usuário faz, vê ou recebe).
-- Novo tipo de processamento ou mudança no que é extraído/exibido no resultado.
+- Nova funcionalidade, novo tipo de item/trabalho, ou mudança no que é produzido ou exibido como resultado para o usuário.
 - Correção de problema que o usuário sentiu em produção.
-- Mudança em cobrança, tarifação, limites, bloqueios ou permissão de acesso.
+- Mudança em cobrança, valores, limites, bloqueios ou permissão de acesso.
 - Ganho de desempenho perceptível (ex.: tela que demorava a abrir).
 
 **Não entra:**
 
 - Refatoração, renomeação, tipagem, testes, lint, CI, dependências, Docker, variáveis de ambiente.
-- Estrutura interna de banco: campo novo de controle, índice, migração, formato de armazenamento (ex.: guardar o arquivo compactado em vez de base64 — irrelevante para o usuário).
+- Estrutura interna de dados/banco: campo novo de controle, índice, migração, mudança de formato de armazenamento — irrelevante para o usuário quando não tem efeito visível.
 - Log, monitoramento, tratamento interno de erro, status HTTP, ajuste de contrato interno.
 - Bug introduzido e corrigido dentro da própria branch (o usuário nunca viu).
 - Otimização sem efeito perceptível.
