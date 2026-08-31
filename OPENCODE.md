@@ -30,7 +30,7 @@ Usamos `.opencode/` como pasta canônica do projeto:
 └── commands/           # comandos personalizados (quando houver)
 ```
 
-O contexto do produto (resumo canônico) fica no `AGENTS.md` na raiz do projeto, carregado automaticamente pelo OpenCode. Os princípios de engenharia são carregados remotamente pelo `instructions` do `opencode.json` global (ver abaixo). Skills carregam detalhes operacionais sob demanda para economizar tokens em cada sessão.
+O contexto do produto (resumo canônico) fica no `AGENTS.md` na raiz do projeto, carregado automaticamente pelo OpenCode. Os princípios de engenharia são carregados pela configuração `instructions` do `opencode.json` global (ver abaixo). Skills carregam detalhes operacionais sob demanda para economizar tokens em cada sessão.
 
 ## Como o OpenCode carrega regras
 
@@ -42,7 +42,7 @@ Em toda sessão, o OpenCode carrega no contexto do agente:
 
    Apenas o `AGENTS.md` da **raiz do projeto** é carregado automaticamente. `AGENTS.md` em subpastas (ex.: `backend/AGENTS.md`) é ignorado a menos que referenciado explicitamente em `instructions`.
 
-2. **Campo `instructions` do `opencode.json`** — permite globs de arquivos locais e **URLs remotas** (timeout 5s). Combinadas com o `AGENTS.md`. É o mecanismo que usamos para carregar principios.md remotamente no `opencode.json` global.
+2. **Campo `instructions` do `opencode.json`** — permite globs de arquivos locais e **URLs remotas** (timeout 5s). Combinadas com o `AGENTS.md`. É o mecanismo que usamos para carregar as regras da pasta local no `opencode.json` global.
 3. **Configuração (`opencode.json`)** — define modelo, provedor, MCPs, plugins e permissões. Lida em dois níveis (mesclados):
    - Global: `%USERPROFILE%\.config\opencode\opencode.json`
    - Projeto: `<projeto>/opencode.json` (maior precedência)
@@ -62,24 +62,24 @@ Links oficiais: [Regras](https://opencode.ai/docs/pt-br/rules/) · [Configuraç�
 └── opencode.json
 ```
 
-O `AGENTS.md` na raiz carrega automaticamente o contexto do produto. Os principios.md são carregados remotamente pelo `instructions` do `opencode.json` global. Skills carregam detalhes operacionais sob demanda.
+O `AGENTS.md` na raiz carrega automaticamente o contexto do produto. Os princípios são carregados pelas `instructions` do `opencode.json` global. Skills carregam detalhes operacionais sob demanda.
 
 ## Regras — carregadas sempre
 
 Regras carregadas em **toda sessão, todo prompt**, combinando duas fontes:
 
 1. **`AGENTS.md`** na raiz do projeto — contexto do produto (carregado automaticamente).
-2. **`instructions` do `opencode.json` global** — principios.md carregado remotamente do repositório compartilhado da Sky Informática:
+2. **`instructions` do `opencode.json` global** — regras carregadas da pasta local `~/.config/opencode/rules/` (copiadas do repositório pelo script de configuração):
 
 ```json
 {
   "instructions": [
-    "https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/rules/principios.md"
+    "~/.config/opencode/rules/*.md"
   ]
 }
 ```
 
-O `opencode.json` global (`%USERPROFILE%\.config\opencode\opencode.json`) aceita URLs remotas (timeout 5s). Isso permite compartilhar principios entre todos os projetos Sky sem duplicar arquivos. Instruções específicas de domínio (backend, frontend, deploy) vão em skills, carregadas sob demanda.
+O wildcard `~/.config/opencode/rules/*.md` (sintaxe interna do OpenCode, expandida em qualquer SO) carrega **todas** as regras da pasta local, incluindo novas regras baixadas depois. As regras são **copiadas** para a máquina do usuário na instalação (via script em `prompt-configurar-opencode.md`), não carregadas por URL — a pasta `rules/` do repositório é a fonte, e a cópia local é sempre atualizada com a versão do repositório. Instruções específicas de domínio (backend, frontend, deploy) vão em skills, carregadas sob demanda.
 
 ## Skills (`.opencode/skills`) — carregadas sob demanda
 

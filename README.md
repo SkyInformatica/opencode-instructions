@@ -93,7 +93,7 @@ Isso configurará automaticamente:
 - **`%USERPROFILE%\.config\opencode\rules\`** — regras da Sky (principios, svn, Delphi)
 - **`%USERPROFILE%\.config\opencode\skills\`** — skills da Sky (C#, Delphi)
 
-Tudo carregado remotamente, sem copiar arquivos para cada projeto. O prompt é seguro para executar múltiplas vezes: nunca duplica nem sobrescreve configurações existentes.
+Tudo carregado da pasta global (rules copiados da repo para `%USERPROFILE%\.config\opencode\rules\`), sem copiar arquivos para cada projeto. O prompt é seguro para executar múltiplas vezes: nunca duplica nem sobrescreve configurações existentes.
 
 ## Instalar plugins
 
