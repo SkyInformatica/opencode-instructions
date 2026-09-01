@@ -78,7 +78,15 @@ Quando o usuário informar somente o número de uma tarefa do Redmine (ex.: "ger
    ]
    ```
 
-2. Com as revisões SVN obtidas, levantar o diff correspondente no SVN (`svn diff -r REV1:REV2` ou `svn log --diff`, conforme o Passo 1 de SVN) para ler as mudanças reais. O número da tarefa informado também é o id usado na linha do resultado (formato `(#<id>)`, ver Passo 3).
+2. **Incluir no contexto o que a tarefa descreve sobre si mesma**, extraído do retorno do Passo 1.1:
+   - O campo `subject` da tarefa (**o título**).
+   - O campo `category` da tarefa (**a categoria**), **se existir** (nem toda tarefa tem).
+   - O campo `description` da tarefa (**o que é o problema/requisito e o comportamento esperado**).
+   - O campo personalizado **"Instruções para testes"** (custom field id `43`), **se existir e estiver preenchido** — descreve o que foi alterado/corrigido, telas afetadas, configurações/estrutura/relatórios tocados e o comportamento esperado. Serve como fonte confiável do que mudou para o usuário e do que deve ser descrito como novidade.
+
+   Esses conteúdos (título, categoria, descrição e instruções para testes) entram no contexto **junto com** as mudanças dos arquivos de código (Passo 1.3), como insumo para o Passo 2 (filtro) e Passo 3 (escrita em linguagem de usuário final). O título e a categoria também são usados para inferir a **área** da linha do resultado (ver Passo 3, "Inferir a área"). Tudo o que for gerado como novidade deve ser confirmado contra o diff de código — descrição e instruções ajudam a entender a mudança, mas não substituem a leitura das alterações.
+
+3. Com as revisões SVN obtidas, levantar o diff correspondente no SVN (`svn diff -r REV1:REV2` ou `svn log --diff`, conforme o Passo 1 de SVN) para ler as mudanças reais dos arquivos de código. O número da tarefa informado também é o id usado na linha do resultado (formato `(#<id>)`, ver Passo 3).
 
 Se o MCP do Redmine não estiver disponível, avisar que não é possível levantar as mudanças dessa tarefa sem o MCP e encerrar.
 
@@ -114,6 +122,19 @@ Em caso de dúvida sobre relevância ou sobre qual é o benefício real, pergunt
 - Toda linha termina com o **id da tarefa** correspondente no formato `(#<id>)` — mesmo quando houver uma única novidade. O id vem de cada item analisado (a tarefa/commit que originou aquela mudança); retirá-lo do histórico levantado no Passo 1 ou da informação dada pelo usuário. É também o id que será usado ao publicar no Redmine (ver "Publicar no Redmine"). Outras referências a chamado/PR fora do id só entram se o usuário informar os números.
 - Voz padrão das linhas: "Adicionada opção para…", "Adicionado campo…", "Ajustado o comportamento…", "Melhorada a…", "Corrigido…", "Solucionado um problema…".
 - Área é o nome de usuário final. A taxonomia de domínios e a regra de mapeamento domínio → área, além da terminologia de produto, estão no arquivo de configuração do sistema identificado (ver "Identificar o sistema"). Usar as áreas definidas lá; não inventar área que não exista na taxonomia do sistema. Quando houver dúvida sobre o domínio da mudança, perguntar ao usuário.
+
+#### Inferir a área a partir da tarefa do Redmine
+
+Quando a novidade vem de uma tarefa do Redmine (Passo 1, "Redmine"), usar **título e categoria** da tarefa para inferir a área da linha, na ordem abaixo — se ainda não houver certeza, usar as regras de mapeamento domínio → área do arquivo do sistema:
+
+1. **Se a tarefa tiver categoria** (`category`), usar o **nome da categoria como candidata a área**. Conferir se bate com uma área da taxonomia do sistema; se a categoria já for uma área conhecida, usá-la direto.
+2. **Se não houver categoria** (ou ela não mapear para uma área), inferir a área pelo **título** (`subject`): normalmente o título começa com o nome da área seguido de um hífen, por exemplo:
+   - `RI Digital - Assinador Digital - Alterar janela...` → área `RI Digital` (o trecho antes do **primeiro** hífen).
+   - `Fichários - Unificar cadastros` → área `Fichários`.
+   Conferir se o trecho antes do primeiro hífen bate com uma área da taxonomia do sistema.
+3. Se ainda assim não der para inferir (título sem hífen ou ambíguo), usar o mapeamento domínio → área do arquivo do sistema ou **perguntar ao usuário** qual a área.
+
+Sempre validar a área inferida contra a taxonomia do sistema; não criar área que não exista.
 
 ## Passo 4 — Gerar o resultado
 
