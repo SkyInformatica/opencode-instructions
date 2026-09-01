@@ -218,6 +218,30 @@ Filtros nativos do endpoint (use no `params`):
 | `status_id=open` | Apenas issues abertas |
 | `assigned_to_id=me` | Issues atribuídas ao usuário logado |
 | `tracker_id` | Filtrar por tipo de tarefa |
+| `created_on` | Filtrar por data de criação da tarefa (operadores abaixo) |
+| `updated_on` | Filtrar por data de última atualização |
+| `closed_on` | Filtrar por data de fechamento |
+| `start_date` | Filtrar por data de início |
+| `due_date` | Filtrar por data de vencimento |
+
+### Filtro por datas (campos de data, ex.: data de criação)
+
+O MCP aceita filtro por campos de data direto nos `params`. O valor é um **operador seguido da data `YYYY-MM-DD`**. Operadores suportados (testados na API da Sky):
+
+| Operador | Significado | Exemplo (`created_on`) |
+|----------|-------------|------------------------|
+| `>=` | a partir de (maior/igual) | `created_on: ">=2026-08-20"` |
+| `<=` | até (menor/igual) | `created_on: "<=2026-01-01"` |
+| `=` | igual (dia exato) | `created_on: "=2026-09-01"` |
+| `><` | entre (intervalo, datas separadas por `\|`) | `created_on: "><2026-08-20\|2026-08-25"` |
+| `*` | não vazio (tem data preenchida) | `created_on: "*"` |
+
+Regras:
+
+1. **Não existe** operador `<` ou `>` isolado (apenas `<=`/`>=`) — usar `<=`/`>=` ou o intervalo `><`. Tentar `<` retorna erro 422.
+2. Campos válidos: `created_on` (criação), `updated_on` (atualização), `closed_on` (fechamento), `start_date`, `due_date`. O usuário pode pedir em português ("tarefas criadas depois de X", "vencendo até Y", "atualizadas em Z") — mapeie para o campo correspondente.
+3. Combine com os demais filtros: `project_id` + `created_on=>=...` funciona junto.
+4. Mantenha a paginação (loop `offset`/`limit`) mesmo com filtro de data.
 
 Regras:
 
