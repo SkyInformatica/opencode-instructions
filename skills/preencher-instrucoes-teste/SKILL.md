@@ -1,6 +1,6 @@
 ---
-name: preencher-instrucoes-teste
-description: Preenche o campo "Instruções para testes" de tarefas do Redmine respondendo às perguntas pré-definidas da própria tarefa, sem alterar as perguntas. Sempre referencia formulários pelo caminho de navegação do usuário (ex.: "Encaminhamento > Emitir"), nunca pelo nome interno do fonte. Usa arquivo de referência de módulos por projeto em <config opencode global>/.opencode/skills/refs/<projeto>.md; quando não sabe o caminho, pergunta ao usuário e salva no arquivo. Use quando pedirem para preencher instruções de teste, instruções para testes, campo Instruções para testes, ou completar o campo 43 de uma tarefa do Redmine.
+name: "preencher-instrucoes-teste"
+description: "Preenche o campo 'Instruções para testes' de tarefas do Redmine respondendo às perguntas pré-definidas da própria tarefa, sem alterar as perguntas. Sempre referencia formulários pelo caminho de navegação do usuário (ex.: 'Encaminhamento > Emitir'), nunca pelo nome interno do fonte. Usa arquivo de referência de módulos por projeto em <config opencode global>/.opencode/skills/refs/<projeto>.md; quando não sabe o caminho, pergunta ao usuário e salva no arquivo. Use quando pedirem para preencher instruções de teste, instruções para testes, campo Instruções para testes, ou completar o campo 43 de uma tarefa do Redmine"
 ---
 
 # Preencher Instruções para Testes
