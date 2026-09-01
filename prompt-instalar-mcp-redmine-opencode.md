@@ -30,7 +30,13 @@ Passos:
    - Baixe a versão atual do repositório:
      https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/redmine-instructions.md
    - Salve em `%USERPROFILE%\.config\opencode\redmine-instructions.md`
-   - Se o arquivo já existir, sobrescreva com a versão baixada — **não pule o download** quando o `mcp.redmine` já estiver configurado: o `redmine-instructions.md` local pode estar desatualizado e precisa ser sempre atualizado com uma nova cópia. Esse arquivo é usado pela variável `REDMINE_REQUEST_INSTRUCTIONS` para dar contexto à tool `redmine_request`.
+    - Se o arquivo já existir, sobrescreva com a versão baixada — **não pule o download** quando o `mcp.redmine` já estiver configurado: o `redmine-instructions.md` local pode estar desatualizado e precisa ser sempre atualizado com uma nova cópia. Esse arquivo é usado pela variável `REDMINE_REQUEST_INSTRUCTIONS` para dar contexto à tool `redmine_request`.
+
+2b. (Memorização de projeto — opcional, só na primeira instalação) Pergunte ao usuário se deseja memorizar o projeto de trabalho padrão em `%USERPROFILE%\.config\opencode\redmine-config.json`. Se sim, liste os projetos e crie o arquivo com o formato:
+   ```json
+   { "projeto": "<ID do projeto>", "nome": "<Nome da equipe>" }
+   ```
+   Se o usuário preferir não memorizar agora, **não crie** o arquivo — o agente perguntará sob demanda durante o uso (comportamento já descrito nas instruções). O `redmine-config.json` passa a valer a partir da próxima sessão do OpenCode.
 
 3. Configure o MCP no `opencode.json` global:
    - Leia `%USERPROFILE%\.config\opencode\opencode.json` (ou `opencode.jsonc`) e verifique se já existe a seção `mcp.redmine`.

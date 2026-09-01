@@ -203,4 +203,63 @@ A equipe QS (testes) também tem um projeto próprio no Redmine para organizar s
 - `offset`: deslocamento de paginação (padrão 0).
 - `limit`: quantidade de itens por página (padrão 25, máximo 100 — use 100).
 
+## Filtro no GET de issues (obrigatório)
+
+Ao consultar tarefas, **sempre filtre no servidor** via `params` do `/issues.json`. Nunca puxe todas as issues e filtre localmente.
+
+Filtros nativos do endpoint (use no `params`):
+
+| Parâmetro | Uso |
+|-----------|-----|
+| `project_id` | Filtrar por projeto (id da equipe) |
+| `fixed_version_id` | Filtrar por sprint (id da Version) |
+| `status_id=open` | Apenas issues abertas |
+| `assigned_to_id=me` | Issues atribuídas ao usuário logado |
+| `tracker_id` | Filtrar por tipo de tarefa |
+
+Regras:
+
+1. **Combine filtros sempre que possível.** Se o projeto e a sprint forem conhecidos, use `project_id` + `fixed_version_id` juntos.
+2. "Minhas tarefas" → use `assigned_to_id=me` (quando disponível) em vez de buscar tudo.
+3. Aplicar `status_id=open` e/ou lista de status abertos por padrão em questões abertas.
+4. **Única exceção:** buscar sem filtro (todos os projetos/sprints) **somente** quando o usuário pedir explicitamente "todas as tarefas de todos os projetos".
+5. Mantenha a paginação (loop `offset`/`limit`) mesmo com filtro.
+
+### Exemplo — minhas tarefas da sprint atual do projeto memorizado
+
+```
+1. Leia o projeto memorizado (ver seção "Projeto de trabalho padrão").
+2. Descubra a sprint atual do projeto (consulte `/projects/{id}/versions.json` e compare a data de hoje com o período).
+3. Busque com filtro: `/issues.json?project_id={id}&fixed_version_id={version_id}&assigned_to_id=me&status_id=open`
+4. Faça o loop de paginação até trazer tudo (total_count).
+```
+
+## Projeto de trabalho padrão (memorização)
+
+Para não pedir o projeto toda hora, o projeto de trabalho pode ser **memorizado** em um arquivo de configuração local, criado pelo próprio agente sob demanda:
+
+- **Local do config:** `%USERPROFILE%\.config\opencode\redmine-config.json`
+- **Formato:**
+  ```json
+  { "projeto": "<ID do projeto>", "nome": "<Nome da equipe>" }
+  ```
+
+Comportamento do agente:
+
+1. **No início das interações de tarefa**, verifique se `redmine-config.json` existe. Se existir, **use `project_id` desse projeto como padrão** em toda consulta de issues.
+2. **Se não existir** (ou o usuário parecer trabalhar em outro projeto), **pergunte ao usuário** se quer memorizar o projeto, listando os projetos disponíveis:
+   | ID | Nome |
+   |----|------|
+   | 4  | Equipe Protesto |
+   | 9  | Equipe Imóveis |
+   | 16 | Equipe Civil |
+   | 17 | Equipe TED |
+   | 21 | Equipe Notar |
+   | 22 | Equipe Financeiro |
+   | 99 | QS |
+3. **Se o usuário quiser memorizar**, crie/atualize o `redmine-config.json` com o projeto escolhido (o agente tem ferramentas de escrita de arquivo; use o caminho Windows acima).
+4. **Observação:** como o arquivo de instruções é lido na inicialização do servidor, o `redmine-config.json` memorizado passa a influenciar **a partir da próxima sessão**. Na sessão atual, o agente já aplica o projeto após a memorização no próprio fluxo.
+5. **Override explícito:** se o usuário disser explicitamente "todos os projetos" ou citar outro projeto, **ignore** o memorizado e use o que foi pedido.
+6. **Trocar de projeto:** se o usuário disser que agora trabalha em outro projeto, atualize o `redmine-config.json` para o novo projeto.
+
 <!-- TODO: completar mais contexto aqui -->
