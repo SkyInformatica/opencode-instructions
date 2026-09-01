@@ -188,6 +188,8 @@ Cada equipe de desenvolvimento tem um projeto no Redmine. Use os IDs abaixo para
 | 16 | Equipe Civil |
 | 9  | Equipe Imóveis |
 | 17 | Equipe TED |
+| 82 | Equipe SKY.NET |
+| 8  | Equipe SkyWeb |
 
 ### Equipe QS
 
@@ -256,6 +258,8 @@ Comportamento do agente:
    | 17 | Equipe TED |
    | 21 | Equipe Notar |
    | 22 | Equipe Financeiro |
+   | 82 | Equipe SKY.NET |
+   | 8  | Equipe SkyWeb |
    | 99 | QS |
 3. **Se o usuário quiser memorizar**, crie/atualize o `redmine-config.json` com o projeto escolhido (o agente tem ferramentas de escrita de arquivo; use o caminho Windows acima).
 4. **Observação:** como o arquivo de instruções é lido na inicialização do servidor, o `redmine-config.json` memorizado passa a influenciar **a partir da próxima sessão**. Na sessão atual, o agente já aplica o projeto após a memorização no próprio fluxo.
