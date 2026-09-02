@@ -1,6 +1,6 @@
 ---
 name: "gerar-oquehadenovo"
-description: "gera o texto 'O que há de novo' da branch, em linguagem para o usuário final, a partir do diff da branch, exibido como bloco de texto para copiar e colar (o sistema pode definir onde gravar)"
+description: "gera o texto 'O que há de novo' da branch, em linguagem para o usuário final, a partir do diff da branch, exibido como bloco de texto para copiar e colar"
 ---
 
 # Gerar "O que há de novo"
@@ -11,7 +11,7 @@ Esse conteúdo é conteúdo de produto (direcionado ao usuário final), não é 
 
 ## Quando invocar
 
-- Antes de reintegrar a branch na `main` (o sistema pode exigir o resultado, conforme o arquivo de configuração).
+- Antes de reintegrar a branch na `main`.
 - Quando o usuário pedir "o que há de novo", "novidades da versão", "release notes" ou "changelog do usuário".
 - Depois de uma reintegração em que o arquivo foi esquecido, informando a branch já mesclada.
 
@@ -21,22 +21,11 @@ Tudo é opcional. Sem entrada, usar o alvo atual (branch ou arquivos pendentes).
 
 - Nome de uma branch (ex.: `restaurar-sessao-agno-chat`).
 - Id de um commit (no SVN, número da revisão) ou a faixa entre dois (ex.: `4dd3569`, `4dd3569..HEAD`, `1234`, `1000:1200`).
-- **Número de uma tarefa do Redmine** — quando o usuário informar apenas um número de tarefa (ex.: "gere o que há de novo da tarefa #95401"), é **com certeza uma tarefa do Redmine**. Nesse caso, identificar o sistema e levantar as mudanças via MCP do Redmine (ver Passo 1, "Redmine").
+- Número de uma tarefa do Redmine — quando o usuário informar apenas um número de tarefa (ex.: "gere o que há de novo da tarefa #95401"), é **com certeza uma tarefa do Redmine**. Nesse caso, levantar as mudanças via MCP do Redmine (ver Passo 1, "Redmine").
 - Lista de arquivos alterados.
 - Instruções livres do usuário descrevendo o que foi feito ou o que deve ser considerado.
 
 Sempre confirmar com o usuário o que será analisado quando houver mais de uma leitura possível (ex.: branch atual já mesclada, entrada ambígua, mais de uma branch candidata).
-
-## Identificar o sistema
-
-A skill é genérica e serve para qualquer sistema (Sk.AI, Notar, TED, Imóveis, Civil, Protesto, Financeiro). Cada sistema tem um arquivo de configuração na subpasta `<pasta-da-skill>/<subpasta-do-arquivo-de-configuracao>/`.
-
-O sistema em uso fica registrado em `<pasta-da-skill>/config.json`:
-
-1. Ler `config.json` no início. Se existir e tiver o campo `sistema`, usar esse valor para localizar o arquivo do sistema.
-2. Se `config.json` não existir (ou não tiver `sistema`), perguntar ao usuário **qual sistema** a branch pertence, entre as opções: Sk.AI, Notar, TED, Imóveis, Civil, Protesto, Financeiro. Criar `config.json` na raiz da skill com o campo `sistema` preenchido com o nome escolhido (formato do nome do arquivo, ex.: `sk_ai`) e persistir — assim as próximas execuções leem direto do arquivo.
-3. Com o sistema definido, ler o arquivo de configuração do sistema (`<pasta-da-skill>/<subpasta-do-arquivo-de-configuracao>/<sistema>.md`) e seguir as definições dele (local dos arquivos, domínios e áreas de usuário final, terminologia de produto, publicação).
-4. Trabalhar sempre com as definições do arquivo do sistema; nunca usar domínios, áreas, caminhos ou termos de um sistema em outro.
 
 ## Passo 1 — Levantar as mudanças
 
@@ -121,20 +110,19 @@ Em caso de dúvida sobre relevância ou sobre qual é o benefício real, pergunt
 - Formato da linha: `Área: frase descrevendo o que mudou para o usuário. (#<id>)`
 - Toda linha termina com o **id da tarefa** correspondente no formato `(#<id>)` — mesmo quando houver uma única novidade. O id vem de cada item analisado (a tarefa/commit que originou aquela mudança); retirá-lo do histórico levantado no Passo 1 ou da informação dada pelo usuário. É também o id que será usado ao publicar no Redmine (ver "Publicar no Redmine"). Outras referências a chamado/PR fora do id só entram se o usuário informar os números.
 - Voz padrão das linhas: "Adicionada opção para…", "Adicionado campo…", "Ajustado o comportamento…", "Melhorada a…", "Corrigido…", "Solucionado um problema…".
-- Área é o nome de usuário final. A taxonomia de domínios e a regra de mapeamento domínio → área, além da terminologia de produto, estão no arquivo de configuração do sistema identificado (ver "Identificar o sistema"). Usar as áreas definidas lá; não inventar área que não exista na taxonomia do sistema. Quando houver dúvida sobre o domínio da mudança, perguntar ao usuário.
+- Área é o nome de usuário final. No passo 3, usar as áreas que ficarem evidentes pela tarefa ou pela mudança; quando houver dúvida sobre o domínio da mudança ou qual área usar, perguntar ao usuário.
 
 #### Inferir a área a partir da tarefa do Redmine
 
-Quando a novidade vem de uma tarefa do Redmine (Passo 1, "Redmine"), usar **título e categoria** da tarefa para inferir a área da linha, na ordem abaixo — se ainda não houver certeza, usar as regras de mapeamento domínio → área do arquivo do sistema:
+Quando a novidade vem de uma tarefa do Redmine (Passo 1, "Redmine"), usar **título e categoria** da tarefa para inferir a área da linha, na ordem abaixo:
 
-1. **Se a tarefa tiver categoria** (`category`), usar o **nome da categoria como candidata a área**. Conferir se bate com uma área da taxonomia do sistema; se a categoria já for uma área conhecida, usá-la direto.
+1. **Se a tarefa tiver categoria** (`category`), usar o **nome da categoria como candidata a área**.
 2. **Se não houver categoria** (ou ela não mapear para uma área), inferir a área pelo **título** (`subject`): normalmente o título começa com o nome da área seguido de um hífen, por exemplo:
    - `RI Digital - Assinador Digital - Alterar janela...` → área `RI Digital` (o trecho antes do **primeiro** hífen).
    - `Fichários - Unificar cadastros` → área `Fichários`.
-   Conferir se o trecho antes do primeiro hífen bate com uma área da taxonomia do sistema.
-3. Se ainda assim não der para inferir (título sem hífen ou ambíguo), usar o mapeamento domínio → área do arquivo do sistema ou **perguntar ao usuário** qual a área.
+3. Se ainda assim não der para inferir (título sem hífen ou ambíguo), **perguntar ao usuário** qual a área.
 
-Sempre validar a área inferida contra a taxonomia do sistema; não criar área que não exista.
+Sempre validar a área inferida; não criar área que não exista de fato.
 
 ## Passo 4 — Gerar o resultado
 
@@ -163,8 +151,6 @@ Exemplo de resultado de uma tarefa única com item único, ainda assim com a se�
 
 **Resultado padrão:** exibir o texto como um bloco `text` pronto para copiar e colar. Não gravar arquivo por padrão.
 
-**Exceção por sistema:** se o arquivo de configuração do sistema (`<sistema>.md`, ver "Identificar o sistema") definir onde gravar o resultado em um arquivo, seguir essa regra do sistema em vez de apenas exibir o bloco — nome do arquivo, diretório e fluxo de publicação ficam a cargo do arquivo do sistema.
-
 Mostrar o conteúdo ao usuário e confirmar se está adequado antes de encerrar. Ajustar o texto conforme o retorno dele.
 
 ## Publicar no Redmine (opcional)
@@ -190,6 +176,5 @@ Se, depois do filtro, não sobrar nenhuma novidade relevante para o usuário fin
 ## Regras
 
 - Conteúdo de produto em pt-BR: nunca citar nome de arquivo, função, tabela, coluna, endpoint, biblioteca, branch, commit, status HTTP ou variável de ambiente.
-- Não alterar código nem outros arquivos do projeto nesta skill, exceto quando a regra do sistema exigir gravar o arquivo de resultado.
-- Quando a regra do sistema grava o resultado em arquivo, seguir as regras de nomeação, diretório e commit definidas no arquivo de configuração do sistema.
+- Não alterar código nem outros arquivos do projeto nesta skill, exceto quando o usuário pedir para gravar o resultado em arquivo.
 - Só gravar no Redmine quando o usuário pedir explicitamente; nunca gravar por conta própria.
