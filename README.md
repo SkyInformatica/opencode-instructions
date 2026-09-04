@@ -206,6 +206,23 @@ Em uma sessão do OpenCode, use o prompt:
 siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-instalar-mcp-redmine-opencode.md para configurar o MCP do redmine
 ```
 
+## Instalar MCP Azure DevOps
+
+Servidor MCP que conecta o OpenCode ao Azure DevOps da Sky, permitindo lidar com projetos, work items, repos, wikis, pipelines, test plans e advanced security via tools (`core`, `work`, `work-items`, `repositories`, etc.).
+
+Configura o MCP global no `opencode.json` com:
+- **Organização**: `SkyInfoDevOps`
+- **Projeto padrão**: `Terra Média`
+- **Autenticação**: perguntada no momento da instalação — interativa (login Microsoft) ou Personal Access Token (PAT) salvo como variável de ambiente de usuário do Windows (`PERSONAL_ACCESS_TOKEN`), não em texto claro
+- **Instruções de contexto**: baixa `azure-instructions.md` deste repositório para `%USERPROFILE%\.config\opencode\` e aponta para ele (organização, domínios carregados e convenções de uso)
+- Roda via `npx` (pacote npm `@azure-devops/mcp`), exigindo Node.js 20+ — o `npx` instala as dependências automaticamente se não existirem (`-y`)
+
+Em uma sessão do OpenCode, use o prompt:
+
+```
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-instalar-mcp-azuredevops-opencode.md para configurar o MCP do Azure DevOps
+```
+
 ## Projetos Sky
 
 Cada projeto mantém seu `AGENTS.md` (contexto de produto) e `.opencode/skills/` (playbooks). As regras globais vêm do repositório central automaticamente.
