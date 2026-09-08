@@ -82,10 +82,12 @@ siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/o
 siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para instalar somente as regras csharp e delphi da Sky
 ```
 
-**Somente configurar modelos (whitelist do Zen):**
+**Somente configurar modelos:**
 ```
 siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para configurar somente os modelos do OpenCode Zen
 ```
+
+Nota: o prompt não configura mais whitelist de modelos — os modelos ficam livres, sem restrição no `opencode.json`.
 
 Isso configurará automaticamente:
 
