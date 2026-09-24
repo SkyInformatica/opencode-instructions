@@ -24,7 +24,7 @@ O [OpenChamber](https://github.com/openchamber/openchamber/releases) é a IDE de
 1. Abra o OpenCode Desktop ou OpenChamber
 2. No menu **Settings**, procure a opção **Providers**
 3. Adicione o provider **opencode zen**
-4. Insira sua chave de API (da conta `@skyinformatica.com.br`)
+4. **Autentique com login**: clique em **Sign in** / **Log in** — o navegador abre o site do OpenCode; clique em **"OpenCode Console account"**, faça login (conta `@skyinformatica.com.br`) e **autorize** o acesso. Ao voltar para o OpenCode, o provider fica autenticado — não é mais necessário inserir chave de API.
 
 ### Configurar skills e regras
 
