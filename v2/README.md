@@ -11,8 +11,9 @@ v2/
 │   └── opencode.json  ← modelo de config global em formato nativo V2
 ├── agents/            ← agents com frontmatter nativo V2 (permissions, mode)
 ├── prompts/           ← prompts de instalação/ configuração orientados a V2
-└── plugins/
-    └── encoding-auto/ ← plugin portado para a API V2 (Plugin.define + ctx.tool.hook)
+├── plugins/
+    ├── encoding-auto/ ← plugin portado para a API V2 (Plugin.define + ctx.tool.hook)
+    └── caveman/       ← port V2 do plugin (plugin.js + index.js byte-idênticos + helpers)
 ```
 
 ## O que fica compartilhado (não duplicar)
@@ -37,7 +38,7 @@ v2/
 | secret-redactor | ❌ upstream ainda V1 (0.5.1) | prompt avisa e sugere aguardar/usar rehydra |
 | rehydra | ❌ upstream ainda V1 | prompt avisa |
 | ponytail | ❌ upstream ainda V1 (4.x) | prompt avisa (AGENTS.md do ponytail ainda vale como regra) |
-| caveman | ❌ plugin upstream V1; skill + bloco AGENTS.md seguem funcionando no V2 | prompt avisa |
+| caveman | ✅ port V2 neste repo (`v2/plugins/caveman/`, index.js byte-idêntico ao plugin.js); installer upstream ainda grava plugin V1 | prompt: `v2/prompts/prompt-instalar-caveman-opencode.md` |
 
 Prompts de MCP (azuredevops, redmine) e de ambiente Windows são válidos nos dois — o V2 traduz a forma V1 da config `mcp` automaticamente.
 
