@@ -4,6 +4,8 @@
 
 Repositório global de regras e configuração do [OpenCode](https://opencode.ai) para a **Sky Informática**.
 
+> **Usando OpenCode V2?** As configurações e prompts na **raiz** deste repo são para o **OpenCode V1**. As versões para OpenCode **V2** (config em formato nativo, agents, prompts e plugins) ficam na pasta [`v2/`](v2/README.md) — use os prompts de lá ao migrar máquinas para V2. Regras (`rules/`) e skills (`skills/`) são as mesmas nos dois.
+
 ## Instalação
 
 ### OpenCode Desktop (Windows)

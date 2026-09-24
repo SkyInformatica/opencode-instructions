@@ -1,0 +1,13 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "opencode/deepseek-v4-flash",
+  "agents": {
+    "title": {
+      "model": "opencode/deepseek-v4-flash"
+    }
+  },
+  "shell": "bash",
+  "instructions": [
+    "~/.config/opencode/rules/*.md"
+  ]
+}
