@@ -34,7 +34,7 @@ v2/
 | Plugin | É V2-compatível hoje? | Onde acompanhar |
 | --- | --- | --- |
 | encoding-auto | ✅ portado neste repo (`v2/plugins/encoding-auto/`) | prompt: `v2/prompts/prompt-instalar-encoding-auto-opencode.md` |
-| rtk | ⏳ em dev upstream (`--opencode-v2`, PR em aberto) | prompt checa a flag: `v2/prompts/prompt-instalar-rtk-opencode.md` |
+| rtk | ⏳ lógica universal dual-API via PR [#4187](https://github.com/rtk-ai/rtk/pull/4187) (aberto) — **sem flag `--opencode-v2`**; porém o PR exporta o plugin como função, e o loader 2.0.x exige `export default` de objeto `{ id, setup }` (senão `Expected object`); prompt converte | prompt instala, converte o shape e valida: `v2/prompts/prompt-instalar-rtk-opencode.md` |
 | secret-redactor | ❌ upstream ainda V1 (0.5.1) | prompt avisa e sugere aguardar/usar rehydra |
 | rehydra | ❌ upstream ainda V1 | prompt avisa |
 | ponytail | ❌ upstream ainda V1 (4.x) | prompt avisa (AGENTS.md do ponytail ainda vale como regra) |
