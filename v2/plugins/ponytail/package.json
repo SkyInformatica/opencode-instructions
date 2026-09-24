@@ -1,0 +1,11 @@
+{
+  "name": "ponytail-opencode-plugin",
+  "version": "0.1.0",
+  "description": "ponytail plugin for opencode V2 — minimal-code ruleset injection + slash commands (Sky port)",
+  "type": "module",
+  "main": "plugin.js",
+  "exports": {
+    ".": "./plugin.js"
+  },
+  "private": true
+}
