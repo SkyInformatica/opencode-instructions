@@ -51,9 +51,9 @@ C. **Se o escopo incluir skills:**
 D. **Se o escopo incluir agents:**
    Pergunte: "Quais agents deseja instalar? (informe os nomes separados por vírgula, ou 'todos')"
 
-   - Se usuário responder "todos" → instale todos os agents disponíveis na pasta agents/
+   - Se usuário responder "todos" → instale todos os agents disponíveis na pasta v1/agents/
    - Se usuário informar nomes específicos → instale apenas os agents com esses nomes
-   - Se usuário não informar nada / deixar em branco → liste os agents disponíveis (consultando a pasta agents/ do repositório via GitHub API) e peça para o usuário escolher quais deseja. Repita a pergunta até obter uma resposta válida (nomes específicos ou "todos").
+   - Se usuário não informar nada / deixar em branco → liste os agents disponíveis (consultando a pasta v1/agents/ do repositório via GitHub API) e peça para o usuário escolher quais deseja. Repita a pergunta até obter uma resposta válida (nomes específicos ou "todos").
 
 **Após obter as escolhas do usuário, execute os passos abaixo:**
 
@@ -87,15 +87,15 @@ Passos:
    - Se %USERPROFILE%\.config\opencode\skills\<SUBPASTA>\SKILL.md já existir, sobrescreva com a versão baixada (a cópia local pode estar desatualizada).
    - Se não existir, crie a pasta %USERPROFILE%\.config\opencode\skills\<SUBPASTA>\ e salve o SKILL.md baixado.
 
-3b. **Se o escopo incluir agents**, baixe os agents selecionados da pasta agents/ do repositório para a pasta global de agents:
-   https://github.com/SkyInformatica/opencode-instructions/tree/main/agents
+3b. **Se o escopo incluir agents**, baixe os agents selecionados da pasta v1/agents/ do repositório para a pasta global de agents:
+   https://github.com/SkyInformatica/opencode-instructions/tree/main/v1/agents
 
    Liste o conteúdo da pasta agents via GitHub API:
-   https://api.github.com/repos/SkyInformatica/opencode-instructions/contents/agents
+   https://api.github.com/repos/SkyInformatica/opencode-instructions/contents/v1/agents
 
    Para cada agent selecionado pelo usuário:
    - Baixe sempre a versão atual do repositório:
-     https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/agents/<SUBPASTA>.md
+     https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/v1/agents/<SUBPASTA>.md
    - Se %USERPROFILE%\.config\opencode\agents\<SUBPASTA>.md já existir, sobrescreva com a versão baixada (a cópia local pode estar desatualizada).
    - Se não existir, crie a pasta %USERPROFILE%\.config\opencode\agents\ e salve o <SUBPASTA>.md baixado.
 
@@ -137,7 +137,7 @@ Passos:
       - Garanta que `"shell": "bash"` esteja presente no JSON. Isso garante que o OpenCode use o Git Bash (que já inclui comandos Unix nativos), e não cmd/PowerShell.
      - Mantenha todo o resto inalterado ($schema, plugins, MCPs, permissões).
    - Se não existir, crie usando como modelo:
-     https://github.com/SkyInformatica/opencode-instructions/blob/main/global/opencode.json
+     https://github.com/SkyInformatica/opencode-instructions/blob/main/v1/global/opencode.json
       Adapte model (`opencode/deepseek-v4-flash`), small_model (`opencode/deepseek-v4-flash`), instructions e `"shell": "bash"` conforme necessário.
 
 5. Verifique se os arquivos estão corretos lendo %USERPROFILE%\.config\opencode\opencode.json.

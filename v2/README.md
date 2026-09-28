@@ -1,6 +1,8 @@
 # OpenCode V2 — configurações e prompts da Sky
 
-Este diretório contém **somente** as versões OpenCode **V2** das configurações e prompts da Sky. A raiz do repositório continua sendo a versão **V1** — assim, dá para migrar máquina por máquina sem perder as instruções V1.
+Este diretório contém **somente** as versões OpenCode **V2** das configurações e prompts da Sky. A versão **V1** fica em [`v1/`](../v1) — assim, dá para migrar máquina por máquina sem perder as instruções V1.
+
+> **V2 é o padrão atual.** Os comandos do README raiz apontam para `v2/prompts/`.
 
 ## Estrutura
 
@@ -23,7 +25,7 @@ v2/
 
 ## Diferenças V2 relevantes já aplicadas aqui
 
-| Item | V1 (raiz) | V2 (este dir) |
+| Item | V1 (`v1/`) | V2 (este dir) |
 | --- | --- | --- |
 | Config global | `small_model` | `agents.title.model` |
 | Chave de plugins | `plugin` | `plugins` |
@@ -41,12 +43,12 @@ v2/
 | ponytail | ✅ port V2 neste repo (`v2/plugins/ponytail/`); PR [#907](https://github.com/DietrichGebert/ponytail/pull/907) (aberto) tem bloqueio do reviewer (setup retornando hooks é ignorado no V2); upstream 4.x ainda V1 | prompt: `v2/prompts/prompt-instalar-ponytail-opencode.md` |
 | caveman | ✅ port V2 neste repo (`v2/plugins/caveman/`, index.js byte-idêntico ao plugin.js); installer upstream ainda grava plugin V1 | prompt: `v2/prompts/prompt-instalar-caveman-opencode.md` |
 
-Prompts de MCP (azuredevops, redmine) e de ambiente Windows são válidos nos dois — o V2 traduz a forma V1 da config `mcp` automaticamente.
+Prompts de MCP (azuredevops, redmine) e de ambiente Windows ficam na raiz e são válidos nos dois — o V2 traduz a forma V1 da config `mcp` automaticamente.
 
 ## Como usar
 
 1. Git clone/pull este repo (mesmo de antes).
-2. Ao migrar uma máquina para V2, use os prompts **deste diretório** (`v2/prompts/`) — não os da raiz.
+2. Ao migrar uma máquina para V2, use os prompts **deste diretório** (`v2/prompts/`) — não os de `v1/prompts/`.
 3. As regras/skills continuam instalando das pastas `rules/` e `skills/` da raiz.
 4. **Cuidado**: V1 e V2 leem os mesmos locais de config (`~/.config/opencode/`). Depois de converter a config de uma máquina para o formato nativo V2, não aponte o OpenCode V1 para a mesma pasta.
 
