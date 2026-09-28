@@ -1,9 +1,9 @@
 ---
-name: sky-csharp
+name: sky-delphi-csharp
 description: "Regras e convenções da Sky para código C# (.cs): nomenclatura pt-BR, POO/SOLID, exceções, interop COM, arquitetura DLL+Backend."
 ---
 
-# sky-csharp
+# sky-delphi-csharp
 
 ## Quando usar
 

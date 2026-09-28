@@ -64,6 +64,12 @@ siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/o
 siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para instalar somente as skills da Sky
 ```
 
+**Somente um time (regras + skills):**
+```
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para instalar somente as regras e skills do time delphi
+```
+Troque `delphi` por `dotnet` para o outro time. O prompt resolve pelo prefixo `sky-delphi-`/`sky-dotnet-` e inclui os itens gerais (`sky-principios`, `sky-oquehadenovo`).
+
 **Somente regras (todas):**
 ```
 siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para instalar somente as regras da Sky
@@ -71,17 +77,17 @@ siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/o
 
 **Somente regras Delphi e SVN:**
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para instalar somente as regras delphi e svn da Sky
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para instalar somente as regras sky-delphi-diretivas e sky-delphi-svn da Sky
 ```
 
-**Somente regras de princípios:**
+**Somente regra de princípios:**
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para instalar somente a regra principios da Sky
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para instalar somente a regra sky-principios da Sky
 ```
 
-**Somente regras C# e Delphi:**
+**Somente skills do time .NET (C#):**
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para instalar somente as regras csharp e delphi da Sky
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-configurar-opencode.md para instalar somente as skills sky-dotnet-testes e sky-dotnet-proposta da Sky
 ```
 
 **Somente configurar modelos:**
@@ -94,8 +100,8 @@ Nota: o prompt não configura mais whitelist de modelos — os modelos ficam liv
 Isso configurará automaticamente:
 
 - **`%USERPROFILE%\.config\opencode\opencode.json`** — modelo e small_model do agente, `instructions` apontando para todas as regras em `rules/` deste repositório
-- **`%USERPROFILE%\.config\opencode\rules\`** — regras da Sky (principios, svn, Delphi)
-- **`%USERPROFILE%\.config\opencode\skills\`** — skills da Sky (C#, Delphi, preencher instruções de teste)
+- **`%USERPROFILE%\.config\opencode\rules\`** — regras da Sky (`sky-principios`, `sky-delphi-diretivas`, `sky-delphi-svn`)
+- **`%USERPROFILE%\.config\opencode\skills\`** — skills da Sky, prefixadas por time (`sky-delphi-*`, `sky-dotnet-*`) e as compartilhadas `sky-oquehadenovo`
 - **`%USERPROFILE%\.config\opencode\agents\`** — agents da Sky (orquestrador, executor)
 
 Tudo carregado da pasta global (rules copiados da repo para `%USERPROFILE%\.config\opencode\rules\`), sem copiar arquivos para cada projeto. O prompt é seguro para executar múltiplas vezes: nunca duplica nem sobrescreve configurações existentes.
@@ -235,6 +241,23 @@ Cada projeto mantém seu `AGENTS.md` (contexto de produto) e `.opencode/skills/`
 
 - `global/` — modelos de referência para config global do OpenCode (`opencode.json`)
 - `rules/` — regras de engenharia carregadas remotamente via `instructions`
-- `skills/` — skills globais da Sky (C#, Delphi, preencher instruções de teste)
+- `skills/` — skills globais da Sky (prefixadas por time — ver taxonomia abaixo)
 - `agents/` — agents globais da Sky (orquestrador, executor)
 - `OPENCODE.md` — guia completo de setup OpenCode
+
+## Taxonomia de nomes
+
+Skills e regras seguem o padrão `sky-<time>-<assunto>`:
+
+- **`sky-`** — ownership: separa as skills da Sky das de terceiros (`caveman`, `ponytail`, `docling`) instaladas na mesma pasta global.
+- **`<time>`** — time dono do playbook:
+  - **`delphi`** — time Delphi (Redmine + SVN + Delphi/VCL, incluindo C# de interop: `sky-delphi-csharp`).
+  - **`dotnet`** — time .NET (Azure DevOps + git + OpenSpec).
+  - **ausente** — compartilhada entre times (ex.: `sky-oquehadenovo`).
+- **`<assunto>`** — resto, minúsculo com hífen.
+
+Exemplos: `sky-delphi-revisar`, `sky-dotnet-revisar-pr`, `sky-delphi-devexpress`, `sky-oquehadenovo`.
+
+Regras seguem o mesmo prefixo quando são de um time (`sky-delphi-diretivas`, `sky-delphi-svn`); regras gerais usam só `sky-` (`sky-principios`).
+
+Os referenciais técnicos compartilhados ficam em `skills/references/<time>/` — hoje `skills/references/dotnet/` (arquitetura, regras de codificação, testes, input de PR) e `skills/references/delphi/` (reservado).

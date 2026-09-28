@@ -1,15 +1,15 @@
 ---
-name: "gerar-oquehadenovo-skai"
-description: "gera o texto 'O que há de novo' para o sistema Sk.AI, em linguagem para o usuário final. Delega à skill genérica `gerar-oquehadenovo` e adiciona apenas as regras específicas do Sk.AI: como definir a área (domínios → área de usuário final) e como gravar o resultado em arquivo markdown."
+name: "sky-dotnet-oquehadenovo-skai"
+description: "gera o texto 'O que há de novo' para o sistema Sk.AI, em linguagem para o usuário final. Delega à skill genérica `sky-oquehadenovo` e adiciona apenas as regras específicas do Sk.AI: como definir a área (domínios → área de usuário final) e como gravar o resultado em arquivo markdown."
 ---
 
 # Gerar "O que há de novo" — Sk.AI
 
-Esta skill é a versão do **sistema Sk.AI** da skill genérica `gerar-oquehadenovo`. Não repete o conteúdo dela: apenas **chama** a skill genérica e **adiciona** o contexto específico do Sk.AI (área e gravação em arquivo).
+Esta skill é a versão do **sistema Sk.AI** da skill genérica `sky-oquehadenovo`. Não repete o conteúdo dela: apenas **chama** a skill genérica e **adiciona** o contexto específico do Sk.AI (área e gravação em arquivo).
 
 ## Como executar
 
-1. **Carregar e executar a skill genérica** `gerar-oquehadenovo` seguindo todo o fluxo dela (levantar mudanças, filtrar, escrever em linguagem de usuário final, gerar as seções "Novos recursos e melhorias" / "Soluções de problemas").
+1. **Carregar e executar a skill genérica** `sky-oquehadenovo` seguindo todo o fluxo dela (levantar mudanças, filtrar, escrever em linguagem de usuário final, gerar as seções "Novos recursos e melhorias" / "Soluções de problemas").
 2. **Aplicar as regras específicas do Sk.AI** abaixo, no que a skill genérica diferencia por sistema: **definir a área** da linha e **gravar o resultado em arquivo** em vez de apenas exibir o bloco.
 
 O restante (formato das linhas, seções, filtros) segue a skill genérica — não reescrever aqui.
@@ -22,7 +22,7 @@ O Sk.AI **não usa Redmine**: nunca buscar tarefa no Redmine, nunca usar o MCP d
 
 ## Gravação do resultado em arquivo
 
-Diferente do padrão da skill `gerar-oquehadenovo` (que exibe o resultado como bloco de texto), o **Sk.AI grava o resultado em um arquivo** na pasta de branches:
+Diferente do padrão da skill `sky-oquehadenovo` (que exibe o resultado como bloco de texto), o **Sk.AI grava o resultado em um arquivo** na pasta de branches:
 
 ```
 backend/src/app/data/o-que-ha-de-novo/branchs/<nome-da-branch>.md
@@ -65,4 +65,4 @@ Regra de mapeamento domínio → área de usuário final:
 
 ## Saída final
 
-Escrever o texto do resultado (montado pela skill genérica `gerar-oquehadenovo`) no arquivo markdown da branch conforme "Gravação do resultado em arquivo", mostrar o conteúdo ao usuário e confirmar antes de encerrar.
+Escrever o texto do resultado (montado pela skill genérica `sky-oquehadenovo`) no arquivo markdown da branch conforme "Gravação do resultado em arquivo", mostrar o conteúdo ao usuário e confirmar antes de encerrar.

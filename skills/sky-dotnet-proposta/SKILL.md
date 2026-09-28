@@ -1,9 +1,9 @@
 ---
-name: proposta-dotnet
+name: sky-dotnet-proposta
 description: "Cria uma proposta de mudança OpenSpec para projetos .NET, carregando os princípios de engenharia e a arquitetura do domínio como contexto. Use quando o usuário quiser propor/planejar uma mudança antes de implementar."
 ---
 
-# proposta-dotnet
+# sky-dotnet-proposta
 
 ## Quando usar
 
@@ -27,15 +27,15 @@ Execute a partir da raiz do projeto. Após o init, confirme que `openspec/` exis
 
 Antes de executar o `openspec-propose`, carregue e considere estes arquivos como contexto obrigatório:
 
-1. `../../rules/principios.md` — princípios de engenharia: Library First, DDD, DRY, SOLID, KISS/YAGNI, tipagem forte, segurança
-2. `../references/arquitetura-dotnet.md` — estrutura de projetos .NET: camadas (Dominio/Aplicacao/Infraestrutura/Servico), organização de domínios, MediatR, repositórios, multi-tenant
+1. `../../rules/sky-principios.md` — princípios de engenharia: Library First, DDD, DRY, SOLID, KISS/YAGNI, tipagem forte, segurança
+2. `../references/dotnet/arquitetura-dotnet.md` — estrutura de projetos .NET: camadas (Dominio/Aplicacao/Infraestrutura/Servico), organização de domínios, MediatR, repositórios, multi-tenant
 
-> Estes arquivos ficam em `rules/` e `skills/references/` do repositório de compartilhamento. A proposta deve respeitar os princípios e adaptar a arquitetura de referência ao projeto concreto.
+> Estes arquivos ficam em `rules/` e `skills/references/dotnet/` do repositório de compartilhamento. A proposta deve respeitar os princípios e adaptar a arquitetura de referência ao projeto concreto.
 
 ## Workflow
 
 1. **Inicialize o OpenSpec** se necessário (seção acima)
-2. **Carregue o contexto** — leia `principios.md` e `arquitetura-dotnet.md` e aplique-os ao desenho da proposta
+2. **Carregue o contexto** — leia `sky-principios.md` e `arquitetura-dotnet.md` e aplique-os ao desenho da proposta
 3. **Invoque a skill `openspec-propose`** com o input do usuário
 4. Quando o `openspec-propose` pedir contexto, use os princípios e a arquitetura carregados para guiar o design, specs e tasks
 
@@ -45,9 +45,9 @@ Após concluir, informe:
 - Nome e localização da change OpenSpec
 - Lista de artefatos criados (proposal, specs, design, tasks)
 - "Todos os artefatos necessários para a implementação estão prontos."
-- Prompt: "Quando quiser implementar, use a skill `implementar-proposta-dotnet`."
+- Prompt: "Quando quiser implementar, use a skill `sky-dotnet-implementar-proposta`."
 
 ## Limites
 
 - Esta skill **apenas planeja** — nunca edita código do projeto.
-- Não implemente a mudança nesta skill; a implementação é responsabilidade da skill `implementar-proposta-dotnet`.
+- Não implemente a mudança nesta skill; a implementação é responsabilidade da skill `sky-dotnet-implementar-proposta`.

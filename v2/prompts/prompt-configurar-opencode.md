@@ -8,29 +8,45 @@ Antes de configurar o OpenCode, certifique-se de que as ferramentas essenciais e
 2. **Git**: Verifique com `git --version`. Se ausente, instale via `winget install --id Git.Git -e --accept-source-agreements --accept-package-agreements --silent`.
 3. **PATH**: Após instalação, garanta que os diretórios de instalação estejam no PATH do usuário (registro) e atualize a sessão atual.
 
+**Taxonomia dos nomes (use para resolver pedidos por time):**
+
+Tudo segue `sky-<time>-<assunto>`, onde `<time>` é `delphi` ou `dotnet`:
+
+| Time | Ferramentas | Prefixo (regras e skills) |
+|---|---|---|
+| **Delphi** | Redmine + SVN | `sky-delphi-` |
+| **.NET** | Azure DevOps + git | `sky-dotnet-` |
+| **Geral / compartilhado** | — | `sky-` sem time (`sky-principios`, `sky-oquehadenovo`) |
+
+Quando o usuário pedir por **time** (ex.: "somente delphi", "só o que é do dotnet", "minhas regras e skills do time Delphi"), **não** exija nomes: resolva para os itens cujo nome começa com o prefixo do time (`sky-delphi-` ou `sky-dotnet-`) e liste o que foi selecionado antes de baixar. Inclua sempre os gerais (`sky-principios` para regras; `sky-oquehadenovo` quando o pedido incluir skills), avisando que são compartilhados.
+
 **Antes de executar qualquer passo técnico, você DEVE perguntar ao usuário o seguinte:**
 
 A. **Escopo da instalação:**
-   Pergunte: "Deseja instalar regras, skills, agents, ou combinação? (responda: 'somente regras', 'somente skills', 'somente agents', ou deixe em branco para todos)"
+   Pergunte: "Deseja instalar regras, skills, agents, ou combinação? (responda: 'somente regras', 'somente skills', 'somente agents', 'somente delphi', 'somente dotnet', ou deixe em branco para todos)"
 
    - Se usuário responder "somente regras" → pule todo passo relacionado a skills e agents
    - Se usuário responder "somente skills" → pule todo passo relacionado a regras e agents
    - Se usuário responder "somente agents" → pule todo passo relacionado a regras e skills
+   - Se usuário responder "somente delphi" → regras (`sky-delphi-*`) + skills (`sky-delphi-*`) do time Delphi; pule agents. Inclua os gerais conforme a regra da taxonomia acima.
+   - Se usuário responder "somente dotnet" → regras (`sky-dotnet-*`) + skills (`sky-dotnet-*`) do time .NET; pule agents. Inclua os gerais conforme a regra da taxonomia acima.
    - Se usuário não informar / deixar em branco → considere todos (regras + skills + agents)
 
 B. **Se o escopo incluir regras:**
-   Pergunte: "Quais regras deseja instalar? (informe os nomes separados por vírgula, ou 'todas')"
+   Pergunte: "Quais regras deseja instalar? (informe os nomes separados por vírgula, um time ('delphi'/'dotnet'), ou 'todas')"
 
    - Se usuário responder "todas" → instale todas as regras disponíveis na pasta rules/
+   - Se usuário informar um time → instale as regras com o prefixo daquele time (`sky-delphi-*` / `sky-dotnet-*`) e inclua os gerais (`sky-principios`)
    - Se usuário informar nomes específicos → instale apenas as regras com esses nomes
-   - Se usuário não informar nada / deixar em branco → liste as regras disponíveis (consultando a pasta rules/ do repositório via GitHub API) e peça para o usuário escolher quais deseja. Repita a pergunta até obter uma resposta válida (nomes específicos ou "todas").
+   - Se usuário não informar nada / deixar em branco → liste as regras disponíveis (consultando a pasta rules/ do repositório via GitHub API) e peça para o usuário escolher quais deseja. Repita a pergunta até obter uma resposta válida (nomes específicos, time, ou "todas").
 
 C. **Se o escopo incluir skills:**
-   Pergunte: "Quais skills deseja instalar? (informe os nomes separados por vírgula, ou 'todas')"
+   Pergunte: "Quais skills deseja instalar? (informe os nomes separados por vírgula, um time ('delphi'/'dotnet'), ou 'todas')"
 
    - Se usuário responder "todas" → instale todas as skills disponíveis na pasta skills/
+   - Se usuário informar um time → instale as skills com o prefixo daquele time (`sky-delphi-*` / `sky-dotnet-*`) e inclua a compartilhada `sky-oquehadenovo`
    - Se usuário informar nomes específicos → instale apenas as skills com esses nomes
-   - Se usuário não informar nada / deixar em branco → liste as skills disponíveis (consultando a pasta skills/ do repositório via GitHub API) e peça para o usuário escolher quais deseja. Repita a pergunta até obter uma resposta válida (nomes específicos ou "todas").
+   - Se usuário não informar nada / deixar em branco → liste as skills disponíveis (consultando a pasta skills/ do repositório via GitHub API) e peça para o usuário escolher quais deseja. Repita a pergunta até obter uma resposta válida (nomes específicos, time, ou "todas").
 
 D. **Se o escopo incluir agents:**
    Pergunte: "Quais agents deseja instalar? (informe os nomes separados por vírgula, ou 'todos')"
@@ -63,6 +79,8 @@ Passos:
    Liste o conteúdo da pasta skills via GitHub API:
    https://api.github.com/repos/SkyInformatica/opencode-instructions/contents/skills
 
+   Ignore a subpasta `references/` ao listar/instalar: não é skill (não tem `SKILL.md`), é o acervo de referenciais técnicos compartilhados.
+
    Para cada skill selecionada pelo usuário:
    - Baixe sempre a versão atual do repositório:
      https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/skills/<SUBPASTA>/SKILL.md
@@ -80,6 +98,34 @@ Passos:
      https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/v2/agents/<SUBPASTA>.md
    - Se %USERPROFILE%\.config\opencode\agents\<SUBPASTA>.md já existir, sobrescreva com a versão baixada (a cópia local pode estar desatualizada).
    - Se não existir, crie a pasta %USERPROFILE%\.config\opencode\agents\ e salve o <SUBPASTA>.md baixado.
+
+3c. **Remova arquivos legados renomeados** (a taxonomia antiga pode ter deixado arquivos órfãos na máquina — sem isso a skill/regra fica duplicada). Só remova o legado se o novo correspondente tiver acabado de ser baixado nos passos 2/3.
+
+   Skills — remova a pasta inteira `%USERPROFILE%\.config\opencode\skills\<legada>\`:
+
+   | Legada (remover) | Nova (mantida) |
+   |---|---|
+   | `sky-delphi` | `sky-delphi-codigo` |
+   | `sky-devexpress` | `sky-delphi-devexpress` |
+   | `sky-wptools7` | `sky-delphi-wptools7` |
+   | `sky-csharp` | `sky-delphi-csharp` |
+   | `delphi-review` | `sky-delphi-revisar` |
+   | `preencher-instrucoes-teste` | `sky-delphi-instrucoes-teste` |
+   | `revisar-pr` | `sky-dotnet-revisar-pr` |
+   | `preencher-instrucoes-teste-pr` | `sky-dotnet-instrucoes-teste-pr` |
+   | `proposta-dotnet` | `sky-dotnet-proposta` |
+   | `implementar-proposta-dotnet` | `sky-dotnet-implementar-proposta` |
+   | `manutencao-testes-automatizados` | `sky-dotnet-testes` |
+   | `gerar-oquehadenovo-skai` | `sky-dotnet-oquehadenovo-skai` |
+   | `gerar-oquehadenovo` | `sky-oquehadenovo` |
+
+   Regras — remova o arquivo `%USERPROFILE%\.config\opencode\rules\<legado>.md`:
+
+   | Legada (remover) | Nova (mantida) |
+   |---|---|
+   | `delphi.md` | `sky-delphi-diretivas.md` |
+   | `svn.md` | `sky-delphi-svn.md` |
+   | `principios.md` | `sky-principios.md` |
 
 4. **Se o escopo incluir regras**, configure o opencode.json global:
    - Se %USERPROFILE%\.config\opencode\opencode.json já existir, leia o conteúdo atual.

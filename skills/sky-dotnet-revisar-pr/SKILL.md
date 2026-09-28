@@ -1,9 +1,9 @@
 ---
-name: revisar-pr
+name: sky-dotnet-revisar-pr
 description: "Revisão de PR no Azure DevOps: valida regras de codificação .NET (SOLID, Clean Code, arquitetura Sky) e publica comentários individuais por linha."
 ---
 
-# revisar-pr
+# sky-dotnet-revisar-pr
 
 ## Quando usar
 
@@ -11,21 +11,21 @@ Ative esta skill quando o usuário pedir para revisar um PR, Code Review, ou qua
 
 ## Input aceito
 
-Consulte `skills/references/input-pr-branch.md` para os formatos de entrada aceitos (`!<numero>`, `tarefa/<numero>`, `entrega/<numero>`).
+Consulte `skills/references/dotnet/input-pr-branch.md` para os formatos de entrada aceitos (`!<numero>`, `tarefa/<numero>`, `entrega/<numero>`).
 
 ## Regras de referência
 
 Carregue os três arquivos abaixo **antes** de iniciar a revisão. Eles são a base de validação:
 
-1. `references/regras-de-codificacao-dotnet.md` — regras de nomenclatura, padrões MediatR, organização de arquivos, tratamento de erros, async/cancellation, enums, comentários
-2. `references/arquitetura-dotnet.md` — camadas (Dominio/Aplicacao/Infraestrutura/Servico), organização de domínios, DDD, multi-tenant, MediatR, repositórios
-3. `rules/principios.md` — SOLID, DRY, KISS/YAGNI, Library First, tipagem forte, segurança
+1. `references/dotnet/regras-de-codificacao-dotnet.md` — regras de nomenclatura, padrões MediatR, organização de arquivos, tratamento de erros, async/cancellation, enums, comentários
+2. `references/dotnet/arquitetura-dotnet.md` — camadas (Dominio/Aplicacao/Infraestrutura/Servico), organização de domínios, DDD, multi-tenant, MediatR, repositórios
+3. `rules/sky-principios.md` — SOLID, DRY, KISS/YAGNI, Library First, tipagem forte, segurança
 
 ## Workflow
 
 ### Fase 1 — Localizar o PR
 
-Siga o fluxo definido em `skills/references/input-pr-branch.md` para identificar o PR.
+Siga o fluxo definido em `skills/references/dotnet/input-pr-branch.md` para identificar o PR.
 
 ### Fase 2 — Obter dados do PR e diffs
 

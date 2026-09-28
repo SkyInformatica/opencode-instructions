@@ -1,9 +1,9 @@
 ---
-name: implementar-proposta-dotnet
+name: sky-dotnet-implementar-proposta
 description: "Implementa uma proposta de mudança OpenSpec em projetos .NET, executando as tasks do apply e carregando as regras de codificação como contexto. Use quando o usuário quiser implementar uma proposta já aprovada ou aplicar as tasks de uma change OpenSpec."
 ---
 
-# implementar-proposta-dotnet
+# sky-dotnet-implementar-proposta
 
 ## Quando usar
 
@@ -27,9 +27,9 @@ Execute a partir da raiz do projeto. Após o init, confirme que `openspec/` exis
 
 Antes de executar o `openspec-apply-change`, carregue e considere este arquivo como contexto obrigatório:
 
-1. `../references/regras-de-codificacao-dotnet.md` — como escrever código em projetos .NET: nomenclatura pt-BR, padrões MediatR, organização de arquivos, validadores, repositórios, controllers, tratamento de erros, null handling, async/cancellation, enums, comentários, acesso, complexidade
+1. `../references/dotnet/regras-de-codificacao-dotnet.md` — como escrever código em projetos .NET: nomenclatura pt-BR, padrões MediatR, organização de arquivos, validadores, repositórios, controllers, tratamento de erros, null handling, async/cancellation, enums, comentários, acesso, complexidade
 
-> Este arquivo fica em `skills/references/` do repositório de compartilhamento. Todo código produzido deve obedecê-lo.
+> Este arquivo fica em `skills/references/dotnet/` do repositório de compartilhamento. Todo código produzido deve obedecê-lo.
 
 ## Workflow
 

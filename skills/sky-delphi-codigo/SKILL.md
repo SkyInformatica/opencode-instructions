@@ -1,9 +1,9 @@
 ---
-name: sky-delphi
+name: sky-delphi-codigo
 description: "Regras e convenções da Sky para código Delphi/Pascal (.pas, .dpr): nomenclatura pt-BR, POO/memória, exceções, compatibilidade D5/D7 ↔ D10.2 via DLL, encoding ANSI/UTF-8."
 ---
 
-# sky-delphi
+# sky-delphi-codigo
 
 ## Quando usar
 

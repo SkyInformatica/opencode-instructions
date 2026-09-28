@@ -2,7 +2,7 @@
 
 Documento **estrutural**: descreve como este repositório está organizado —
 camadas, tecnologias, divisão dos domínios e como os conceitos de
-[principios.md](principios.md) são concretamente materializados aqui. Não é um
+[sky-principios.md](sky-principios.md) são concretamente materializados aqui. Não é um
 guia de codificação; para regras de implementação ver [regras-de-codificacao-dotnet.md]
 (regras-de-codificacao-dotnet.md) e as decisões em `Documentos/DecisõesArquiteturais/`.
 
@@ -196,9 +196,9 @@ armazenamento **implementa**; a composição **injeta**.
   consulta própria (padrões 3.4.1 e 3.4.2 de `SolucoesPadroes.md`).
 - DTOs com vínculo de organização implementam `IIdOrganizacao`.
 
-## Como os conceitos de principios.md se aplicam aqui
+## Como os conceitos de sky-principios.md se aplicam aqui
 
-| Conceito (principios.md) | Materialização no projeto |
+| Conceito (sky-principios.md) | Materialização no projeto |
 |---|---|
 | **Library First** | Todo caso de uso nasce como DLL em `Dominio/` ou `Aplicacao/`; a camada `Servico` (API, workers) apenas orquestra e consome. |
 | **DDD** | Regras de negócio no `Dominio/`; contexto por domínio, agrupado por agregado; variação regional como subdomínio; núcleo compartilhado `SkyInfo.Core.Dominio`. |
@@ -219,5 +219,5 @@ Pontos de decisão arquitetural relevantes (em `Documentos/DecisõesArquiteturai
 Este documento é a referência estrutural do repositório. Alterações na
 organização dos domínios, nas camadas ou no uso das tecnologias devem ser
 registradas de forma rastreável e revisadas explicitamente antes de integrar,
-sempre subordinadas aos princípios inegociáveis de [principios.md]
-(principios.md).
+sempre subordinadas aos princípios inegociáveis de [sky-principios.md]
+(sky-principios.md).

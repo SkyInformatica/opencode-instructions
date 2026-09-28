@@ -1,9 +1,9 @@
 ---
-name: sky-devexpress
+name: sky-delphi-devexpress
 description: "Regras e padrões de uso dos componentes DevExpress VCL (linha cx*): TcxGrid/TcxGridDBTableView/TcxGridDBColumn, editores cxEdit (TcxTextEdit, TcxCurrencyEdit, TcxComboBox, TcxCheckBox), TcxButton, TcxPageControl/TcxTabSheet, TcxTreeList/TcxTreeListNode, TdxBarManager, look&feel e skins. Cobre Delphi 7 (ANSI string) e Delphi 10.2 (Unicode)."
 ---
 
-# sky-devexpress
+# sky-delphi-devexpress
 
 ## Quando usar
 
@@ -190,4 +190,4 @@ dxSkinController1.SkinName := 'Office2013White';   // TdxSkinController (dxSkinC
 ## Referências
 
 - Fontes oficiais: seguir a estrutura relativa da tabela na seção "Fonte da verdade".
-- Convenções gerais Delphi da Sky: ative a skill `sky-delphi`.
+- Convenções gerais Delphi da Sky: ative a skill `sky-delphi-codigo`.

@@ -1,9 +1,9 @@
 ---
-name: sky-wptools7
+name: sky-delphi-wptools7
 description: "Regras e padrões de uso do componente WPTools 7 para Delphi 7: TWPRichText, cursor e texto (CPPosition, MovePosition, InputString), seleção e formatação (SelectedTextAttr/WPAT_*), objetos de texto (TextObjects.Insert, wpobj*), load/save de RTF (streams e arquivos) e impressão (PrintPageOnCanvas/PaintPageOnCanvas)."
 ---
 
-# sky-wptools7
+# sky-delphi-wptools7
 
 ## Quando usar
 
@@ -168,4 +168,4 @@ RichEdit.ReplaceDialog;  // substituição de texto
 ## Referências
 
 - Fonte oficial do componente: `<raiz>/delphi/7/lib/WPTools7/Source`.
-- Convenções gerais Delphi da Sky: ative a skill `sky-delphi`.
+- Convenções gerais Delphi da Sky: ative a skill `sky-delphi-codigo`.

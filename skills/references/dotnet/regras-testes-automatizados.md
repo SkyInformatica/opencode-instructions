@@ -10,8 +10,8 @@ datas e horários; - valores monetários; - IDs; - placeholders.
 Objetivos: **legibilidade**, **determinismo**, **baixo acoplamento** e
 **manutenção fácil**.
 
-> Regras gerais do projeto estão em `principios.md` e
-> `regras-de-codificacao-dotnet.md` (em `skills/references/`). Este arquivo
+> Regras gerais do projeto estão em `sky-principios.md` e
+> `regras-de-codificacao-dotnet.md` (em `skills/references/dotnet/`). Este arquivo
 > trata apenas das convenções específicas dos testes automatizados em JSON.
 
 ------------------------------------------------------------------------

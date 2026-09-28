@@ -1,5 +1,5 @@
 ---
-name: "gerar-oquehadenovo"
+name: "sky-oquehadenovo"
 description: "gera o texto 'O que há de novo' da branch, em linguagem para o usuário final, a partir do diff da branch, exibido como bloco de texto para copiar e colar"
 ---
 

@@ -1,9 +1,9 @@
 ---
-name: preencher-instrucoes-teste-pr
+name: sky-dotnet-instrucoes-teste-pr
 description: "Gera as instruções de teste para a descrição do PR no Azure DevOps, respondendo as 5 perguntas padrão da Sky."
 ---
 
-# preencher-instrucoes-teste-pr
+# sky-dotnet-instrucoes-teste-pr
 
 ## Quando usar
 
@@ -11,13 +11,13 @@ Ative esta skill quando o usuário pedir para escrever instruções de teste, pr
 
 ## Input aceito
 
-Consulte `skills/references/input-pr-branch.md` para os formatos de entrada aceitos (`!<numero>`, `tarefa/<numero>`, `entrega/<numero>`).
+Consulte `skills/references/dotnet/input-pr-branch.md` para os formatos de entrada aceitos (`!<numero>`, `tarefa/<numero>`, `entrega/<numero>`).
 
 ## Workflow
 
 ### Fase 1 — Localizar o PR
 
-Siga o fluxo definido em `skills/references/input-pr-branch.md` para identificar o PR.
+Siga o fluxo definido em `skills/references/dotnet/input-pr-branch.md` para identificar o PR.
 
 ### Fase 2 — Coletar dados
 

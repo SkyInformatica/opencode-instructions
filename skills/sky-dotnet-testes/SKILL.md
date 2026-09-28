@@ -1,9 +1,9 @@
 ---
-name: manutencao-testes-automatizados
+name: sky-dotnet-testes
 description: "Cria, ajusta e atualiza testes automatizados (aceitação JSON e unitários C#) conforme as regras do projeto. Use quando o usuário pedir para criar, corrigir, atualizar ou manter testes, ou para uma determinada funcionalidade/classe/método."
 ---
 
-# manutencao-testes-automatizados
+# sky-dotnet-testes
 
 ## Quando usar
 
@@ -13,13 +13,13 @@ Ative esta skill quando o usuário pedir para **criar**, **ajustar**, **atualiza
 
 Carregue e aplique as regras de testes automatizados:
 
-1. `../references/regras-testes-automatizados.md` — convenções dos testes de aceitação JSON: estrutura, nomenclatura, codificação UTF-8 sem BOM, determinismo, placeholders `{{...}}`/`[[...]]`, datas, valores, enums, checklist antes do commit.
+1. `../references/dotnet/regras-testes-automatizados.md` — convenções dos testes de aceitação JSON: estrutura, nomenclatura, codificação UTF-8 sem BOM, determinismo, placeholders `{{...}}`/`[[...]]`, datas, valores, enums, checklist antes do commit.
 
 Para testes unitários C#, complemente com:
-2. `../references/regras-de-codificacao-dotnet.md` — nomenclatura e padrões do código .NET (aplicáveis também ao código de teste).
-3. `../../rules/principios.md` — princípios gerais de engenharia (DRY, SOLID, KISS/YAGNI).
+2. `../references/dotnet/regras-de-codificacao-dotnet.md` — nomenclatura e padrões do código .NET (aplicáveis também ao código de teste).
+3. `../../rules/sky-principios.md` — princípios gerais de engenharia (DRY, SOLID, KISS/YAGNI).
 
-> Localização dos arquivos no repositório de compartilhamento: `skills/references/regras-testes-automatizados.md`, `skills/references/regras-de-codificacao-dotnet.md`, `rules/principios.md`.
+> Localização dos arquivos no repositório de compartilhamento: `skills/references/dotnet/regras-testes-automatizados.md`, `skills/references/dotnet/regras-de-codificacao-dotnet.md`, `rules/sky-principios.md`.
 
 ## Localizar os testes no projeto
 

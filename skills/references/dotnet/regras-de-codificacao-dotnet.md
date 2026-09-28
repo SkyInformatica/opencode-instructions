@@ -3,7 +3,7 @@
 Guia de **implementação**: como escrever código neste repositório. Para a
 estrutura do projeto (camadas, domínios, tecnologias) ver
 [arquitetura-dotnet.md](arquitetura-dotnet.md); para os princípios
-gerais ver [principios.md](principios.md).
+gerais ver [sky-principios.md](sky-principios.md).
 
 ## Nomenclatura
 

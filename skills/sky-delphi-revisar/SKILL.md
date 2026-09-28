@@ -1,5 +1,5 @@
 ---
-name: delphi-review
+name: sky-delphi-revisar
 description: >
   Revisão técnica profunda de código Delphi (Object Pascal) focada em funcionalidade,
   boas práticas e integridade do sistema, com veredito, análise funcional e estilística.
