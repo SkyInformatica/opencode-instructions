@@ -20,9 +20,9 @@ Passos:
    - O arquivo %USERPROFILE%\.config\opencode\opencode.json existe e é JSON válido. Se não existir, crie com pelo menos o $schema.
 
 2. Verifique se o PonyTail já está instalado antes de qualquer alteração:
-   - Leia %USERPROFILE%\.config\opencode\opencode.json e verifique o array **`plugins`** (V2).
-   - Se contém "`./plugins/ponytail`" **e** a pasta %USERPROFILE%\.config\opencode\plugins\ponytail\ existe com `index.js`, pule para o passo 4 (verificação). Não reinstale nem duplique nada.
-   - Se o array contém uma entrada V1 ("`@dietrichgebert/ponytail`" ou "`opencode-ponytail`"): esse pacote npm é plugin V1 e **falha ao carregar no V2** (log: `Plugin must export a default definition...`). Substitua essa entrada por "`./plugins/ponytail`" — é o upgrade intencional para o port V2 deste repo.
+   - A pasta %USERPROFILE%\.config\opencode\plugins\ponytail\ existe com `index.js`? O V2 auto-descobre essa pasta, então o array `plugins` não é critério. Se sim, pule para o passo 4 (verificação). Não reinstale nem duplique nada.
+   - Leia %USERPROFILE%\.config\opencode\opencode.json e verifique o array **`plugins`** (V2):
+     - Se contém a entrada V1 ("`@dietrichgebert/ponytail`" ou "`opencode-ponytail`"): esse pacote npm é plugin V1 e **falha ao carregar no V2** (log: `Plugin must export a default definition...`). Remova a entrada — a pasta do port V2 deste repo (acima) é o upgrade intencional.
 
 3. Instale o port V2:
    a. Baixe os arquivos do port publicado neste repo para %USERPROFILE%\.config\opencode\plugins\ponytail\:
@@ -42,8 +42,9 @@ Passos:
         ```
       - Confirme que `index.js` é byte-idêntico ao `plugin.js` local (no Windows: `fc /b index.js plugin.js`).
       - **Não** copie nada para %USERPROFILE%\.config\opencode\commands\ nem %USERPROFILE%\.config\opencode\skills\: o plugin registra os comandos via `ctx.command.transform` e o builder de instruções lê `skills\ponytail\SKILL.md` de dentro do próprio diretório do plugin.
-   b. Config opencode.json (formato V2):
-      - Garanta que o array **`plugins`** contenha a entrada "`./plugins/ponytail`" (o diretório — não `plugin.js`; o V2 descobrirá o `index.js` dentro dele). Sem duplicar entradas.
+   b. Config opencode.json (formato V2) — nada a adicionar:
+      - **Não** registre o ponytail no `opencode.json`. O V2 auto-descobre a pasta `plugins\ponytail\` do passo a. (descoberta pelo `index.js`), sem entrada no array `plugins`.
+      - Se já existir uma entrada redundante "`./plugins/ponytail`" (instalação anterior), remova-a (backup antes): a descoberta automática já cobre o diretório, o array é redundante.
       - Se a entrada V1 ("`@dietrichgebert/ponytail`" / "`opencode-ponytail`") estiver presente, remova-a (ver passo 2).
       - Se a máquina é 100% V2 e existe a chave **`plugin`** (formato V1), ela é ignorada pelo V2 — remova-a (backup do opencode.json antes), deixando só `plugins`. O V2 só lê `plugins`.
       - Mantenha todo o resto inalterado ($schema, model, agents.title.model, plugins npm, MCPs, permissões).
@@ -52,6 +53,7 @@ Passos:
    - %USERPROFILE%\.config\opencode\plugins\ponytail\index.js e plugin.js existem e são byte-idênticos (`fc /b`).
    - Recarregue a config: `opencode reload`. Depois `opencode plugin list --builtin` — a lista deve mostrar uma linha `ponytail` com origem local apontando para `plugins\ponytail\index.js`.
      - Se não mostrar, reinicie o serviço (`opencode service restart`) e repita.
+     - Se ainda assim não mostrar, o build não está auto-descobrigindo a pasta global: aplique o fallback — adicione "`./plugins/ponytail`" ao array `plugins` do opencode.json (builds antigos só descobrem `.opencode/plugins/` do projeto).
      - Confira no log do opencode que **não** há "failed to load plugin" / "disabled plugin after transform failure" para o ponytail.
    - Diferente do caveman, o ponytail **não** grava flag ao carregar: `%USERPROFILE%\.config\opencode\.ponytail-active` só aparece depois do primeiro `/ponytail <modo>`. Sem flag, o modo efetivo é o default `full` (env `PONYTAIL_DEFAULT_MODE` ou `%USERPROFILE%\.config\ponytail\config.json` com `{"defaultMode": "lite"}`).
    - Teste de fumaça: peça ao usuário para digitar `/ponytail lite` numa sessão e confirme que o flag `.ponytail-active` passou a conter `lite`; depois `/ponytail off` (flag = `off`, injeção silenciosa) e `/ponytail` (retorna ao default).
