@@ -38,8 +38,8 @@ v2/
 | --- | --- | --- |
 | encoding-auto | ✅ portado neste repo (`v2/plugins/encoding-auto/`) | prompt: `v2/prompts/prompt-instalar-encoding-auto-opencode.md` |
 | rtk | ⏳ lógica universal dual-API via PR [#4187](https://github.com/rtk-ai/rtk/pull/4187) (aberto) — **sem flag `--opencode-v2`**; porém o PR exporta o plugin como função, e o loader 2.0.x exige `export default` de objeto `{ id, setup }` (senão `Expected object`); prompt converte | prompt instala, converte o shape e valida: `v2/prompts/prompt-instalar-rtk-opencode.md` |
-| secret-redactor | ❌ upstream ainda V1 (0.5.1) | prompt avisa e sugere aguardar/usar rehydra |
-| rehydra | ❌ upstream ainda V1 | prompt avisa |
+| secret-redactor | ❌ upstream ainda V1 (0.5.1) | prompt avisa e manda aguardar o port — não há alternativa de redação no V2 hoje (rehydra também bloqueado) |
+| rehydra | ❌ upstream ainda V1 — o `setup()` quebra no V2 com `TypeError: undefined is not an object (evaluating 'client.app')` (testado em 0.13.0); port em andamento no time | prompt bloqueia a instalação em V2; destrava quando sair release > 0.13.0 com suporte V2 |
 | ponytail | ✅ port V2 neste repo (`v2/plugins/ponytail/`); PR [#907](https://github.com/DietrichGebert/ponytail/pull/907) (aberto) tem bloqueio do reviewer (setup retornando hooks é ignorado no V2); upstream 4.x ainda V1 | prompt: `v2/prompts/prompt-instalar-ponytail-opencode.md` |
 | caveman | ✅ port V2 neste repo (`v2/plugins/caveman/`, index.js byte-idêntico ao plugin.js); installer upstream ainda grava plugin V1 | prompt: `v2/prompts/prompt-instalar-caveman-opencode.md` |
 

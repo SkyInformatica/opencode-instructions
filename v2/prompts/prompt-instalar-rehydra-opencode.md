@@ -1,6 +1,9 @@
 Instale o plugin @rehydra/opencode no OpenCode global da minha máquina Windows. Tudo que já estiver configurado deve ser mantido — nunca duplicar, nunca sobrescrever configurações existentes.
 
-> **Status OpenCode V2:** o upstream (`@rehydra/opencode`) ainda usa a API de plugin V1 (hooks `messages.transform`, `system.transform`, `tool.execute.*`, `text.complete`) e **não roda no V2**. A API de plugins mudou e plugins V1 não são executados no V2. Antes de instalar, verifique se já existe versão compatível com V2 (`Plugin.define` / `@opencode/plugin`, hooks `ctx.session.hook` / `ctx.tool.hook`). Se a máquina já roda V2 e não houver versão V2, avise o usuário em vez de instalar algo que não carregará. Este prompt serve para máquinas V1 ou quando o upstream publicar suporte V2.
+> **Status OpenCode V2 (set/2026): BLOQUEADO — não instale em máquina V2.** O upstream ainda usa a API de plugin V1 (hooks `messages.transform`, `system.transform`, `tool.execute.*`, `text.complete`) e o port V2 está em andamento no time do rehydra; a release pública continua sem suporte V2.
+> - **Evidência (2026-09-30, `@rehydra/opencode@0.13.0` + OpenCode V2):** empacotado como arquivo local `plugins/rehydra.ts` com o shape V2 correto (`export default { id, setup }`), o V2 **descobre e carrega** o plugin — mas o `setup()` do pacote morre logo em seguida: `failed to load plugin plugin.id=rehydra cause="TypeError: undefined is not an object (evaluating 'client.app')"`. O `setup()` do upstream lê `client.app`, que não existe no `ctx` do V2. A falha é do pacote, não do wrapper.
+> - **Em máquina V2: pare no passo 2 e não instale nada.** Só siga os passos 3+ se a máquina for V1, ou se o upstream já tiver publicado suporte V2 — condição mínima de desbloqueio: `npm view @rehydra/opencode version` retornando **acima de 0.13.0** com changelog citando V2 (`ctx.session.hook` / `ctx.tool.hook`).
+> - Alternativa de redação: nenhuma hoje. O `opencode-secret-redactor` está bloqueado pelo mesmo motivo (ver `v2/prompts/prompt-instalar-secret-redactor-opencode.md`).
 
 Referência oficial:
 - https://docs.rehydra.ai/guides/opencode-plugin
