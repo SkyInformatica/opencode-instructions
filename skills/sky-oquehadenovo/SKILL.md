@@ -81,6 +81,8 @@ Se o MCP do Redmine não estiver disponível, avisar que não é possível levan
 
 ## Passo 2 — Filtrar o que é relevante para o usuário
 
+O texto descreve **o estado final da branch** — o que o usuário recebe com ela publicada. Não descreve o caminho percorrido para chegar lá.
+
 Entra no arquivo apenas o que o usuário percebe ou o que muda a forma de trabalhar dele.
 
 **Entra:**
@@ -97,8 +99,18 @@ Entra no arquivo apenas o que o usuário percebe ou o que muda a forma de trabal
 - Refatoração, renomeação, tipagem, testes, lint, CI, dependências, Docker, variáveis de ambiente.
 - Estrutura interna de dados/banco: campo novo de controle, índice, migração, mudança de formato de armazenamento — irrelevante para o usuário quando não tem efeito visível.
 - Log, monitoramento, tratamento interno de erro, status HTTP, ajuste de contrato interno.
-- Bug introduzido e corrigido dentro da própria branch (o usuário nunca viu).
 - Otimização sem efeito perceptível.
+
+### Correção de bug: só entra se o defeito existia na base
+
+Branch costuma ganhar, perder e trocar código durante o desenvolvimento. Defeito que **surgiu na própria branch e foi corrigido dentro dela** nunca existiu para o usuário — corrigir é parte natural de desenvolver, não é novidade.
+
+Teste objetivo, antes de escrever qualquer linha de "Soluções de problemas": **o defeito existia na base da comparação** (no Git, a `main` / o ponto de divergência; no SVN, a revisão anterior)?
+
+- **Não existia** (foi introduzido no meio da branch, ou era um sintoma de um ajuste ainda em andamento) → **não entra**. Nem na seção de problemas, nem como "estabilidade", nem como "melhoria na leitura".
+- **Existia** (o usuário podia encontrar-lo na versão já publicada) → entra como "Soluções de problemas".
+
+Dúvida resolvida pelo histórico: commits com prefixo `fix` **dentro** da branch não indicam defeito do usuário; o que vale é o diff contra a base. Quando o defeito foi encontrado durante o desenvolvimento, o relato é para o time, não para o usuário final.
 
 Em caso de dúvida sobre relevância ou sobre qual é o benefício real, perguntar ao usuário. Nunca inventar novidade nem descrever mudança que não foi encontrada no código.
 

@@ -16,6 +16,10 @@ O restante (formato das linhas, seções, filtros) segue a skill genérica — n
 
 O Sk.AI **não usa Redmine**: nunca buscar tarefa no Redmine, nunca usar o MCP do Redmine, e **não** adicionar o id da tarefa entre parênteses no final das frases — as linhas seguem `Área: frase descrevendo o que mudou para o usuário.`, sem `(#id)`.
 
+### Branchs do Sk.AI acumulam correção durante o desenvolvimento
+
+No Sk.AI é comum a branch passar por várias rodadas de ajuste (extração, consolidação, worker, IA) e cada rodada gerar erro novo, corrigido em seguida. Isso é desenvolvimento, não é defeito do usuário — **não entra** no "O que há de novo". Vale a regra da skill genérica ("Correção de bug: só entra se o defeito existia na base"): se o defeito não estava na `main`, não se escreve linha sobre ele. Erro de extração, falha de worker ou instabilidade apareceram no meio da branch e foram resolvidos na própria branch? Ficam de fora — o texto fala só do que o usuário recebe no estado final.
+
 ## Sistema
 
 - Nome do sistema: **Sk.AI**
@@ -55,7 +59,7 @@ A área da linha é o nome de usuário final derivado da taxonomia de domínios 
 Regra de mapeamento domínio → área de usuário final:
 
 - O domínio `processamento` vira `Processamentos`, ou o tipo específico (`Qualificação`, `Escritura pública`, `Matrícula`, `Transcrição de áudio`) quando a novidade for só daquele tipo.
-- Os demais domínios usam o nome de negócio que o usuário reconhece (ex.: `Acesso`, `Serventias`, `Tarifação`, `Checklist`, `Chat com agentes de IA`, `Base de conhecimento`, `Sistema`). A taxonomia pode evoluir; consultar as skills em vez de memorizar a lista.
+- Os demais domínios usam o nome de negócio que o usuário reconhece (ex.: `Acesso`, `Serventias`, `Tarifação`, `Checklist`, `Chat`, `Base de conhecimento`, `Sistema`). O domínio `agentes-ia` vira a área `Chat` — nunca "Chat com agentes de IA". A taxonomia pode evoluir; consultar as skills em vez de memorizar a lista.
 - Gestão administrativa (usuários, serventias, planos, preços, tokens, permissões) usa a área `Administração` — o que define `Administração` é o público (somente administradores), não o domínio.
 
 ## Terminologia de produto
