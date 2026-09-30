@@ -1,9 +1,11 @@
 Instale o Caveman (skill de respostas compactas) no OpenCode global da minha máquina Windows. Tudo que já estiver configurado deve ser mantido — nunca duplicar, nunca sobrescrever configurações existentes.
 
-> **Status OpenCode V2 (set/2026):** o Caveman já está adaptado para V2.
-> - PR #1087 (merged) — `caveman enable opencode` já gera plugin nativo V2 em host V2 (probe `opencode --version`).
-> - PR #1088 (aberto) — dual V1/V2 entrypoint no `bin/install.js` (mesma raiz do problema #1083).
-> - **Importante:** o caminho de instalação via `npx -y github:JuliusBrussee/caveman -- --only opencode` (install.js) ainda escreve o plugin na API V1 no upstream. O V2 **ignora** o `main` do package.json e só descobre plugin de diretório pelo **`index.js`**. Por isso, em máquina V2, depois do instalador oficial, aplica-se o **port V2 versionado neste repo** (`v2/plugins/caveman/`): `plugin.js` com default export `{ id, setup }` + `index.js` byte-idêntico + helpers `caveman-config.cjs`/`caveman-parse.cjs`. Com isso skill + bloco do AGENTS.md + plugin dinâmico (comandos `/caveman <modo>`, flag, injeção de reforço) funcionam no V2.
+> **Status OpenCode V2 (atualizado 2026-09-30):** o Caveman tem suporte V2 no upstream, mas **só na branch `main` e só pela rota `caveman enable opencode`** — ainda não em release, e não pela rota do instalador que este prompt usa.
+> - PRs #1087 e #1088 foram **fechados sem merge**, mas adotados via cherry-pick no PR #1089 (mergeado em `main` em 20/09/2026). O que entrou: `opencodeNativePluginSourceV2()` em `packages/cli/src/index.ts`, com gate por `opencode --version` (major ≥ 2 → API V2; versão ilegível → mantém V1). Testado end-to-end no `setup()`.
+> - A release `v2.7.0` (15/09) é **anterior** ao merge e **não tem V2**. Espere uma release pós-20/09 para o caminho oficial.
+> - A rota `caveman enable opencode` grava `~/.config/opencode/plugins/caveman-native.js` (arquivo flat gerado), que é diferente do `plugins/caveman/` escrito pelo instalador.
+> - A rota `node bin/install.js --only opencode` (`npx -y github:JuliusBrussee/caveman -- --only opencode`) **continua escrevendo o plugin na API V1**, mesmo em `main`: `OPENCODE_PLUGIN_REL = './plugins/caveman/plugin.js'`, entrada em `cfg.plugin`, e `src/plugins/opencode/plugin.js` ainda é `export const CavemanPlugin = async (_ctx)`.
+> - **Importante:** o V2 **ignora** o `main` do package.json e só descobre plugin de diretório pelo **`index.js`**. Por isso, em máquina V2, depois do instalador oficial, aplica-se o **port V2 versionado neste repo** (`v2/plugins/caveman/`): `plugin.js` com default export `{ id, setup }` + `index.js` byte-idêntico + helpers `caveman-config.cjs`/`caveman-parse.cjs`. Com isso skill + bloco do AGENTS.md + plugin dinâmico (comandos `/caveman <modo>`, flag, injeção de reforço) funcionam no V2. O port segue válido mesmo depois de sair a release oficial — a rota oficial gera outro arquivo, em outro formato.
 
 Referência oficial:
 - https://github.com/JuliusBrussee/caveman/blob/main/INSTALL.md
