@@ -4,6 +4,8 @@
 
 Repositório global de regras e configuração do [OpenCode](https://opencode.ai) para a **Sky Informática**.
 
+> **Acompanhe as novidades em [CHANGELOG.md](CHANGELOG.md).**
+
 ## Versões V1 e V2
 
 O repositório atende **duas versões** do OpenCode em pastas separadas, para migrar máquina por máquina:
