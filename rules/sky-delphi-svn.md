@@ -2,6 +2,24 @@
 
 Este projeto usa Subversion (SVN), não Git. Nunca use comandos git. Use comandos svn ou TortoiseSVN.
 
+## ⚠️ ALERTA CRÍTICO — SVN só com permissão explícita
+
+### Sem autorização do usuário, NUNCA executar
+
+```
+svn add      svn checkout   svn cleanup   svn commit
+svn delete   svn move       svn resolve   svn revert
+svn switch   svn update
+```
+
+### `svn revert` é proibido
+
+O working copy quase sempre contém alterações não comitadas — o revert as destrói de forma **IRREVERSÍVEL**.
+
+### Nenhuma ação irreversível sem autorização prévia
+
+`revert`, `delete`, `rm`, `mv`, sobrescrever arquivo — tudo exige autorização do usuário **antes**.
+
 ## Terminal — comandos svn
 
 | Operação | Git | SVN |
