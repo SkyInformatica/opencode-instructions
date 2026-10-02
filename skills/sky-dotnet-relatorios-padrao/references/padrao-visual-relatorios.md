@@ -249,6 +249,11 @@ valores (`TOTAL ORÇADO ... TOTAL REALIZADO ... DESVIO ...`). Quando existe
 **Resumo da regra:** total geral = bloco com mini-cabeçalho sempre; total de
 grupo = bloco com mini-cabeçalho **apenas quando há subgrupos**, senão linha
 única; total de subgrupo = linha única sempre.
+**Label identifica o total:** quando há várias colunas de valor, o bloco do
+total usa o **label** (`TOTAL GRUPO ...` / `TOTAL GERAL DO RELATÓRIO`) na
+linha de cima e os **valores alinhados sob as colunas** na linha de baixo.
+O cabeçalho das colunas na linha do label é **OPCIONAL** (com: Exemplo03 —
+`CONVERTIDO | RESTITUÍDO`; sem: Exemplo06).
 
 ## Rodapé (PageFooterBand)
 
