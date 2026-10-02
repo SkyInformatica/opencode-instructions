@@ -30,9 +30,12 @@ dos relatórios".
      `examples/Exemplo01-Referencia-Grupo-Totais.pdf`,
      `examples/Exemplo01-Referencia-Somente-Detalhe-SemGrupo.pdf` —
      **referência genérica, NÃO gerada pela skill** (apenas origem das medidas);
-   - `examples/Exemplo02-Ocorrencias-LDP-GeradoPelaSkill.pdf/.frx` e
-     `examples/Exemplo03-Depositos-LDP-GeradoPelaSkill.pdf/.frx` —
-     **gerados pela skill**, validação do padrão.
+   - `examples/Exemplo02-Ocorrencias-LDP-SomenteGrupo-GeradoPelaSkill.pdf/.frx`
+     — **somente grupo, sem subgrupo** (gerado pela skill);
+   - `examples/Exemplo03-Depositos-LDP-SomenteGrupo-GeradoPelaSkill.pdf/.frx`
+     — **somente grupo, sem subgrupo** (gerado pela skill);
+   - `examples/Exemplo04-Ocorrencias-LDP-GrupoSubgrupo-GeradoPelaSkill.pdf/.frx`
+     — **grupo + subgrupo** (gerado pela skill).
 3. **Mecânica FastReport:** skill `fastreport-dotnet` — lifecycle,
    `RegisterData`, `Prepare`, export, segurança, diagnóstico.
 

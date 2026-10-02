@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Exemplo03-Depositos-LDP-GeradoPelaSkill.frx
+  Exemplo03-Depositos-LDP-SomenteGrupo-GeradoPelaSkill.frx
   Padrão visual Sky (padrao-visual-relatorios.md) — variante SOMENTE GRUPO
   Grupo por comprovante (depósito). Units = Centimeters | A4 | margens 1.5cm
   Alturas (grid 8pt => cm): grupo 0.85 / cabeçalho 0.56 / detalhe 0.56 / total grupo 0.85 / total geral 0.85

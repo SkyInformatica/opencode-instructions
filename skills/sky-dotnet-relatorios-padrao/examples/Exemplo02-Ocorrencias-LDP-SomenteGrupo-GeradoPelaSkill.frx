@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Exemplo02-Ocorrencias-LDP.frx
+  Exemplo02-Ocorrencias-LDP-SomenteGrupo.frx
   Padrão visual Sky (skills/sky-dotnet-relatorios-padrao/references/padrao-visual-relatorios.md)
   Variante: SOMENTE GRUPO (grupo por tipo_ocorrencia + detalhe + TOTAL GRUPO linha única + TOTAL GERAL)
   Units = Centimeters | A4 | margens 1.5 cm
