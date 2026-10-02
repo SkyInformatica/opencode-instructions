@@ -36,7 +36,7 @@ Para a mecânica do FastReport (`RegisterData`, `Prepare`, export) use a skill
 ## 2. Cabeçalho de colunas (linha de detalhe do cabeçalho)
 
 ```
-│  DATA | ORIGEM | PROTOCOLO | RECIBO | VALOR      │  7.5 pt bold
+│  DATA | ORIGEM | PROTOCOLO | RECIBO | VALOR      │  7 pt bold cinza
 │  ──────────────────────────────────────────────── │  ← fechado com divisórias
 ```
 
@@ -75,7 +75,7 @@ Cabeçalho
 Grupo                        10.5 pt bold + divisória preta abaixo
 Cabeçalho de colunas         (1 por grupo)
 Linhas de detalhe
-── cinza ──  TOTAL GRUPO ... R$  (linha única 8 pt)
+── cinza ──  Total do grupo ... R$  (linha única 8 pt)
 TOTAL GERAL DO RELATÓRIO
 ```
 
@@ -89,9 +89,9 @@ Grupo                        10.5 pt bold, na margem + divisória abaixo
   Subgrupo                   8.5 pt bold cinza 35%, caixa alta
   Cabeçalho de colunas       (repete a cada subgrupo)
   Linhas de detalhe
-  ── cinza ──  TOTAL SUBGRUPO
+  ── cinza ──  Total do subgrupo <nome>
   (próximo subgrupo: repete cabeçalho + detalhe + total)
-── cinza ──  TOTAL GRUPO  (bloco)
+── cinza ──  Total do grupo <nome>  (bloco)
 TOTAL GERAL DO RELATÓRIO
 ```
 

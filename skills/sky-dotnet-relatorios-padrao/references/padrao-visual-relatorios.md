@@ -82,7 +82,7 @@ o padrão usa o valor de grid, não o medido.
 |---|---|---|
 | Grupo | 24 pt | ~21.7 pt medido |
 | Subgrupo | 24 pt | igual ao grupo |
-| Cabeçalho de colunas | 16 pt | 3 linhas de 7.5 pt + respiro |
+| Cabeçalho de colunas | 16 pt | 3 linhas de 7 pt + respiro |
 | Detalhe (1 linha) | 16 pt | linha simples |
 | Detalhe (2 linhas — descrição quebra) | 32 pt | pitch da linha = 29.3 pt |
 | Totalizador de subgrupo | 16 pt | ~19 pt medido |
@@ -220,9 +220,9 @@ Grupo           10.5 bold, esq (margem)   + divisória abaixo
   Subgrupo      9 bold, esq (indentado)   (sem divisória)
   Cabeçalho de colunas                    (indentado; repete a cada subgrupo)
   Detalhe                                 (indentado)
-  TOTAL SUBGRUPO                          (indentado)
+  Total do subgrupo <nome>                (indentado)
   (próximo subgrupo: repete cabeçalho + detalhe + total)
-TOTAL GRUPO            bloco (indentado)
+Total do grupo <nome>   bloco (indentado)
 TOTAL GERAL            bloco (NA MARGEM, não indentado)
 ```
 
@@ -236,7 +236,7 @@ Cabeçalho
 Grupo           10.5 bold, esq        + divisória abaixo
 Cabeçalho de colunas
 Detalhe                              (sem subgrupo)
-TOTAL GRUPO            linha única 8: rótulo + valores R$
+Total do grupo <nome>   linha única 8: rótulo + valores R$
 TOTAL GERAL            bloco: rótulo 9.5 + mini-cabeçalho + valores R$ 10
 ```
 
@@ -256,8 +256,8 @@ TOTAL GERAL            bloco: rótulo 9.5 + mini-cabeçalho + valores R$ 10
 | Grupo (10.5 bold + divisória) | sim | sim | — |
 | Subgrupo (9 bold, sem divisória) | sim | — | — |
 | Cabeçalho de colunas | repete por subgrupo | 1 por grupo | 1 |
-| TOTAL SUBGRUPO (linha única) | sim | — | — |
-| TOTAL GRUPO | bloco (mini-cabeçalho) | linha única | — |
+| Total do subgrupo (linha única) | sim | — | — |
+| Total do grupo | bloco (mini-cabeçalho) | linha única | — |
 | TOTAL GERAL | bloco completo | bloco completo | bloco completo |
 
 Regra: o **cabeçalho de colunas repete antes de cada bloco de detalhe** (após
@@ -271,12 +271,12 @@ completo.
 valores (`TOTAL ORÇADO ... TOTAL REALIZADO ... DESVIO ...`). Quando existe
 **uma única linha de total**, sem mini-cabeçalho (linha única 8 pt).
 
-- **Subgrupo**: linha única — rótulo `TOTAL SUBGRUPO x.y` 8 pt bold–itálico
-  à esquerda; valores 8 pt bold à direita.
-- **Grupo com subgrupo**: bloco 2 linhas — rótulo `TOTAL GRUPO ...` 8.5 pt
-  bold + mini-cabeçalho das colunas de valores (7 pt) + valores 8 pt bold com
+- **Subgrupo**: linha única — rótulo `Total do subgrupo <nome>` 8 pt itálico
+  (sentence case) à esquerda; valores 8 pt bold à direita.
+- **Grupo com subgrupo**: bloco 2 linhas — rótulo `Total do grupo <nome>` 8.5 pt
+  regular (sentence case) + mini-cabeçalho das colunas de valores (7 pt) + valores 8 pt bold com
   `R$`. Linha cinza só acima do bloco.
-- **Grupo sem subgrupo**: linha única 8 pt — rótulo `TOTAL GRUPO ...` +
+- **Grupo sem subgrupo**: linha única 8 pt — rótulo `Total do grupo <nome>` +
   valores com `R$` à direita.
 - **Total geral**: sempre bloco completo — rótulo `TOTAL GERAL DO RELATÓRIO`
   9.5 pt bold + mini-cabeçalho (7 pt) + valores 10 pt bold com `R$`. Linha
@@ -296,7 +296,7 @@ valores (`TOTAL ORÇADO ... TOTAL REALIZADO ... DESVIO ...`). Quando existe
 grupo = bloco com mini-cabeçalho **apenas quando há subgrupos**, senão linha
 única; total de subgrupo = linha única sempre.
 **Label identifica o total:** quando há várias colunas de valor, o bloco do
-total usa o **label** (`TOTAL GRUPO ...` / `TOTAL GERAL DO RELATÓRIO`) na
+total usa o **label** (`Total do grupo ...` / `TOTAL GERAL DO RELATÓRIO`) na
 linha de cima e os **valores alinhados sob as colunas** na linha de baixo.
 O cabeçalho das colunas na linha do label é **OPCIONAL** — exemplos 03 e 06
 usam com (`CONVERTIDO | RESTITUÍDO`); a variação sem texto é permitida
