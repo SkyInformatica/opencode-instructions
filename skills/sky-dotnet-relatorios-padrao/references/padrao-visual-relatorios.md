@@ -149,6 +149,9 @@ total geral 24 pt.
 - Fonte 8 pt (7.5–8 pt para conteúdo extenso); nº doc em monoespaçada 7.5 pt.
 - Descrição pode quebrar em 2 linhas; altura da linha acompanha o conteúdo
   (pitch ≈ 29 pt com 2 linhas no exemplo de referência).
+- Conteúdo longo (ex.: lista de recibos/códigos): alargar a coluna para caber
+  o maior valor; se ainda exceder, habilitar **`WordWrap`** na célula para
+  quebrar dentro da própria coluna — **nunca estourar sobre a coluna vizinha**.
 - Sem cor alternada (zebra) por padrão.
 
 ## Variações de layout (3 formas padrão)
@@ -278,5 +281,6 @@ Antes de entregar/exportar o relatório, conferir:
 - [ ] Moeda: sem `R$` no detalhe, com `R$` nos totalizadores
 - [ ] Rodapé com divisória cinza, data impressão (esq) / usuário (centro) / `Página N de M` (dir)
 - [ ] Variante de layout correta (grupo+subgrupo / só grupo / sem grupo)
+- [ ] Colunas longas: largura adequada + `WordWrap` na célula (nunca estourar na vizinha)
 - [ ] Datas `dd/mm/aaaa`, texto pt-BR
 - [ ] Nomes de datasource/parâmetros sincronizados com o C#
