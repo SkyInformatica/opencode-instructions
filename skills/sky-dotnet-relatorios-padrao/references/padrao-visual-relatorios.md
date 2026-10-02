@@ -252,8 +252,9 @@ grupo = bloco com mini-cabeçalho **apenas quando há subgrupos**, senão linha
 **Label identifica o total:** quando há várias colunas de valor, o bloco do
 total usa o **label** (`TOTAL GRUPO ...` / `TOTAL GERAL DO RELATÓRIO`) na
 linha de cima e os **valores alinhados sob as colunas** na linha de baixo.
-O cabeçalho das colunas na linha do label é **OPCIONAL** (com: Exemplo03 —
-`CONVERTIDO | RESTITUÍDO`; sem: Exemplo06).
+O cabeçalho das colunas na linha do label é **OPCIONAL** — exemplos 03 e 06
+usam com (`CONVERTIDO | RESTITUÍDO`); a variação sem texto é permitida
+(apenas omitir os TextObjects do cabeçalho).
 
 ## Rodapé (PageFooterBand)
 

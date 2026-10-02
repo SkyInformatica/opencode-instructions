@@ -3,9 +3,8 @@
   Exemplo06-Depositos-LDP-Totais-GeradoPelaSkill.frx
   Padrão visual Sky — variante SOMENTE GRUPO (sem subgrupo)
   Grupo: nota_entrega. 4 colunas de valor (VALOR/SALDO/CONVERTIDO/RESTITUÍDO).
-  Total de grupo/geral: LABEL identifica o total e VALORES embaixo alinhados
-  na borda das colunas (bloco 32pt = 1.13cm). O cabeçalho das colunas na
-  linha do label é OPCIONAL (aqui SEM).
+  Total de grupo/geral: LABEL em cima e VALORES embaixo, cada um alinhado
+  na borda direita da própria coluna (bloco 32pt = 1.13cm).
   Units = Centimeters | A4 | margens 1.5cm
 -->
 <Report ScriptLanguage="CSharp" ReportInfo.CreatorVersion="2025.1.0">
@@ -25,7 +24,7 @@
     <ReportTitleBand Name="ReportTitle1" Width="18" Height="0.5"/>
     <PageHeaderBand Name="PageHeader1" Width="18" Height="2.4">
       <TextObject Name="Titulo" Left="0" Top="0" Width="18" Height="0.7" Font="Arial, 14pt, style=Bold" Text="DEPÓSITOS — LIVRO DIÁRIO DE PREVENÇÃO (LDP)"/>
-      <TextObject Name="Subtitulo" Left="0" Top="0.75" Width="18" Height="0.45" Font="Arial, 9pt" Text="Depósitos agrupados por nota de entrega — totais sem cabeçalho"/>
+      <TextObject Name="Subtitulo" Left="0" Top="0.75" Width="18" Height="0.45" Font="Arial, 9pt" Text="Depósitos agrupados por nota de entrega — totais com cabeçalho"/>
       <LineObject Name="LinhaSub" StartPoint="0, 1.55" EndPoint="18, 1.55" LineColor="Gray" LineWidth="0.75"/>
       <TextObject Name="FiltroRotulo" Left="0" Top="1.7" Width="0.95" Height="0.4" Font="Arial, 7.5pt, style=Bold" TextColor="Gray" Text="Período:"/>
       <TextObject Name="FiltroValor" Left="0.95" Top="1.7" Width="12" Height="0.4" Font="Arial, 7.5pt" TextColor="Gray" Text=" 03/03/2026 a 03/03/2026   •   Posição dos depósitos e conversões"/>
@@ -57,6 +56,8 @@
     <GroupFooterBand Name="GroupFooter1" Width="18" Height="1.13">
       <LineObject Name="LinhaTotalGrupoTopo" StartPoint="0.48, 0" EndPoint="18, 0" LineColor="Gray" LineWidth="0.75"/>
       <TextObject Name="TotalGrupoRotulo" Left="0.48" Top="0.2" Width="11" VertAlign="Center" Height="0.5" Font="Arial, 8.5pt, style=Bold" Text="TOTAL GRUPO NOTA DE ENTREGA [Depositos.nota_entrega]"/>
+      <TextObject Name="TotalGrupoHdConvertido" Left="15.3" Top="0.2" Width="1.01" VertAlign="Center" Height="0.5" Font="Arial, 7pt, style=Bold" HorizAlign="Right" Text="CONVERTIDO"/>
+      <TextObject Name="TotalGrupoHdRestituido" Left="16.9" Top="0.2" Width="1.08" VertAlign="Center" Height="0.5" Font="Arial, 7pt, style=Bold" HorizAlign="Right" Text="RESTITUÍDO"/>
       <TextObject Name="TotalGrupoConvertido" Left="15.3" Top="0.62" Width="1.01" VertAlign="Center" Height="0.5" Font="Arial, 8pt, style=Bold" HorizAlign="Right" Format="N2" Text="R$ [Sum(Depositos.convertido)]"/>
       <TextObject Name="TotalGrupoRestituido" Left="16.9" Top="0.62" Width="1.08" VertAlign="Center" Height="0.5" Font="Arial, 8pt, style=Bold" HorizAlign="Right" Format="N2" Text="R$ [Sum(Depositos.restituido)]"/>
       <LineObject Name="LinhaTotalGrupoBase" StartPoint="0.48, 1.12" EndPoint="18, 1.12" LineColor="Gray" LineWidth="0.75"/>
@@ -64,6 +65,10 @@
     <ReportSummaryBand Name="ReportSummary1" Width="18" Height="1.13">
       <LineObject Name="LinhaTotalGeralTopo" StartPoint="0.48, 0" EndPoint="18, 0" LineColor="Black" LineWidth="0.75"/>
       <TextObject Name="TotalGeralRotulo" Left="0.48" Top="0.2" Width="10" VertAlign="Center" Height="0.5" Font="Arial, 9.5pt, style=Bold" Text="TOTAL GERAL DO RELATÓRIO"/>
+      <TextObject Name="TotalGeralHdValor" Left="10.9" Top="0.2" Width="1.18" VertAlign="Center" Height="0.5" Font="Arial, 7pt, style=Bold" HorizAlign="Right" Text="VALOR"/>
+      <TextObject Name="TotalGeralHdSaldo" Left="13.2" Top="0.2" Width="1.0" VertAlign="Center" Height="0.5" Font="Arial, 7pt, style=Bold" HorizAlign="Right" Text="SALDO"/>
+      <TextObject Name="TotalGeralHdConvertido" Left="15.3" Top="0.2" Width="1.01" VertAlign="Center" Height="0.5" Font="Arial, 7pt, style=Bold" HorizAlign="Right" Text="CONVERTIDO"/>
+      <TextObject Name="TotalGeralHdRestituido" Left="16.9" Top="0.2" Width="1.08" VertAlign="Center" Height="0.5" Font="Arial, 7pt, style=Bold" HorizAlign="Right" Text="RESTITUÍDO"/>
       <TextObject Name="TotalGeralValor" Left="10.9" Top="0.62" Width="1.18" VertAlign="Center" Height="0.5" Font="Arial, 10pt, style=Bold" HorizAlign="Right" Format="N2" Text="R$ [Sum(Depositos.valor)]"/>
       <TextObject Name="TotalGeralSaldo" Left="13.2" Top="0.62" Width="1.0" VertAlign="Center" Height="0.5" Font="Arial, 10pt, style=Bold" HorizAlign="Right" Format="N2" Text="R$ [Sum(Depositos.saldo)]"/>
       <TextObject Name="TotalGeralConvertido" Left="15.3" Top="0.62" Width="1.01" VertAlign="Center" Height="0.5" Font="Arial, 10pt, style=Bold" HorizAlign="Right" Format="N2" Text="R$ [Sum(Depositos.convertido)]"/>
