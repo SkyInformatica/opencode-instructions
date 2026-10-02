@@ -52,7 +52,7 @@ Antes de escrever UMA linha de template (.frx) ou código, verificar:
 | Totalizador de grupo — valores | 8 pt | bold | direita |
 | Total geral — rótulo | 9.5 pt | bold | esquerda |
 | Total geral — valores | 10 pt | bold | direita |
-| Rodapé | 8 pt | regular | esq / centro / dir |
+| Rodapé | 8 pt | regular, **cinza 50%** | esq / centro / dir |
 
 Detalhe: 8 pt padrão; 9–10 pt apenas em linhas curtas; 7.5–8 pt em colunas
 com conteúdo extenso.
@@ -232,7 +232,8 @@ grupo = bloco com mini-cabeçalho **apenas quando há subgrupos**, senão linha
 Presente **no final de todas as páginas**, sempre com divisória:
 
 - **Linha divisória cinza** acima do texto, largura útil.
-- Texto 8 pt, recuado **3 espaços** das margens laterais.
+- Texto **8 pt, cinza 50%** — detalhe sutil, sem competir com o conteúdo.
+- Texto recuado **3 espaços** das margens laterais.
 - Três posições fixas:
   - **esquerda**: data de impressão (`dd/mm/aaaa hh:mm`)
   - **centro**: usuário que gerou o relatório

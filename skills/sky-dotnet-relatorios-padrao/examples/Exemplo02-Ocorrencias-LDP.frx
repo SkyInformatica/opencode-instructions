@@ -66,9 +66,9 @@
     </ReportSummaryBand>
     <PageFooterBand Name="PageFooter1" Width="18" Height="1">
       <LineObject Name="LinhaRodape" StartPoint="0, 0" EndPoint="18, 0" LineColor="Gray" LineWidth="0.75"/>
-      <TextObject Name="RodapeData" Left="0" Top="0.15" Width="6" Height="0.4" Font="Arial, 8pt" Text="Emissão: 02/10/2026 16:00"/>
-      <TextObject Name="RodapeOperador" Left="6" Top="0.15" Width="6" Height="0.4" Font="Arial, 8pt" HorizAlign="Center" Text="Operador: SISTEMA"/>
-      <TextObject Name="RodapePagina" Left="12" Top="0.15" Width="6" Height="0.4" Font="Arial, 8pt" HorizAlign="Right" Text="Página [PageN] de [TotalPages]"/>
+      <TextObject Name="RodapeData" Left="0" Top="0.15" Width="6" Height="0.4" Font="Arial, 8pt" TextColor="Gray" Text="Emissão: 02/10/2026 16:00"/>
+      <TextObject Name="RodapeOperador" Left="6" Top="0.15" Width="6" Height="0.4" Font="Arial, 8pt" TextColor="Gray" HorizAlign="Center" Text="Operador: SISTEMA"/>
+      <TextObject Name="RodapePagina" Left="12" Top="0.15" Width="6" Height="0.4" Font="Arial, 8pt" TextColor="Gray" HorizAlign="Right" Text="Página [PageN] de [TotalPages]"/>
     </PageFooterBand>
   </ReportPage>
 </Report>
