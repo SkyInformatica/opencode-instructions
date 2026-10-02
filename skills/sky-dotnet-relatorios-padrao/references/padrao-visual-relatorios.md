@@ -81,6 +81,8 @@ com conteúdo extenso.
 | Valor total / orçado / realizado / desvio | direita |
 
 - Números alinhados **pelo último dígito** (mesma precisão decimal).
+- Sinal negativo à **esquerda do número**, sem deslocar os dígitos
+  (ex.: `-58,03` alinha o `3` com `58,03`).
 - Moeda: **sem `R$` nas linhas de detalhe**; `R$` presente nos totalizadores
   (grupo/geral); `BRL (R$)`: apenas no topo direito / cabeçalho.
 
