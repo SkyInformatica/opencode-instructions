@@ -44,6 +44,26 @@ totalizadores e sumário usados nos relatórios FastReport da Sky.
 Detalhe: 8 pt padrão; 9–10 pt apenas em linhas curtas; 7.5–8 pt em colunas
 com conteúdo extenso.
 
+## Alturas de banda (padrão)
+
+Cada banda tem **altura fixa** — o texto é centralizado verticalmente dentro
+da banda e a linha divisória fica na **borda** (superior/inferior) da própria
+banda, não solta no layout.
+
+| Banda | Altura |
+|---|---|
+| Grupo | 16 pt |
+| Subgrupo | 16 pt |
+| Cabeçalho de colunas | 14 pt |
+| Detalhe (1 linha) | 13 pt |
+| Detalhe (2 linhas — descrição quebra) | 29 pt |
+| Totalizador (subgrupo / grupo) | 16 pt |
+| Total geral | 20 pt |
+
+Regra: a altura **não varia por relatório**. Conteúdo maior que 1 linha
+quebra dentro da banda (altura 2 linhas); nunca "empurrar" a banda para
+acomodar texto — isso é o papel do pitch de 29 pt com descrição em 2 linhas.
+
 ## Divisórias
 
 | Local | Linha |
