@@ -14,7 +14,7 @@ dos relatórios".
 
 ## Contexto
 
-1. **Padrão visual (OBRIGATÓRIO ler primeiro):** `../references/dotnet/padrao-visual-relatorios.md`
+1. **Padrão visual (OBRIGATÓRIO ler primeiro):** `references/padrao-visual-relatorios.md`
    — fonte, cabeçalho, banda de dados, grupo, rodapé e regras gerais.
 2. **Exemplos de referência (PDF):** `examples/Exemplo01-Grupo-Subgrupo-Totais.pdf`,
    `examples/Exemplo01-Grupo-Totais.pdf`, `examples/Exemplo01-Somente-Detalhe-SemGrupo.pdf`
@@ -22,7 +22,7 @@ dos relatórios".
 3. **Mecânica FastReport:** skill `fastreport-dotnet` — lifecycle,
    `RegisterData`, `Prepare`, export, segurança, diagnóstico.
 
-> O arquivo do padrão fica em `skills/references/dotnet/` do repositório de
+> O arquivo do padrão fica em `references/` desta skill no repositório de
 > compartilhamento. Todo relatório produzido deve obedecê-lo.
 
 ## Regras
