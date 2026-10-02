@@ -101,7 +101,7 @@ total geral 24 pt.
 | Grupo → conteúdo (subgrupo/detalhe) | preta fina (~0.7 pt), da margem esq. |
 | Cabeçalho de colunas | preta fina ~0.7 pt **antes e depois** do bloco |
 | Totalizador (subgrupo/grupo) | cinza acima e abaixo do bloco |
-| Total geral | preta acima; base reforçada (dupla) |
+| Total geral | preta acima e abaixo (simples) |
 | Rodapé | cinza acima do texto |
 
 > **Subgrupo não recebe divisória** — apenas o grupo principal traça a linha
@@ -220,7 +220,7 @@ valores (`TOTAL ORÇADO ... TOTAL REALIZADO ... DESVIO ...`). Quando existe
   valores com `R$` à direita.
 - **Total geral**: sempre bloco completo — rótulo `TOTAL GERAL DO RELATÓRIO`
   9.5 pt bold + mini-cabeçalho (7 pt) + valores 10 pt bold com `R$`. Linha
-  preta acima; base reforçada (dupla).
+  preta acima e abaixo (simples).
 - Texto auxiliar opcional (`Espaço para detalhamento se necessário`): 7 pt.
 
 **Resumo da regra:** total geral = bloco com mini-cabeçalho sempre; total de
@@ -272,7 +272,7 @@ Antes de entregar/exportar o relatório, conferir:
 - [ ] Tipografia conforme tabela (Arial, tamanhos exatos)
 - [ ] Bandas com altura múltiplo de 8 pt, texto **centralizado verticalmente** (padding simétrico / `VertAlign=Center`)
 - [ ] Divisórias na borda das bandas (cabeçalho de colunas: antes e depois;
-      totalizadores: cinza antes e depois; total geral: preta + base dupla)
+      totalizadores: cinza antes e depois; total geral: preta acima e abaixo)
 - [ ] Alinhamento de colunas: texto/código/data esq, números dir pelo último dígito
 - [ ] Sinal negativo à esquerda, sem deslocar dígitos
 - [ ] Moeda: sem `R$` no detalhe, com `R$` nos totalizadores

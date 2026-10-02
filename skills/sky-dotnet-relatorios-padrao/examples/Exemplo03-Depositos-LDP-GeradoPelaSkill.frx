@@ -65,8 +65,7 @@
       <LineObject Name="LinhaTotalGeralTopo" StartPoint="0, 0" EndPoint="18, 0" LineColor="Black" LineWidth="0.75"/>
       <TextObject Name="TotalGeralRotulo" Left="0" Top="0" Width="12" Height="0.85" Font="Arial, 9.5pt, style=Bold" VertAlign="Center" Text="TOTAL GERAL DO RELATÓRIO"/>
       <TextObject Name="TotalGeralValor" Left="12" Top="0" Width="6" Height="0.85" Font="Arial, 10pt, style=Bold" VertAlign="Center" HorizAlign="Right" Format="N2" Text="R$ [Sum(Depositos.valor)]"/>
-      <LineObject Name="LinhaTotalGeralBase1" StartPoint="0, 0.84" EndPoint="18, 0.84" LineColor="Black" LineWidth="0.75"/>
-      <LineObject Name="LinhaTotalGeralBase2" StartPoint="0, 0.847" EndPoint="18, 0.847" LineColor="Black" LineWidth="0.75"/>
+      <LineObject Name="LinhaTotalGeralBase" StartPoint="0, 0.84" EndPoint="18, 0.84" LineColor="Black" LineWidth="0.75"/>
     </ReportSummaryBand>
     <PageFooterBand Name="PageFooter1" Width="18" Height="1">
       <LineObject Name="LinhaRodape" StartPoint="0, 0" EndPoint="18, 0" LineColor="Gray" LineWidth="0.75"/>
