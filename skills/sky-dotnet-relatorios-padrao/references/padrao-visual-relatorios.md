@@ -48,23 +48,30 @@ com conteúdo extenso.
 
 Cada banda tem **altura fixa** — o texto é centralizado verticalmente dentro
 da banda e a linha divisória fica na **borda** (superior/inferior) da própria
-banda, não solta no layout. Valores medidos no `Exemplo01` de referência.
+banda, não solta no layout.
 
-| Banda | Altura | Medida de origem |
+**Grid de espaçamento: múltiplos de 8 pt** (16 / 24 / 32 / 48). Valores
+originais medidos no `Exemplo01` (pitch grupo→subgrupo 21.7, detalhe 29.3,
+bloco total grupo 33, bloco total geral 48) foram arredondados para o grid —
+o padrão usa o valor de grid, não o medido.
+
+| Banda | Altura (grid) | Medida de origem |
 |---|---|---|
-| Grupo | 22 pt | pitch grupo→subgrupo = 21.7 pt |
-| Subgrupo | 22 pt | igual ao grupo |
-| Cabeçalho de colunas | 17 pt | 3 linhas de 7.5 pt + respiro |
-| Detalhe (1 linha) | 14 pt | linha simples |
-| Detalhe (2 linhas — descrição quebra) | 29 pt | pitch da linha = 29.3 pt |
-| Totalizador de subgrupo | 19 pt | 18.8 pt do detalhe + 23.2 pt até o próximo |
-| Totalizador de grupo (bloco) | 33 pt | linhas 430.5→463.5 |
+| Grupo | 24 pt | ~21.7 pt medido |
+| Subgrupo | 24 pt | igual ao grupo |
+| Cabeçalho de colunas | 16 pt | 3 linhas de 7.5 pt + respiro |
+| Detalhe (1 linha) | 16 pt | linha simples |
+| Detalhe (2 linhas — descrição quebra) | 32 pt | pitch da linha = 29.3 pt |
+| Totalizador de subgrupo | 16 pt | ~19 pt medido |
+| Totalizador de grupo (bloco) | 32 pt | linhas 430.5→463.5 (~33) |
 | Total geral (bloco) | 48 pt | linhas 480.8→528.8 |
+| Respiro entre blocos de grupo | 8 pt | — |
 
-Regra: a altura **não varia por relatório**. Conteúdo maior que 1 linha
-quebra dentro da banda (altura 2 linhas de 29 pt); nunca "empurrar" a banda
-para acomodar texto. Variantes com coluna única de valor (sem mini-cabeçalho
-de totais) usam bloco reduzido: total grupo 24 pt, total geral 24 pt.
+Regra: a altura **não varia por relatório** e **sempre múltiplo de 8 pt**.
+Conteúdo maior que 1 linha quebra dentro da banda (altura 2 linhas de 32 pt);
+nunca "empurrar" a banda para acomodar texto. Variantes com coluna única de
+valor (sem mini-cabeçalho de totais) usam bloco reduzido: total grupo 24 pt,
+total geral 24 pt.
 
 ## Divisórias
 
