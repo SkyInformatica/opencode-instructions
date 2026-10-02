@@ -48,21 +48,23 @@ com conteúdo extenso.
 
 Cada banda tem **altura fixa** — o texto é centralizado verticalmente dentro
 da banda e a linha divisória fica na **borda** (superior/inferior) da própria
-banda, não solta no layout.
+banda, não solta no layout. Valores medidos no `Exemplo01` de referência.
 
-| Banda | Altura |
-|---|---|
-| Grupo | 16 pt |
-| Subgrupo | 16 pt |
-| Cabeçalho de colunas | 14 pt |
-| Detalhe (1 linha) | 13 pt |
-| Detalhe (2 linhas — descrição quebra) | 29 pt |
-| Totalizador (subgrupo / grupo) | 16 pt |
-| Total geral | 20 pt |
+| Banda | Altura | Medida de origem |
+|---|---|---|
+| Grupo | 22 pt | pitch grupo→subgrupo = 21.7 pt |
+| Subgrupo | 22 pt | igual ao grupo |
+| Cabeçalho de colunas | 17 pt | 3 linhas de 7.5 pt + respiro |
+| Detalhe (1 linha) | 14 pt | linha simples |
+| Detalhe (2 linhas — descrição quebra) | 29 pt | pitch da linha = 29.3 pt |
+| Totalizador de subgrupo | 19 pt | 18.8 pt do detalhe + 23.2 pt até o próximo |
+| Totalizador de grupo (bloco) | 33 pt | linhas 430.5→463.5 |
+| Total geral (bloco) | 48 pt | linhas 480.8→528.8 |
 
 Regra: a altura **não varia por relatório**. Conteúdo maior que 1 linha
-quebra dentro da banda (altura 2 linhas); nunca "empurrar" a banda para
-acomodar texto — isso é o papel do pitch de 29 pt com descrição em 2 linhas.
+quebra dentro da banda (altura 2 linhas de 29 pt); nunca "empurrar" a banda
+para acomodar texto. Variantes com coluna única de valor (sem mini-cabeçalho
+de totais) usam bloco reduzido: total grupo 24 pt, total geral 24 pt.
 
 ## Divisórias
 
