@@ -8,8 +8,7 @@ Para a mecânica do FastReport (`RegisterData`, `Prepare`, export) use a skill
 `fastreport-dotnet`.
 
 > Padrão em **preto e branco**, fonte **Arial**, A4, margens **15 mm** nos 4
-> lados. Exemplos nas duas extremidades: `examples/` tem os gerados pela
-> skill e as referências (não geradas) — ver catálogo na SKILL.md.
+> lados. Exemplos em `examples/` (PDF + `.frx`) — ver catálogo na SKILL.md.
 
 ---
 
@@ -57,7 +56,7 @@ vêm do C# (`SetParameterValue`) — nomes são contrato com o template.
 
 O corpo do relatório muda conforme a agregação dos dados:
 
-### Versão A — Sem grupo (listagem simples) — `Exemplo05`
+### Versão A — Sem grupo (listagem simples) — `Exemplo04`
 
 ```
 Cabeçalho
@@ -68,7 +67,7 @@ TOTAL GERAL DO RELATÓRIO     (preta acima e abaixo)
 
 Quando usar: listagem pura de registros, sem agrupamento.
 
-### Versão B — Somente grupo — `Exemplo02` / `Exemplo03`
+### Versão B — Somente grupo — `Exemplo01` / `Exemplo02`
 
 ```
 Cabeçalho
@@ -81,7 +80,7 @@ TOTAL GERAL DO RELATÓRIO
 
 Quando usar: um nível de agrupamento (ex.: por tipo, por nota).
 
-### Versão C — Grupo + Subgrupo — `Exemplo04`
+### Versão C — Grupo + Subgrupo — `Exemplo03`
 
 ```
 Cabeçalho
@@ -113,10 +112,10 @@ indentado em **+13.5 pt**; as linhas de borda acompanham a indentação.
 - `R$` aparece **só nos totalizadores** (linhas de detalhe sem símbolo).
 - Quando há múltiplas colunas de valor (orçado/realizado/desvio), o bloco
   ganha mini-cabeçalho 7 pt.
-- **Totais com cabeçalho (`Exemplo06`):** não acompanham as colunas do
+- **Totais com cabeçalho (`Exemplo05`):** não acompanham as colunas do
   detalhe; usam grade própria de slots iguais (2.8 cm, passo 3.0 cm,
   terminando na margem direita), bem espaçados. Com um único total
-  (`Exemplo03`) fica à direita, sem mini-cabeçalho.
+  (`Exemplo02`) fica à direita, sem mini-cabeçalho.
 
 ## 6. Rodapé
 

@@ -26,20 +26,16 @@ dos relatórios".
 1. **Padrão visual (OBRIGATÓRIO ler primeiro):** `references/padrao-visual-relatorios.md`
    — fonte, cabeçalho, banda de dados, grupo, rodapé e regras gerais.
 2. **Exemplos (PDF):**
-   - `examples/Exemplo01-Referencia-Grupo-Subgrupo-Totais.pdf`,
-     `examples/Exemplo01-Referencia-Grupo-Totais.pdf`,
-     `examples/Exemplo01-Referencia-Somente-Detalhe-SemGrupo.pdf` —
-     **referência genérica, NÃO gerada pela skill** (apenas origem das medidas);
-   - `examples/Exemplo02-Ocorrencias-LDP-SomenteGrupo-GeradoPelaSkill.pdf/.frx`
+   - `examples/Exemplo01-Ocorrencias-LDP-SomenteGrupo-GeradoPelaSkill.pdf/.frx`
      — **somente grupo, sem subgrupo** (gerado pela skill);
-   - `examples/Exemplo03-Depositos-LDP-SomenteGrupo-GeradoPelaSkill.pdf/.frx`
+   - `examples/Exemplo02-Depositos-LDP-SomenteGrupo-GeradoPelaSkill.pdf/.frx`
      — **somente grupo, sem subgrupo** (gerado pela skill);
-   - `examples/Exemplo04-Ocorrencias-LDP-GrupoSubgrupo-GeradoPelaSkill.pdf/.frx`
+   - `examples/Exemplo03-Ocorrencias-LDP-GrupoSubgrupo-GeradoPelaSkill.pdf/.frx`
      — **grupo + subgrupo** (gerado pela skill);
-   - `examples/Exemplo05-Ocorrencias-LDP-SemGrupo-GeradoPelaSkill.pdf/.frx`
+   - `examples/Exemplo04-Ocorrencias-LDP-SemGrupo-GeradoPelaSkill.pdf/.frx`
      — **sem grupo e sem subgrupo** (listagem simples, sem colunas vazias,
      gerado pela skill);
-   - `examples/Exemplo06-Depositos-LDP-Totais-GeradoPelaSkill.pdf/.frx`
+   - `examples/Exemplo05-Depositos-LDP-Totais-GeradoPelaSkill.pdf/.frx`
      — **totais com label identificando o total + cabeçalho** (gerado pela
      skill; sem texto é variação permitida, só omitir). Os totais usam
      **grade própria de slots**, independente das colunas do detalhe.

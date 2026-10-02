@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Exemplo06-Depositos-LDP-Totais-GeradoPelaSkill.frx
+  Exemplo05-Depositos-LDP-Totais-GeradoPelaSkill.frx
   Padrão visual Sky — variante SOMENTE GRUPO (sem subgrupo)
   Grupo: nota_entrega. 4 colunas de valor (VALOR/SALDO/CONVERTIDO/RESTITUÍDO).
   Total de grupo/geral: LABEL em cima e VALORES embaixo (bloco 32pt = 1.13cm).

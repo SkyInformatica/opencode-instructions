@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Exemplo05-Ocorrencias-LDP-SemGrupo-GeradoPelaSkill.frx
+  Exemplo04-Ocorrencias-LDP-SemGrupo-GeradoPelaSkill.frx
   Padrão visual Sky — variante SEM GRUPO / SEM SUBGRUPO (listagem simples)
   Cabeçalho de colunas -> DataBand -> TOTAL GERAL. Conteúdo na margem (sem indentação).
   Units = Centimeters | A4 | margens 1.5cm

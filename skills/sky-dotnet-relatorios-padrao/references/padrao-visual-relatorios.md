@@ -5,8 +5,6 @@ totalizadores e sumário usados nos relatórios FastReport da Sky.
 
 > Padrão em **preto e branco**. Exemplos em
 > `skills/sky-dotnet-relatorios-padrao/examples/`:
-> - `Exemplo01-Referencia-*.pdf` — **referência genérica, NÃO gerada pela
->   skill** (relatórios de terceiros, usados apenas como origem das medidas);
 > - `Exemplo0N-*.GeradoPelaSkill.pdf` + `.frx` — **gerados por esta skill**
 >   (validação do padrão).
 > Revisões futuras ajustam valores aqui, não em cada template.
@@ -74,7 +72,7 @@ para centralizar o **bloco de glifos** (ascendente/descendente), não a linha
 de base — senão o texto "flutua" alto na banda.
 
 **Grid de espaçamento: múltiplos de 8 pt** (16 / 24 / 32 / 48). Valores
-originais medidos no `Exemplo01` (pitch grupo→subgrupo 21.7, detalhe 29.3,
+originais medidos em relatórios de referência (pitch grupo→subgrupo 21.7, detalhe 29.3,
 bloco total grupo 33, bloco total geral 48) foram arredondados para o grid —
 o padrão usa o valor de grid, não o medido.
 
@@ -105,8 +103,8 @@ total geral 24 pt.
 
 **A altura do total de grupo depende do nº de colunas de valor, não da
 presença de subgrupo:** 1 coluna de valor → 24 pt (inclusive em
-grupo+subgrupo, `Exemplo04`); várias colunas com mini-cabeçalho → 32 pt
-(`Exemplo06`). Em ambos, o respiro de 8 pt entre grupos é somado depois
+grupo+subgrupo, `Exemplo03`); várias colunas com mini-cabeçalho → 32 pt
+(`Exemplo05`). Em ambos, o respiro de 8 pt entre grupos é somado depois
 (24+8 = 32 pt; 32+8 = 40 pt).
 
 ## Divisórias
@@ -190,7 +188,7 @@ grupo+subgrupo, `Exemplo04`); várias colunas com mini-cabeçalho → 32 pt
   **linhas de borda** das bandas de conteúdo começam na indentação
   (56.1 → margem direita); a linha sob o grupo e o rodapé ficam full-width.
 - **Variante somente grupo** (sem subgrupo): conteúdo na margem, sem
-  indentação (exemplos 02/03).
+  indentação (exemplos 01/02).
 - Subtotais ao final de cada nível, hierarquia `grupo + subgrupo + detalhe`.
 
 ## Linhas de detalhe (DataBand)
@@ -212,13 +210,13 @@ grupo+subgrupo, `Exemplo04`); várias colunas com mini-cabeçalho → 32 pt
 - **Sem coluna vazia:** não incluir coluna (cabeçalho + detalhe) que não
   tenha dado no relatório. Se uma coluna de texto longo (ex.: lista de
   protocolos) puder invadir a vizinha, alargá-la — o espaço de uma coluna
-  removida vai para a que precisa (`Exemplo05`).
+  removida vai para a que precisa (`Exemplo04`).
 
 ## Variações de layout (3 formas padrão)
 
-A estrutura muda conforme agregação — os três exemplos de referência:
+A estrutura muda conforme agregação — um exemplo gerado para cada uma:
 
-### 1. Grupo + Subgrupo — `Exemplo01-Referencia-Grupo-Subgrupo-Totais.pdf`
+### 1. Grupo + Subgrupo — `Exemplo03`
 
 ```
 Cabeçalho (título/subtítulo/filtros + divisórias)
@@ -235,7 +233,7 @@ TOTAL GERAL            bloco (NA MARGEM, não indentado)
 Indentação: conteúdo sob o grupo em **+13.5 pt** (56.1) da margem;
 linhas de borda das bandas de conteúdo começam na indentação.
 
-### 2. Somente Grupo — `Exemplo01-Referencia-Grupo-Totais.pdf`
+### 2. Somente Grupo — `Exemplo01` / `Exemplo02` / `Exemplo05`
 
 ```
 Cabeçalho
@@ -246,7 +244,7 @@ Total do grupo <nome>   linha única 8: rótulo + valores R$
 TOTAL GERAL            bloco: rótulo 9.5 + mini-cabeçalho + valores R$ 10
 ```
 
-### 3. Sem grupo (só detalhe) — `Exemplo01-Referencia-Somente-Detalhe-SemGrupo.pdf`
+### 3. Sem grupo (só detalhe) — `Exemplo04`
 
 ```
 Cabeçalho
@@ -296,7 +294,7 @@ valores (`TOTAL ORÇADO ... TOTAL REALIZADO ... DESVIO ...`). Quando existe
   mesma largura. Isso evita valores/cabeçalhos colados quando as colunas do
   detalhe são estreitas. O total de grupo ocupa os últimos slots (mesma grade
   do total geral, para alinhar verticalmente); o total geral usa todos. Ver
-  `Exemplo06`. Quando há **um único total** (ex.: `Exemplo03`), ele fica à
+  `Exemplo05`. Quando há **um único total** (ex.: `Exemplo02`), ele fica à
   direita, sem mini-cabeçalho.
 - Texto auxiliar opcional (`Espaço para detalhamento se necessário`): 7 pt.
 
@@ -306,7 +304,7 @@ senão linha única (24 pt); total de subgrupo = linha única sempre.
 **Label identifica o total:** quando há várias colunas de valor, o bloco do
 total usa o **label** (`Total do grupo ...` / `TOTAL GERAL DO RELATÓRIO`) na
 linha de cima e os **valores alinhados sob as colunas** na linha de baixo.
-O cabeçalho das colunas na linha do label é **OPCIONAL** — exemplos 03 e 06
+O cabeçalho das colunas na linha do label é **OPCIONAL** — exemplos 02 e 05
 usam com (`CONVERTIDO | RESTITUÍDO`); a variação sem texto é permitida
 (apenas omitir os TextObjects do cabeçalho).
 
