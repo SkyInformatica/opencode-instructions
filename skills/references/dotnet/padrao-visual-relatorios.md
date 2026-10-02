@@ -29,7 +29,7 @@ totalizadores e sumário usados nos relatórios FastReport da Sky.
 | Linha de detalhe | 8–10 pt | regular | por tipo de coluna |
 | Totalizador (subtotal) | 9–10 pt | bold | direita (valor) |
 | Total geral | 10 pt | bold | direita (valor) |
-| Nº de página | 8 pt | regular | canto inferior direito |
+| Rodapé (data impressão / usuário / página) | 8 pt | regular | esq / centro / dir |
 
 Detalhe: 8 pt para colunas com conteúdo extenso, 10 pt para linhas curtas;
 **padrão 9 pt**.
@@ -83,7 +83,14 @@ Detalhe: 8 pt para colunas com conteúdo extenso, 10 pt para linhas curtas;
 
 ## Rodapé (PageFooterBand)
 
-- `Página N de M` no **canto inferior direito**, 8 pt.
+Presente **no final de todas as páginas**, sempre com divisória:
+
+- **Linha divisória cinza (50%)** acima do texto, ocupando a largura útil.
+- Texto recuado **3 espaços** das margens laterais, 8 pt.
+- Três posições fixas:
+  - **esquerda**: data de impressão (`dd/mm/aaaa hh:mm`)
+  - **centro**: usuário que gerou o relatório
+  - **direita**: `Página N de M`
 
 ## Regras gerais
 
