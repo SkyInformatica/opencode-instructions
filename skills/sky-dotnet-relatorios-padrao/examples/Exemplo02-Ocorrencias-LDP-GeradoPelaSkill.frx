@@ -27,7 +27,6 @@
       <LineObject Name="LinhaSub" StartPoint="0, 1.55" EndPoint="18, 1.55" LineColor="Gray" LineWidth="0.75"/>
       <TextObject Name="FiltroRotulo" Left="0" Top="1.7" Width="0.95" Height="0.4" Font="Arial, 7.5pt, style=Bold" TextColor="Gray" Text="Período:"/>
       <TextObject Name="FiltroValor" Left="0.95" Top="1.7" Width="12" Height="0.4" Font="Arial, 7.5pt" TextColor="Gray" Text=" 19/05/2025 a 16/07/2026   •   Processo: 565339-A   •   Protocolo: 523101"/>
-      <TextObject Name="Moeda" Left="16" Top="1.7" Width="2" Height="0.4" Font="Arial, 7.5pt" HorizAlign="Right" Text="BRL (R$)"/>
       <LineObject Name="LinhaFiltros" StartPoint="0, 2.25" EndPoint="18, 2.25" LineColor="Gray" LineWidth="0.75"/>
     </PageHeaderBand>
     <GroupHeaderBand Name="GroupHeader1" Condition="[Ocorrencias.tipo_ocorrencia]" Width="18" Height="0.85">
