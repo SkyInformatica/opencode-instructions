@@ -101,6 +101,59 @@ subgrupo) — sempre alinhada à esquerda.
   (pitch ≈ 29 pt com 2 linhas no exemplo de referência).
 - Sem cor alternada (zebra) por padrão.
 
+## Variações de layout (3 formas padrão)
+
+A estrutura muda conforme agregação — os três exemplos de referência:
+
+### 1. Grupo + Subgrupo — `Exemplo01-Grupo-Subgrupo-Totais.pdf`
+
+```
+Cabeçalho (título/subtítulo/filtros + divisórias)
+Grupo           10.5 bold, esq        + divisória abaixo
+  Subgrupo      9 bold, esq           + divisória abaixo
+  Cabeçalho de colunas                (repete a cada subgrupo)
+  Detalhe
+  TOTAL SUBGRUPO        linha única 8 bold-itálico
+  (próximo subgrupo: repete cabeçalho + detalhe + total)
+TOTAL GRUPO            bloco: rótulo 8.5 + mini-cabeçalho + valores R$ 8
+TOTAL GERAL            bloco: rótulo 9.5 + mini-cabeçalho + valores R$ 10
+```
+
+### 2. Somente Grupo — `Exemplo01-Grupo-Totais.pdf`
+
+```
+Cabeçalho
+Grupo           10.5 bold, esq        + divisória abaixo
+Cabeçalho de colunas
+Detalhe                              (sem subgrupo)
+TOTAL GRUPO            linha única 8: rótulo + valores R$
+TOTAL GERAL            bloco: rótulo 9.5 + mini-cabeçalho + valores R$ 10
+```
+
+### 3. Sem grupo (só detalhe) — `Exemplo01-Somente-Detalhe-SemGrupo.pdf`
+
+```
+Cabeçalho
+Cabeçalho de colunas
+Detalhe
+TOTAL GERAL            bloco: rótulo 9.5 + mini-cabeçalho + valores R$ 10
+```
+
+### Diferenças-chave
+
+| Elemento | Grupo+Subgrupo | Somente Grupo | Sem grupo |
+|---|---|---|---|
+| Grupo (10.5 bold + divisória) | sim | sim | — |
+| Subgrupo (9 bold + divisória) | sim | — | — |
+| Cabeçalho de colunas | repete por subgrupo | 1 por grupo | 1 |
+| TOTAL SUBGRUPO (linha única) | sim | — | — |
+| TOTAL GRUPO | bloco (mini-cabeçalho) | linha única | — |
+| TOTAL GERAL | bloco completo | bloco completo | bloco completo |
+
+Regra: o **cabeçalho de colunas repete antes de cada bloco de detalhe** (após
+cada subgrupo e após cada grupo). Total geral sempre presente, sempre bloco
+completo.
+
 ## Totalizadores e sumário
 
 **Bloco de totais:** quando os valores formam múltiplas colunas
