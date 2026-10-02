@@ -16,9 +16,14 @@ dos relatórios".
 
 1. **Padrão visual (OBRIGATÓRIO ler primeiro):** `references/padrao-visual-relatorios.md`
    — fonte, cabeçalho, banda de dados, grupo, rodapé e regras gerais.
-2. **Exemplos de referência (PDF):** `examples/Exemplo01-Grupo-Subgrupo-Totais.pdf`,
-   `examples/Exemplo01-Grupo-Totais.pdf`, `examples/Exemplo01-Somente-Detalhe-SemGrupo.pdf`
-   — layouts válidos para conferência visual (grupo+subgrupo, só grupo, só detalhe).
+2. **Exemplos (PDF):**
+   - `examples/Exemplo01-Referencia-Grupo-Subgrupo-Totais.pdf`,
+     `examples/Exemplo01-Referencia-Grupo-Totais.pdf`,
+     `examples/Exemplo01-Referencia-Somente-Detalhe-SemGrupo.pdf` —
+     **referência genérica, NÃO gerada pela skill** (apenas origem das medidas);
+   - `examples/Exemplo02-Ocorrencias-LDP-GeradoPelaSkill.pdf/.frx` e
+     `examples/Exemplo03-Depositos-LDP-GeradoPelaSkill.pdf/.frx` —
+     **gerados pela skill**, validação do padrão.
 3. **Mecânica FastReport:** skill `fastreport-dotnet` — lifecycle,
    `RegisterData`, `Prepare`, export, segurança, diagnóstico.
 

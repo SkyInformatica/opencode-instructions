@@ -3,10 +3,12 @@
 Guia de **visual**: tipografia, margem, cabeçalho, grupos, linhas de detalhe,
 totalizadores e sumário usados nos relatórios FastReport da Sky.
 
-> Padrão em **preto e branco**, validado contra os relatórios de referência em
+> Padrão em **preto e branco**. Exemplos em
 > `skills/sky-dotnet-relatorios-padrao/examples/`:
-> `Exemplo01-Grupo-Subgrupo-Totais.pdf`, `Exemplo01-Grupo-Totais.pdf`,
-> `Exemplo01-Somente-Detalhe-SemGrupo.pdf`.
+> - `Exemplo01-Referencia-*.pdf` — **referência genérica, NÃO gerada pela
+>   skill** (relatórios de terceiros, usados apenas como origem das medidas);
+> - `Exemplo0N-*.GeradoPelaSkill.pdf` + `.frx` — **gerados por esta skill**
+>   (validação do padrão).
 > Revisões futuras ajustam valores aqui, não em cada template.
 > Para a mecânica do FastReport (lifecycle, `RegisterData`, export) ver a
 > skill `fastreport-dotnet`.
@@ -165,7 +167,7 @@ total geral 24 pt.
 
 A estrutura muda conforme agregação — os três exemplos de referência:
 
-### 1. Grupo + Subgrupo — `Exemplo01-Grupo-Subgrupo-Totais.pdf`
+### 1. Grupo + Subgrupo — `Exemplo01-Referencia-Grupo-Subgrupo-Totais.pdf`
 
 ```
 Cabeçalho (título/subtítulo/filtros + divisórias)
@@ -179,7 +181,7 @@ TOTAL GRUPO            bloco: rótulo 8.5 + mini-cabeçalho + valores R$ 8
 TOTAL GERAL            bloco: rótulo 9.5 + mini-cabeçalho + valores R$ 10
 ```
 
-### 2. Somente Grupo — `Exemplo01-Grupo-Totais.pdf`
+### 2. Somente Grupo — `Exemplo01-Referencia-Grupo-Totais.pdf`
 
 ```
 Cabeçalho
@@ -190,7 +192,7 @@ TOTAL GRUPO            linha única 8: rótulo + valores R$
 TOTAL GERAL            bloco: rótulo 9.5 + mini-cabeçalho + valores R$ 10
 ```
 
-### 3. Sem grupo (só detalhe) — `Exemplo01-Somente-Detalhe-SemGrupo.pdf`
+### 3. Sem grupo (só detalhe) — `Exemplo01-Referencia-Somente-Detalhe-SemGrupo.pdf`
 
 ```
 Cabeçalho
