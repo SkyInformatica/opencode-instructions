@@ -3,8 +3,10 @@
 Guia de **visual**: tipografia, margem, cabeçalho, grupos, linhas de detalhe,
 totalizadores e sumário usados nos relatórios FastReport da Sky.
 
-> Padrão em **preto e branco**, validado contra o relatório de referência
-> `Exemplo01-Demonstrativo Analítico de Despesas Operacionais.pdf`.
+> Padrão em **preto e branco**, validado contra os relatórios de referência em
+> `skills/sky-dotnet-relatorios-padrao/examples/`:
+> `Exemplo01-Grupo-Subgrupo-Totais.pdf`, `Exemplo01-Grupo-Totais.pdf`,
+> `Exemplo01-Somente-Detalhe-SemGrupo.pdf`.
 > Revisões futuras ajustam valores aqui, não em cada template.
 > Para a mecânica do FastReport (lifecycle, `RegisterData`, export) ver a
 > skill `fastreport-dotnet`.
@@ -26,6 +28,7 @@ totalizadores e sumário usados nos relatórios FastReport da Sky.
 | Linha de filtros selecionados | 7.5 pt | regular (rótulo bold), cinza 50% | esquerda |
 | Moeda / classificação (topo dir.) | 7.5 pt | regular | direita |
 | Cabeçalho de colunas | 7.5 pt | bold | por tipo de coluna |
+| Mini-cabeçalho de totais (ORÇADO/REALIZADO/DESVIO) | 7 pt | bold | por tipo de coluna |
 | Grupo | 10.5 pt | bold | esquerda |
 | Subgrupo | 9 pt | bold | esquerda |
 | Linha de detalhe | 8 pt (faixa 8–10 conforme conteúdo) | regular | por tipo de coluna |
@@ -100,13 +103,26 @@ subgrupo) — sempre alinhada à esquerda.
 
 ## Totalizadores e sumário
 
-- Subgrupo: linha cinza acima e abaixo; rótulo `TOTAL SUBGRUPO x.y` em 8 pt
-  bold–itálico à esquerda; valores 8 pt bold à direita.
-- Grupo: linha cinza acima e abaixo; rótulo `TOTAL GRUPO ...` 8.5 pt bold;
-  valores 8 pt bold com `R$` à direita.
-- Total geral: linha preta acima e base dupla; rótulo
-  `TOTAL GERAL DO RELATÓRIO` 9.5 pt bold; valores 10 pt bold com `R$`.
+**Bloco de totais:** quando os valores formam múltiplas colunas
+(orçado/realizado/desvio), o bloco traz **mini-cabeçalho 7 pt** acima dos
+valores (`TOTAL ORÇADO ... TOTAL REALIZADO ... DESVIO ...`). Quando existe
+**uma única linha de total**, sem mini-cabeçalho (linha única 8 pt).
+
+- **Subgrupo**: linha única — rótulo `TOTAL SUBGRUPO x.y` 8 pt bold–itálico
+  à esquerda; valores 8 pt bold à direita.
+- **Grupo com subgrupo**: bloco 2 linhas — rótulo `TOTAL GRUPO ...` 8.5 pt
+  bold + mini-cabeçalho das colunas de valores (7 pt) + valores 8 pt bold com
+  `R$`. Linhas cinza acima e abaixo do bloco.
+- **Grupo sem subgrupo**: linha única 8 pt — rótulo `TOTAL GRUPO ...` +
+  valores com `R$` à direita.
+- **Total geral**: sempre bloco completo — rótulo `TOTAL GERAL DO RELATÓRIO`
+  9.5 pt bold + mini-cabeçalho (7 pt) + valores 10 pt bold com `R$`. Linha
+  preta acima; base reforçada (dupla).
 - Texto auxiliar opcional (`Espaço para detalhamento se necessário`): 7 pt.
+
+**Resumo da regra:** total geral = bloco com mini-cabeçalho sempre; total de
+grupo = bloco com mini-cabeçalho **apenas quando há subgrupos**, senão linha
+única; total de subgrupo = linha única sempre.
 
 ## Rodapé (PageFooterBand)
 
