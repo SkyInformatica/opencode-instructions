@@ -32,14 +32,14 @@ Sistema externo (Delphi 7 / outro sistema Sky)
              ▼
    Financeiro.dll  (módulo carregado pelas External Modules)
         │
-        ├─ FinanceiroWebGerarRecibo               │
-        ├─ FinanceiroWebCancelarRecibo            │  exports  (Financeiro.Web.DLLExports.pas)
-        ├─ FinanceiroWebEstornarRecibo            │
-        ├─ FinanceiroWebPagarRecibo               │
-        ├─ FinanceiroWebCancelarPagamento         │
-        ├─ FinanceiroWebProcessarEncaminhamentos  │
-        ├─ FinanceiroWebSincronizarEncaminhamento │
-        └─ FinanceiroWebGerarComprovanteDeposito  │
+        ├─ FinanceiroWebGerarRecibo                       │
+        ├─ FinanceiroWebCancelarRecibo                    │  exports  (Financeiro.Web.DLLExports.pas)
+        ├─ FinanceiroWebEstornarRecibo                    │
+        ├─ FinanceiroWebPagarRecibo                       │
+        ├─ FinanceiroWebCancelarPagamento                 │
+        ├─ FinanceiroWebAdicionarAtualizarEncaminhaRecibo │
+        ├─ FinanceiroWebSincronizarEncaminhaRecibo        │
+        └─ FinanceiroWebGerarComprovanteDeposito          │
              │
              ▼
    Rotinas internas (TSkySistemasRecibos / TSkySistemasPagamentos /
@@ -79,12 +79,25 @@ Sistema externo (Delphi 7 / outro sistema Sky)
 | `TFinanceiroEM` | `SkyLibSysFinanceiroExternalModulesIntegracao.pas` | Facade do módulo Financeiro. Expõe `.Web`, `.Recibos`, `.Caixas`, `.Depositos`, etc. |
 | `TFinanceiroWebEM` | `SkyLibSysFinanceiroExternalModulesWeb.pas` | Métodos `FinanceiroWeb*` (ver seção 3). |
 | `TModulosFinanceiroDLLDelphi7` | `SkyLibSysFinanceiroExternalModulesDelphi7Modulos.pas` | Carrega a DLL `Financeiro.dll` de `.\dll\` via `TControlEM` (`SkyExternalModules`). |
-| `TFinanceiroPagamentosParametrosDLL` | `SkyLibSysFinanceiroParametrosDLL.pas` | Parâmetros transportados (objeto → chamada da DLL). |
+| `TFinanceiroParametrosEncaminhaRecibosWebParametrosDLL` | `SkyLibSysFinanceiroParametrosEncaminhaRecibosWebDLL.pas` | Classe **base** dos parâmetros da web. Transporta **apenas** `ListaEncaminhamentos`. |
+| `TFinanceiroParametrosGerarReciboWebParametrosDLL` | idem (herda da base) | Parâmetros de `FinanceiroWebGerarRecibo`: lista + `NaoSolicitarNomeRequerente`, `TalaoRecibo`, `RepasseISSQN`, `NomeRequerente`, `CPFCNPJRequerente`. |
+| `TFinanceiroParametrosPagarReciboWebParametrosDLL` | idem (herda da base) | Parâmetros de `FinanceiroWebPagarRecibo`: lista + `ListaRecibosETaloes`. |
 
-> **Atenção:** o parâmetro de objetos (`TFinanceiroPagamentosParametrosDLL`) trafega como
-> **objeto Variant** no padrão `SkyExternalModules` (`executeFunctionBooleanObj2`). Os dois lados
-> (chamador e DLL) precisam usar o mesmo mecanismo — por isso o caminho recomendado é sempre o
-> facade `TIntegracaoFinanceiroEM`, que já encapsula isso.
+> **Atenção:** o objeto de parâmetros trafega como **objeto Variant** no padrão
+> `SkyExternalModules` (`executeFunctionBooleanObj2`). Os dois lados (chamador e DLL) precisam
+> usar o mesmo mecanismo — por isso o caminho recomendado é sempre o facade
+> `TIntegracaoFinanceiroEM`, que já encapsula isso.
+>
+> **`TFinanceiroPagamentosParametrosDLL` NÃO é mais aceita pelos exports `FinanceiroWeb*`**:
+> cada export recebe a classe específica da operação (seção 2.4). Todas as classes novas têm
+> apenas campos `WideString`/`Integer`/`Boolean`, o que mantém a passagem entre o Delphi 5/7 do
+> chamador e a DLL 10.2 segura. Dentro da `Financeiro.dll` o mapeamento para o objeto de
+> negócio (`TFinanceiroParametrosRecibo`) é feito por `Dll.MapParametros.Web.*`
+> (`Financeiro.Map.Parametros.Web.pas`), que reaproveita o mapeador
+> `Dll.MapParametros.Pagamentos.Recibos`.
+>
+> Cada classe também tem `ToJsonString`/`FromJsonString` para quem precisar serializar os
+> parâmetros (mesma unit, mapeamento por campo).
 
 ### 2.2 Exemplo de código (Delphi 7)
 
@@ -99,16 +112,70 @@ código deve ser copiado/adaptado. Não é repetido aqui.
 
 ### 2.3 Sequência de métodos disponíveis no facade
 
-| Método (`Financeiro.Web.*`) | Export da DLL correspondente |
-|---|---|
-| `GerarRecibo(ParametrosRecibo): Boolean` | `FinanceiroWebGerarRecibo` |
-| `CancelarRecibo(NumeroRecibo, TalaoRecibo, MotivoCancelamento): Boolean` | `FinanceiroWebCancelarRecibo` |
-| `EstornarRecibo(NumeroRecibo, TalaoRecibo): Boolean` | `FinanceiroWebEstornarRecibo` |
-| `PagarRecibo(ParametrosPagamentoRecibo): Boolean` | `FinanceiroWebPagarRecibo` |
-| `CancelarPagamento(NumeroRecibo, TalaoRecibo, MotivoCancelamento): Boolean` | `FinanceiroWebCancelarPagamento` |
-| `ProcessarEncaminhamentos(ParametrosEncaminhamento): Boolean` | `FinanceiroWebProcessarEncaminhamentos` |
-| `SincronizarEncaminhamento(NumeroEncaminhaRecibo)` | `FinanceiroWebSincronizarEncaminhamento` |
-| `GerarComprovanteDeposito(ParametrosDeposito): Boolean` | `FinanceiroWebGerarComprovanteDeposito` |
+| Método (`Financeiro.Web.*`) | Objeto de parâmetros | Export da DLL correspondente |
+|---|---|---|
+| `GerarRecibo(ParametrosRecibo): Boolean` | `TFinanceiroParametrosGerarReciboWebParametrosDLL` | `FinanceiroWebGerarRecibo` |
+| `CancelarRecibo(NumeroRecibo, TalaoRecibo, MotivoCancelamento): Boolean` | — (escalares) | `FinanceiroWebCancelarRecibo` |
+| `EstornarRecibo(NumeroRecibo, TalaoRecibo): Boolean` | — (escalares) | `FinanceiroWebEstornarRecibo` |
+| `PagarRecibo(ParametrosPagamentoRecibo): Boolean` | `TFinanceiroParametrosPagarReciboWebParametrosDLL` | `FinanceiroWebPagarRecibo` |
+| `CancelarPagamento(NumeroRecibo, TalaoRecibo, MotivoCancelamento): Boolean` | — (escalares) | `FinanceiroWebCancelarPagamento` |
+| `ProcessarEncaminhamentos(ParametrosEncaminhamento): Boolean` | `TFinanceiroParametrosEncaminhaRecibosWebParametrosDLL` | `FinanceiroWebAdicionarAtualizarEncaminhaRecibo` |
+| `SincronizarEncaminhamento(NumeroEncaminhaRecibo)` | — (escalar) | `FinanceiroWebSincronizarEncaminhaRecibo` |
+| `GerarComprovanteDeposito(ParametrosDeposito): Boolean` | `TFinanceiroParametrosEncaminhaRecibosWebParametrosDLL` | `FinanceiroWebGerarComprovanteDeposito` |
+
+### 2.4 O que cada rotina faz e qual classe usar
+
+> Documento de referência da API: o nome do método é o mesmo da rota na SkySistemas
+> (`AdicionarAtualizarEncaminhaRecibos`, `SincronizarEncaminhaRecibos`, ...).
+
+**`FinanceiroWebGerarRecibo`** — gera recibos na API SkySistemas a partir de uma lista de
+encaminharecibos. `TSkySistemasRecibos.Gerar` valida/obtém os selos necessários e monta as
+ordens de serviço na web.
+→ use `TFinanceiroParametrosGerarReciboWebParametrosDLL`:
+`ListaEncaminhamentos` (obrigatória), `NaoSolicitarNomeRequerente` (default `True` — com `False`
+a DLL tentaria abrir a tela de manutenção do requerente, que não faz sentido em processo
+automatizado), `TalaoRecibo`, `RepasseISSQN` e, se o requerente já for conhecido,
+`NomeRequerente`/`CPFCNPJRequerente`.
+Esta é a única rotina que abre e fecha o **Wait global** (`WaitClose` no `finally`).
+
+**`FinanceiroWebCancelarRecibo`** — cancela **um** recibo por requisição: `NumeroRecibo`,
+`TalaoRecibo` e `MotivoCancelamento` (texto livre, gravado no histórico do cancelamento).
+Parametros escalares, sem objeto.
+
+**`FinanceiroWebEstornarRecibo`** — estorna **um** recibo por requisição (`NumeroRecibo` +
+`TalaoRecibo`). O recibo **precisa estar cancelado**: chamar em um recibo válido devolve erro de
+validação da API (não cancela nem estorna nada).
+
+**`FinanceiroWebPagarRecibo`** — paga **um** documento por requisição. É permitido apenas **um**
+recibo (`ListaRecibosETaloes`) **ou** um encaminhamento (`ListaEncaminhamentos`) por chamada — o
+documento é identificado na API pela chave de origem (`TInformacoesDeEntidadeDeDocumentoDeOrigem...`),
+que resolve a rota de pagamento. A abertura do front (WebView dentro do aplicativo Delphi) para
+selecionar conta, espécie etc. acontece no lado SkySistemas.
+→ use `TFinanceiroParametrosPagarReciboWebParametrosDLL`.
+Com a integração ativa, **não** é exigido `NomeCaixa`/`EscolherCaixa` no legado nem validação de
+permissão de caixa: quem valida é o front.
+
+**`FinanceiroWebCancelarPagamento`** — cancela **um** pagamento (recibo) por requisição:
+`NumeroRecibo`, `TalaoRecibo` e `MotivoCancelamento`. Mesma mecânica do cancelamento de recibo.
+
+**`FinanceiroWebAdicionarAtualizarEncaminhaRecibo`** — faz o processamento (adicionar/atualizar)
+de **um ou mais** encaminharecibos na web, gerando as respectivas ordens de serviço e refazendo o
+estado do documento. **Deve ser chamada sempre que o encaminhamento mudar no legado** — troca de
+situação, flag `PassarCaixa`, itens/selos/lançamentos, tributos — para que a web reflita a situação
+atual. Não é pagamento: é envio de estado.
+→ use `TFinanceiroParametrosEncaminhaRecibosWebParametrosDLL` (só `ListaEncaminhamentos`).
+Antes do envio, a rotina valida/obtém os selos quando necessário.
+
+**`FinanceiroWebSincronizarEncaminhaRecibo`** — sentido **inverso** do anterior: busca na web as
+informações do encaminhamento (`ENCAMINHARECIBOS`, `ENCAMINHALANCAMENTOS`,
+`ENCAMINHALANCAMENTOSELOS`, tributos etc.) e **persiste no legado**. Use quando a API for a fonte
+dos dados do encaminhamento (carga/importação), não para enviar dados do legado para a web.
+→ parâmetro único `NumeroEncaminhaRecibo`.
+
+**`FinanceiroWebGerarComprovanteDeposito`** — gera na web o comprovante de depósito do
+encaminhamento(s) informado(s). Também é chamado pelo próprio fluxo de pagamento quando a
+integração está ativa.
+→ use `TFinanceiroParametrosEncaminhaRecibosWebParametrosDLL`.
 
 ---
 
@@ -124,29 +191,34 @@ Todas são `stdcall`. Convenções comuns:
 ### 3.1 Assinaturas das rotinas
 
 ```pascal
-function  FinanceiroWebGerarRecibo(AppHandle: Variant; ParametrosRecibo: TFinanceiroPagamentosParametrosDLL): Boolean; stdcall;
+function  FinanceiroWebGerarRecibo(AppHandle: Variant; ParametrosRecibo: TFinanceiroParametrosGerarReciboWebParametrosDLL): Boolean; stdcall;
 function  FinanceiroWebCancelarRecibo(AppHandle, ANumeroRecibo, ATalaoRecibo, AMotivoCancelamento: Variant): Boolean; stdcall;
 function  FinanceiroWebEstornarRecibo(AppHandle, ANumeroRecibo, ATalaoRecibo: Variant): Boolean; stdcall;
 
-function  FinanceiroWebPagarRecibo(AppHandle: Variant; ParametrosPagamentoRecibo: TFinanceiroPagamentosParametrosDLL): Boolean; stdcall;
+function  FinanceiroWebPagarRecibo(AppHandle: Variant; ParametrosPagamentoRecibo: TFinanceiroParametrosPagarReciboWebParametrosDLL): Boolean; stdcall;
 function  FinanceiroWebCancelarPagamento(AppHandle, ANumeroRecibo, ATalaoRecibo, AMotivoCancelamento: Variant): Boolean; stdcall;
 
-function  FinanceiroWebProcessarEncaminhamentos(AppHandle: Variant; ParametrosEncaminhamento: TFinanceiroPagamentosParametrosDLL): Boolean; stdcall;
-procedure FinanceiroWebSincronizarEncaminhamento(AppHandle, ANumeroEncaminhaRecibo: Variant); stdcall;
+function  FinanceiroWebAdicionarAtualizarEncaminhaRecibo(AppHandle: Variant; ParametrosEncaminhamento: TFinanceiroParametrosEncaminhaRecibosWebParametrosDLL): Boolean; stdcall;
+procedure FinanceiroWebSincronizarEncaminhaRecibo(AppHandle, ANumeroEncaminhaRecibo: Variant); stdcall;
 
-function  FinanceiroWebGerarComprovanteDeposito(AppHandle: Variant; ParametrosDeposito: TFinanceiroPagamentosParametrosDLL): Boolean; stdcall;
+function  FinanceiroWebGerarComprovanteDeposito(AppHandle: Variant; ParametrosDeposito: TFinanceiroParametrosEncaminhaRecibosWebParametrosDLL): Boolean; stdcall;
 ```
+
+> As classes de parâmetro vêm de `SkyLibSysFinanceiroParametrosEncaminhaRecibosWebDLL.pas`
+> (seção 2.4). Dentro da DLL, o mapeamento para `TFinanceiroParametrosRecibo` é feito por
+> `Dll.MapParametros.Web.ObterParametrosRecibo` / `.ObterParametrosPagamento` /
+> `.ObterParametrosEncaminhaRecibo` / `.ObterParametrosComprovanteDeposito`.
 
 | Rotina | O que faz (implementação) |
 |---|---|
-| `FinanceiroWebGerarRecibo` | Mapeia parâmetros via `Dll.MapParametros...ObterParametrosReciboPagamentoCancelamentoRecibo` e chama `TSkySistemasRecibos.Gerar`. Abre wait "Verificando dados para o recibo..." e, ao final, **sempre fecha o Wait global** (`WaitClose`). |
+| `FinanceiroWebGerarRecibo` | `Dll.MapParametros.Web.ObterParametrosRecibo` + `TSkySistemasRecibos.Gerar`. Abre wait "Verificando dados para o recibo..." e, ao final, **sempre fecha o Wait global** (`WaitClose`). |
 | `FinanceiroWebCancelarRecibo` | `TSkySistemasRecibos.Cancelar(NumeroRecibo, Talao, MotivoCancelamento)`. |
 | `FinanceiroWebEstornarRecibo` | `TSkySistemasRecibos.Estornar(NumeroRecibo, Talao)`. |
-| `FinanceiroWebPagarRecibo` | `TSkySistemasPagamentos.Pagar(ParametrosRecibo)` — obtém rota de pagamento na API e executa. |
+| `FinanceiroWebPagarRecibo` | `Dll.MapParametros.Web.ObterParametrosPagamento` + `TSkySistemasPagamentos.Pagar(ParametrosRecibo)` — obtém a rota de pagamento na API e executa. |
 | `FinanceiroWebCancelarPagamento` | `TSkySistemasPagamentos.Cancelar(NumeroRecibo, Talao, MotivoCancelamento)`. |
-| `FinanceiroWebProcessarEncaminhamentos` | `TSkySistemasEncaminhamentos.Processar(Parametros)` — valida/obtém selos quando necessário e processa os encaminhamentos na API. |
-| `FinanceiroWebSincronizarEncaminhamento` | `TSkySistemasEncaminhamentos.Sincronizar(NumeroEncaminhaRecibo)`. |
-| `FinanceiroWebGerarComprovanteDeposito` | `TSkySistemasDepositosAntecipados.GerarComprovante(Parametros)`. |
+| `FinanceiroWebAdicionarAtualizarEncaminhaRecibo` | `Dll.MapParametros.Web.ObterParametrosEncaminhaRecibo` + `TSkySistemasEncaminhamentos.Processar(Parametros)` — valida/obtém selos quando necessário e processa os encaminhamentos na API. |
+| `FinanceiroWebSincronizarEncaminhaRecibo` | `TSkySistemasEncaminhamentos.Sincronizar(NumeroEncaminhaRecibo)` — busca na web e grava no legado. |
+| `FinanceiroWebGerarComprovanteDeposito` | `Dll.MapParametros.Web.ObterParametrosComprovanteDeposito` + `TSkySistemasDepositosAntecipados.GerarComprovante(Parametros)`. |
 
 > **Regras/validações internas relevantes (pagamento):**
 > - Permitido apenas **um** encaminhamento por vez (origem encaminhamento) ou **um** recibo por vez (origem recibo).

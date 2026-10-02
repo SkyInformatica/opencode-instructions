@@ -26,7 +26,10 @@ description: "Facilita a implementação em sistemas Delphi das chamadas do Fina
 1. Ler o arquivo de referência (acima).
 2. Identificar qual(is) operação(ões) o sistema precisa, entre:
    `GerarRecibo`, `CancelarRecibo`, `EstornarRecibo`, `PagarRecibo`, `CancelarPagamento`,
-   `ProcessarEncaminhamentos`, `SincronizarEncaminhamento`, `GerarComprovanteDeposito`.
+   `ProcessarEncaminhamentos` (= `AdicionarAtualizarEncaminhaRecibo` na API),
+   `SincronizarEncaminhamento`, `GerarComprovanteDeposito`.
+   A **descrição do que cada uma faz** e a **classe de parâmetros de cada uma** estão na
+   seção 2.4 da referência — ler antes de escrever o código.
 3. **Se a operação for gerar e/ou pagar recibo — VALIDAR O PROJETO ANTES de escrever código.**
    Procurar (grep) se já existe uma chamada de recibo + pagamento via `Financeiro.dll`
    (`RegistrarReciboPagamento`, `RegistrarRecibo`, `RegistrarPagamento`,
@@ -75,25 +78,22 @@ Template a copiar/adaptar — as duas units do `uses` são obrigatórias:
 ```pascal
 uses
   SkyLibSysFinanceiroExternalModulesIntegracao,   // TIntegracaoFinanceiroEM
-  SkyLibSysFinanceiroParametrosDLL;               // TFinanceiroPagamentosParametrosDLL
+  SkyLibSysFinanceiroParametrosEncaminhaRecibosWebDLL; // classes de parâmetros da web
 
 function IntegrarFinanceiroWebGerarRecibo(): Boolean;
 var
   FModulosExternos: TIntegracaoFinanceiroEM;
-  ParametrosRecibo: TFinanceiroPagamentosParametrosDLL;
+  ParametrosRecibo: TFinanceiroParametrosGerarReciboWebParametrosDLL;
 begin
   Result := False;
   FModulosExternos := TIntegracaoFinanceiroEM.Create(ParametrosSistema); // var TParametrosSistema
   try
-    ParametrosRecibo := TFinanceiroPagamentosParametrosDLL.Create;
+    ParametrosRecibo := TFinanceiroParametrosGerarReciboWebParametrosDLL.Create;
     try
-      // --- preencher os parâmetros (ver fonte SkyLibSysFinanceiroParametrosDLL.pas) ---
-      ParametrosRecibo.Sistema             := Sistema;
-      ParametrosRecibo.ListaEncaminhamentos := '11155-1,11155-2';  // formato num-talão
-      ParametrosRecibo.GerarRecibo         := True;
+      // --- preencher os parâmetros (ver fonte SkyLibSysFinanceiroParametrosEncaminhaRecibosWebDLL.pas) ---
+      ParametrosRecibo.ListaEncaminhamentos := '11155,11156'; // NumeroEncaminhaRecibo separados por vírgula
       ParametrosRecibo.TalaoRecibo         := 'A';
-      ParametrosRecibo.GerarPagamento      := True;
-      ParametrosRecibo.NomeCaixa           := 'CAIXA 1';
+      ParametrosRecibo.NaoSolicitarNomeRequerente := True; // web não abre tela de requerente
 
       Result := FModulosExternos.Financeiro.Web.GerarRecibo(ParametrosRecibo);
       if not Result then
@@ -106,6 +106,36 @@ begin
   end;
 end;
 ```
+
+### Qual classe usar em cada operação (obrigatório)
+
+| Operação | Classe (`SkyLibSysFinanceiroParametrosEncaminhaRecibosWebDLL.pas`) |
+|---|---|
+| `GerarRecibo` | `TFinanceiroParametrosGerarReciboWebParametrosDLL` |
+| `PagarRecibo` | `TFinanceiroParametrosPagarReciboWebParametrosDLL` |
+| `ProcessarEncaminhamentos` / `GerarComprovanteDeposito` | `TFinanceiroParametrosEncaminhaRecibosWebParametrosDLL` |
+| `CancelarRecibo`, `EstornarRecibo`, `CancelarPagamento`, `SincronizarEncaminhamento` | sem objeto — só parâmetros escalares |
+
+> **NÃO** usar `TFinanceiroPagamentosParametrosDLL` (de `SkyLibSysFinanceiroParametrosDLL.pas`):
+> os exports `FinanceiroWeb*` não aceitam mais essa classe. Ela continua existindo para os
+> outros exports da DLL (`Financeiro.Recibos.*`, `Financeiro.Impressao.*`, etc.), que não fazem
+> parte desta integração.
+
+### Regras rápidas por operação (detalhes na seção 2.4 da referência)
+
+- `GerarRecibo`: `ListaEncaminhamentos` é obrigatória; `NaoSolicitarNomeRequerente` default
+  `True` (com `False` a DLL tenta abrir tela — não usar em fluxo automatizado).
+- `EstornarRecibo`: só funciona em recibo **já cancelado**; em recibo válido a API devolve erro.
+- `PagarRecibo`: **um** documento por chamada — recibo (`ListaRecibosETaloes`, formato
+  `numero-talao`) ou encaminhamento (`ListaEncaminhamentos`). Não exige `NomeCaixa`/
+  `EscolherCaixa`; a seleção de conta/espécie acontece no front aberto pela API.
+- `CancelarRecibo` / `CancelarPagamento`: **um** documento por chamada, com
+  `NumeroRecibo` + `TalaoRecibo` + `MotivoCancelamento`.
+- `ProcessarEncaminhamentos` (export `FinanceiroWebAdicionarAtualizarEncaminhaRecibo`): envio de
+  estado — chamar **sempre que** o encaminhamento mudar no legado (situação, `PassarCaixa`,
+  itens/selos/lançamentos). Aceita vários encaminhamentos de uma vez.
+- `SincronizarEncaminhamento` (export `FinanceiroWebSincronizarEncaminhaRecibo`): sentido inverso
+  — busca na web e **grava no legado**; usar quando a API for a fonte dos dados.
 
 ### Tratamento de erro
 
@@ -161,10 +191,14 @@ end;
 ## Checklist final
 
 - [ ] Usou o facade `TIntegracaoFinanceiroEM` (nunca `GetProcAddress` na DLL).
-- [ ] `uses` com `SkyLibSysFinanceiroExternalModulesIntegracao` e `SkyLibSysFinanceiroParametrosDLL`.
+- [ ] `uses` com `SkyLibSysFinanceiroExternalModulesIntegracao` e
+      `SkyLibSysFinanceiroParametrosEncaminhaRecibosWebDLL`.
+- [ ] Classe de parâmetros é a da **operação** (tabela acima) — nunca
+      `TFinanceiroPagamentosParametrosDLL` nesses exports.
 - [ ] `try/finally` com `Free` do facade e dos parâmetros.
 - [ ] Retorno `Boolean` tratado; em `False`, `ObterUltimoErroJson` exibido/logado.
-- [ ] Parâmetros preenchidos conforme formatos (listas `num-talão`).
+- [ ] Parâmetros preenchidos conforme formatos (`ListaEncaminhamentos` = `11155,11156`;
+      `ListaRecibosETaloes` = `1-A,2-C`).
 - [ ] Se já existia chamada de recibo/pagamento via DLL: a opção foi **decidida com o
       programador** (A = manter e integrar por configuração, B = rotinas exportadas separadas,
       ou as duas convivendo) — nada de troca de chamada sem pergunta.
