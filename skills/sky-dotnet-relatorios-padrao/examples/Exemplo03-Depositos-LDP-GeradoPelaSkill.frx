@@ -55,7 +55,7 @@
     </DataBand>
     <GroupFooterBand Name="GroupFooter1" Width="18" Height="1.69">
       <LineObject Name="LinhaTotalGrupoTopo" StartPoint="0.48, 0" EndPoint="18, 0" LineColor="Gray" LineWidth="0.75"/>
-      <TextObject Name="TotalGrupoRotulo" Left="0.48" Top="0.03" Width="11" Height="0.5" Font="Arial, 8.5pt, style=Bold" Text="TOTAL GRUPO NOTA DE ENTREGA [Depositos.nota_entrega]"/>
+      <TextObject Name="TotalGrupoRotulo" Left="0.48" Top="0.15" Width="11" Height="0.5" Font="Arial, 8.5pt, style=Bold" Text="TOTAL GRUPO NOTA DE ENTREGA [Depositos.nota_entrega]"/>
       <TextObject Name="TotalGrupoHdConvertido" Left="15.3" Top="0.62" Width="1.01" Height="0.35" Font="Arial, 7pt, style=Bold" HorizAlign="Right" Text="CONVERTIDO"/>
       <TextObject Name="TotalGrupoHdRestituido" Left="16.9" Top="0.62" Width="1.08" Height="0.35" Font="Arial, 7pt, style=Bold" HorizAlign="Right" Text="RESTITUÍDO"/>
       <TextObject Name="TotalGrupoConvertido" Left="15.3" Top="0.95" Width="1.01" Height="0.6" Font="Arial, 8pt, style=Bold" HorizAlign="Right" Format="N2" Text="R$ [Sum(Depositos.convertido)]"/>
@@ -64,7 +64,7 @@
     </GroupFooterBand>
     <ReportSummaryBand Name="ReportSummary1" Width="18" Height="1.69">
       <LineObject Name="LinhaTotalGeralTopo" StartPoint="0.48, 0" EndPoint="18, 0" LineColor="Black" LineWidth="0.75"/>
-      <TextObject Name="TotalGeralRotulo" Left="0.48" Top="0.03" Width="10" Height="0.5" Font="Arial, 9.5pt, style=Bold" Text="TOTAL GERAL DO RELATÓRIO"/>
+      <TextObject Name="TotalGeralRotulo" Left="0.48" Top="0.15" Width="10" Height="0.5" Font="Arial, 9.5pt, style=Bold" Text="TOTAL GERAL DO RELATÓRIO"/>
       <TextObject Name="TotalGeralHdValor" Left="10.9" Top="0.62" Width="1.18" Height="0.35" Font="Arial, 7pt, style=Bold" HorizAlign="Right" Text="VALOR"/>
       <TextObject Name="TotalGeralHdSaldo" Left="13.2" Top="0.62" Width="1.0" Height="0.35" Font="Arial, 7pt, style=Bold" HorizAlign="Right" Text="SALDO"/>
       <TextObject Name="TotalGeralHdConvertido" Left="15.3" Top="0.62" Width="1.01" Height="0.35" Font="Arial, 7pt, style=Bold" HorizAlign="Right" Text="CONVERTIDO"/>
