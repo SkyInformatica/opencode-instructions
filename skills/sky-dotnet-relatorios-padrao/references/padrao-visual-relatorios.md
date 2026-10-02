@@ -10,8 +10,9 @@ totalizadores e sumário usados nos relatórios FastReport da Sky.
 > - `Exemplo0N-*.GeradoPelaSkill.pdf` + `.frx` — **gerados por esta skill**
 >   (validação do padrão).
 > Revisões futuras ajustam valores aqui, não em cada template.
-> Para a mecânica do FastReport (lifecycle, `RegisterData`, export) ver a
-> skill `fastreport-dotnet`.
+> **Este doc define apenas o VISUAL.** A geração/edição do `.frx` (estrutura
+> XML, `RegisterData`, `Prepare`, export) é da skill **`fastreport-dotnet`**
+> — carregue-a obrigatoriamente ao gerar/editar templates.
 
 ### STOP — leia antes de gerar qualquer relatório
 

@@ -14,6 +14,15 @@ dos relatórios".
 
 ## Contexto
 
+**Divisão de trabalho (importante):**
+- **`sky-dotnet-relatorios-padrao` (esta skill)** = define o **VISUAL**: fonte,
+  alturas de banda, divisórias, cabeçalho, grupos, totalizadores, rodapé.
+- **`fastreport-dotnet`** = define a **MECÂNICA**: gerar/editar o template
+  `.frx`, `RegisterData`, `Prepare`, export, segurança, diagnóstico.
+- **Gerar ou editar um `.frx` = ativar (ou delegar a) skill
+  `fastreport-dotnet` obrigatoriamente.** Esta skill sozinha não gera
+  `.frx` — ela define as regras visuais que o template deve seguir.
+
 1. **Padrão visual (OBRIGATÓRIO ler primeiro):** `references/padrao-visual-relatorios.md`
    — fonte, cabeçalho, banda de dados, grupo, rodapé e regras gerais.
 2. **Exemplos (PDF):**
@@ -33,8 +42,9 @@ dos relatórios".
 ## Regras
 
 - **Padrão primeiro, mecânica depois.** Definir layout conforme o
-  `padrao-visual-relatorios.md`; usar `fastreport-dotnet` só para a
-  implementação técnica (bandas, expressões, datasource, export).
+  `padrao-visual-relatorios.md`; **a geração/edição do `.frx` usa a skill
+  `fastreport-dotnet`** (bandas, expressões, datasource, export) — ative-a
+  para qualquer mudança de template.
 - **Não mudar valor marcado como `[TODO: extrair de .frx]`** no padrão sem
   antes extrair o valor real de um relatório consolidado e atualizar o doc.
 - **Não inventar padrão.** Se a seção não estiver definida, apontar o `TODO`
@@ -47,7 +57,8 @@ dos relatórios".
 
 1. Ler `padrao-visual-relatorios.md` (e o bloco STOP antes de qualquer código).
 2. Localizar `.frx` de referência (relatório consolidado) se o padrão tiver `TODO` pendente.
-3. Aplicar o padrão ao template, sincronizando datasource/parâmetros com o C#.
+3. Aplicar o padrão ao layout; a **mecânica do `.frx` (gerar/editar) fica com
+   a skill `fastreport-dotnet`** — ativar/delegar ao mexer no template.
 4. Rodar o **checklist pré-geração** do padrão antes de exportar.
-5. Validar: `report.Load` → `RegisterData` → `Prepare` → export (ver skill `fastreport-dotnet`).
+5. Validar: `report.Load` → `RegisterData` → `Prepare` → export (skill `fastreport-dotnet`).
 6. Conferência visual: comparar com os PDFs de `examples/` (a skill não "vê" o PDF final — extrair textos/posições pode ser necessário).
