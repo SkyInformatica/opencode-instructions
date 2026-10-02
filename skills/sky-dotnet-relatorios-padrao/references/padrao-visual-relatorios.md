@@ -49,15 +49,13 @@ com conteúdo extenso.
 | Local | Linha |
 |---|---|
 | Sob o subtítulo e sob a linha de filtros | cinza 50%, 0.75 pt, largura útil |
-| Grupo → subgrupo / detalhe | preta fina (~0.7 pt), da margem esq. |
-| Subgrupo → detalhe | preta fina (~0.7 pt), da margem esq. |
+| Grupo → conteúdo (subgrupo/detalhe) | preta fina (~0.7 pt), da margem esq. |
 | Totalizador (subgrupo/grupo) | cinza acima e abaixo do bloco |
 | Total geral | preta acima; base reforçada (dupla) |
 | Rodapé | cinza acima do texto |
 
-**Nota:** o relatório de referência só traça a divisória no nível do grupo
-principal. O padrão da Sky exige divisória em **cada nível** (grupo e
-subgrupo) — sempre alinhada à esquerda.
+> **Subgrupo não recebe divisória** — apenas o grupo principal traça a linha
+> (conforme os exemplos de referência).
 
 ## Cabeçalho (PageHeaderBand)
 
@@ -90,8 +88,8 @@ subgrupo) — sempre alinhada à esquerda.
 
 - Grupo: **10.5 pt bold**, rótulo à esquerda.
 - Subgrupo: **9 pt bold**, rótulo à esquerda.
-- Divisória preta fina entre cada nível e as linhas de detalhe, sempre à
-  esquerda.
+- Divisória preta fina da margem esq. apenas **sob o grupo principal**;
+  subgrupo segue direto para o cabeçalho de colunas, sem divisória.
 - Subtotais ao final de cada nível, hierarquia `grupo + subgrupo + detalhe`.
 
 ## Linhas de detalhe (DataBand)
@@ -110,7 +108,7 @@ A estrutura muda conforme agregação — os três exemplos de referência:
 ```
 Cabeçalho (título/subtítulo/filtros + divisórias)
 Grupo           10.5 bold, esq        + divisória abaixo
-  Subgrupo      9 bold, esq           + divisória abaixo
+  Subgrupo      9 bold, esq           (sem divisória)
   Cabeçalho de colunas                (repete a cada subgrupo)
   Detalhe
   TOTAL SUBGRUPO        linha única 8 bold-itálico
@@ -144,7 +142,7 @@ TOTAL GERAL            bloco: rótulo 9.5 + mini-cabeçalho + valores R$ 10
 | Elemento | Grupo+Subgrupo | Somente Grupo | Sem grupo |
 |---|---|---|---|
 | Grupo (10.5 bold + divisória) | sim | sim | — |
-| Subgrupo (9 bold + divisória) | sim | — | — |
+| Subgrupo (9 bold, sem divisória) | sim | — | — |
 | Cabeçalho de colunas | repete por subgrupo | 1 por grupo | 1 |
 | TOTAL SUBGRUPO (linha única) | sim | — | — |
 | TOTAL GRUPO | bloco (mini-cabeçalho) | linha única | — |
