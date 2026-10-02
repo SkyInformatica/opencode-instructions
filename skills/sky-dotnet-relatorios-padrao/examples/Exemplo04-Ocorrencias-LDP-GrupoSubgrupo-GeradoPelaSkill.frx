@@ -27,7 +27,7 @@
       <TextObject Name="Subtitulo" Left="0" Top="0.75" Width="18" Height="0.45" Font="Arial, 9pt" Text="Agrupado por nota de entrega e tipo de ocorrência"/>
       <LineObject Name="LinhaSub" StartPoint="0, 1.35" EndPoint="18, 1.35" LineColor="Gray" LineWidth="0.75"/>
       <TextObject Name="FiltroRotulo" Left="0" Top="1.35" Width="1.2" Height="0.56" VertAlign="Center" Font="Arial, 7.5pt, style=Bold" TextColor="Gray" Text="Período:"/>
-      <TextObject Name="FiltroValor" Left="1.2" Top="1.35" Width="12" Height="0.56" VertAlign="Center" Font="Arial, 7.5pt" TextColor="Gray" Text=" 04/05/2026   •   Natureza: ocorrências de depósito"/>
+      <TextObject Name="FiltroValor" Left="1.2" Top="1.35" Width="12" Height="0.56" VertAlign="Center" Font="Arial, 7.5pt" TextColor="89, 89, 89" Text=" 04/05/2026   •   Natureza: ocorrências de depósito"/>
       <LineObject Name="LinhaFiltros" StartPoint="0, 1.91" EndPoint="18, 1.91" LineColor="Gray" LineWidth="0.75"/>
     </PageHeaderBand>
 
@@ -37,16 +37,16 @@
     </GroupHeaderBand>
 
     <GroupHeaderBand Name="GroupTipo" Condition="[Ocorrencias.tipo_ocorrencia]" Width="18" Height="0.85">
-      <TextObject Name="GrupoTipoNome" Left="0.48" Top="0" Width="17.5" Height="0.85" Font="Arial, 9pt, style=Bold" VertAlign="Center" Text="[Ocorrencias.tipo_ocorrencia]"/>
+      <TextObject Name="GrupoTipoNome" Left="0.48" Top="0" Width="17.5" Height="0.85" Font="Arial, 8.5pt, style=Bold" TextColor="89, 89, 89" VertAlign="Center" Text="[Ocorrencias.tipo_ocorrencia].ToUpper()"/>
     </GroupHeaderBand>
 
     <HeaderBand Name="HeaderColunas" Width="18" Height="0.56">
       <LineObject Name="LinhaColTopo" StartPoint="0.48, 0" EndPoint="18, 0" LineColor="Black" LineWidth="0.75"/>
-      <TextObject Name="ColData" Left="0.48" Top="0" Width="1.95" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" Text="DATA"/>
-      <TextObject Name="ColOrigem" Left="2.43" Top="0" Width="4.65" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" Text="ORIGEM"/>
-      <TextObject Name="ColProtocolo" Left="7.8" Top="0" Width="2.45" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" Text="PROTOCOLO"/>
-      <TextObject Name="ColRecibo" Left="10.27" Top="0" Width="2.1" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" Text="RECIBO"/>
-      <TextObject Name="ColValor" Left="16.9" Top="0" Width="1.1" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" HorizAlign="Right" Text="VALOR"/>
+      <TextObject Name="ColData" Left="0.48" Top="0" Width="1.95" Height="0.56" Font="Arial, 7pt, style=Bold" TextColor="89, 89, 89" VertAlign="Center" Text="DATA"/>
+      <TextObject Name="ColOrigem" Left="2.43" Top="0" Width="4.65" Height="0.56" Font="Arial, 7pt, style=Bold" TextColor="89, 89, 89" VertAlign="Center" Text="ORIGEM"/>
+      <TextObject Name="ColProtocolo" Left="7.8" Top="0" Width="2.45" Height="0.56" Font="Arial, 7pt, style=Bold" TextColor="89, 89, 89" VertAlign="Center" Text="PROTOCOLO"/>
+      <TextObject Name="ColRecibo" Left="10.27" Top="0" Width="2.1" Height="0.56" Font="Arial, 7pt, style=Bold" TextColor="89, 89, 89" VertAlign="Center" Text="RECIBO"/>
+      <TextObject Name="ColValor" Left="16.9" Top="0" Width="1.1" Height="0.56" Font="Arial, 7pt, style=Bold" TextColor="89, 89, 89" VertAlign="Center" HorizAlign="Right" Text="VALOR"/>
       <LineObject Name="LinhaColBase" StartPoint="0.48, 0.55" EndPoint="18, 0.55" LineColor="Black" LineWidth="0.75"/>
     </HeaderBand>
 
@@ -60,16 +60,14 @@
 
     <GroupFooterBand Name="FooterTipo" Width="18" Height="0.85">
       <LineObject Name="LinhaTotalSubTopo" StartPoint="0.48, 0" EndPoint="18, 0" LineColor="Gray" LineWidth="0.75"/>
-      <TextObject Name="TotalSubRotulo" Left="0.48" Top="0" Width="12" Height="0.85" Font="Arial, 8pt, style=BoldItalic" VertAlign="Center" Text="TOTAL SUBGRUPO"/>
+      <TextObject Name="TotalSubRotulo" Left="0.48" Top="0" Width="12" Height="0.85" Font="Arial, 8pt, style=Italic" VertAlign="Center" Text="Total do subgrupo [Ocorrencias.tipo_ocorrencia]"/>
       <TextObject Name="TotalSubValor" Left="12" Top="0" Width="6" Height="0.85" Font="Arial, 8pt, style=Bold" VertAlign="Center" HorizAlign="Right" Format="N2" Text="R$ [Sum(Ocorrencias.valor)]"/>
-      <LineObject Name="LinhaTotalSubBase" StartPoint="0.48, 0.84" EndPoint="18, 0.84" LineColor="Gray" LineWidth="0.75"/>
     </GroupFooterBand>
 
     <GroupFooterBand Name="FooterNota" Width="18" Height="1.41">
       <LineObject Name="LinhaTotalGrupoTopo" StartPoint="0.48, 0" EndPoint="18, 0" LineColor="Gray" LineWidth="0.75"/>
-      <TextObject Name="TotalGrupoRotulo" Left="0.48" Top="0" Width="12" Height="1.13" Font="Arial, 8.5pt, style=Bold" VertAlign="Center" Text="TOTAL GRUPO NOTA DE ENTREGA [Ocorrencias.nota_entrega]"/>
+      <TextObject Name="TotalGrupoRotulo" Left="0.48" Top="0" Width="12" Height="1.13" Font="Arial, 8.5pt" VertAlign="Center" Text="Total do grupo Nota de entrega [Ocorrencias.nota_entrega]"/>
       <TextObject Name="TotalGrupoValor" Left="12" Top="0" Width="6" Height="1.13" Font="Arial, 8pt, style=Bold" VertAlign="Center" HorizAlign="Right" Format="N2" Text="R$ [Sum(Ocorrencias.valor)]"/>
-      <LineObject Name="LinhaTotalGrupoBase" StartPoint="0.48, 1.12" EndPoint="18, 1.12" LineColor="Gray" LineWidth="0.75"/>
     </GroupFooterBand>
 
     <ReportSummaryBand Name="ReportSummary1" Width="18" Height="0.85">

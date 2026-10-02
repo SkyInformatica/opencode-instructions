@@ -29,7 +29,7 @@ Para a mecânica do FastReport (`RegisterData`, `Prepare`, export) use a skill
 - **Subtítulo** — 9 pt regular, esquerda.
 - **Divisória cinza** após o subtítulo e após a linha de filtros.
 - **Área de filtros selecionados** — linha própria entre as duas divisórias:
-  7.5 pt, rótulos em bold e valores em regular, **cinza 50%* (ex.:
+  7.5 pt, rótulos em bold **cinza 50%** e valores regular **cinza 35%** (ex.:
   `Período: 01/01 a 31/01 │ Cliente: X │ Filial: Y`).
 - **Opcional no topo direito** — moeda/classificação (`BRL (R$)`) 7.5 pt.
 
@@ -40,7 +40,7 @@ Para a mecânica do FastReport (`RegisterData`, `Prepare`, export) use a skill
 │  ──────────────────────────────────────────────── │  ← fechado com divisórias
 ```
 
-- 7.5 pt **bold**, alinhamento por tipo de coluna.
+- 7 pt **bold cinza 35%**, alinhamento por tipo de coluna.
 - **Fechado com divisórias pretas finas antes e depois** (na borda da banda).
 - Colunas compostas podem ter 2 linhas (ex.: `FORNECEDOR /` + `BENEFICIÁRIO`).
 - Alinhamento fixo: texto/código/data **esquerda**; números **direita**
@@ -86,7 +86,7 @@ Quando usar: um nível de agrupamento (ex.: por tipo, por nota).
 ```
 Cabeçalho
 Grupo                        10.5 pt bold, na margem + divisória abaixo
-  Subgrupo                   9 pt bold
+  Subgrupo                   8.5 pt bold cinza 35%, caixa alta
   Cabeçalho de colunas       (repete a cada subgrupo)
   Linhas de detalhe
   ── cinza ──  TOTAL SUBGRUPO
@@ -105,9 +105,9 @@ indentado em **+13.5 pt**; as linhas de borda acompanham a indentação.
 
 ## 5. Totalizadores
 
-- **TOTAL SUBGRUPO** — linha única, 8 pt bold–itálico, cinza acima/abaixo.
-- **TOTAL GRUPO** — bloco (rótulo 8.5 + valores 8 bold com `R$`), cinza
-  acima/abaixo; sem subgrupo = linha única.
+- **Total do subgrupo `<nome>`** — linha única, 8 pt itálico (sentence case), valor bold; cinza só acima.
+- **Total do grupo `<nome>`** — bloco (rótulo 8.5 regular sentence case +
+  valores 8 bold com `R$`), cinza só acima; sem subgrupo = linha única.
 - **TOTAL GERAL DO RELATÓRIO** — bloco: rótulo 9.5 / valores 10 bold com
   `R$`, pretas acima e abaixo.
 - `R$` aparece **só nos totalizadores** (linhas de detalhe sem símbolo).

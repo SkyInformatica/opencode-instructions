@@ -41,17 +41,17 @@ Antes de escrever UMA linha de template (.frx) ou código, verificar:
 |---|---|---|---|
 | Título do relatório | 14 pt | bold | esquerda |
 | Subtítulo | 9 pt | regular | esquerda |
-| Linha de filtros selecionados | 7.5 pt | regular (rótulo bold), cinza 50% | esquerda |
+| Linha de filtros selecionados | 7.5 pt | rótulo bold cinza 50%; valores regular **cinza 35% (#595959)** | esquerda |
 | Moeda / classificação (topo dir.) | 7.5 pt | regular | direita |
-| Cabeçalho de colunas | 7.5 pt | bold | por tipo de coluna |
-| Mini-cabeçalho de totais (ORÇADO/REALIZADO/DESVIO) | 7 pt | bold | por tipo de coluna |
+| Cabeçalho de colunas | 7 pt | bold, **cinza 35%** | por tipo de coluna |
+| Mini-cabeçalho de totais (ORÇADO/REALIZADO/DESVIO) | 7 pt | bold, **cinza 35%** | por tipo de coluna |
 | Grupo | 10.5 pt | bold | esquerda |
-| Subgrupo | 9 pt | bold | esquerda |
+| Subgrupo | 8.5 pt | bold, **cinza 35%**, caixa alta | esquerda |
 | Linha de detalhe | 8 pt (faixa 8–10 conforme conteúdo) | regular | por tipo de coluna |
 | Nº de documento (NF-e/CT-e…) | 7.5 pt | monoespaçada (Menlo) | esquerda |
-| Totalizador de subgrupo — rótulo | 8 pt | bold–itálico | esquerda |
+| Totalizador de subgrupo — rótulo (`Total do subgrupo <nome>`) | 8 pt | itálico, sentence case | esquerda |
 | Totalizador de subgrupo — valores | 8 pt | bold | direita |
-| Totalizador de grupo — rótulo | 8.5 pt | bold | esquerda |
+| Totalizador de grupo — rótulo (`Total do grupo <nome>`) | 8.5 pt | regular, sentence case | esquerda |
 | Totalizador de grupo — valores | 8 pt | bold | direita |
 | Total geral — rótulo | 9.5 pt | bold | esquerda |
 | Total geral — valores | 10 pt | bold | direita |
@@ -110,7 +110,7 @@ total geral 24 pt.
 | Sob o subtítulo e sob a linha de filtros | cinza 50%, 0.75 pt, largura útil |
 | Grupo → conteúdo (subgrupo/detalhe) | preta fina (~0.7 pt), da margem esq. |
 | Cabeçalho de colunas | preta fina ~0.7 pt **antes e depois** do bloco |
-| Totalizador (subgrupo/grupo) | cinza acima e abaixo do bloco |
+| Totalizador (subgrupo/grupo) | cinza **só acima** do bloco (abaixo, o respiro de 8 pt separa) |
 | Total geral | preta acima e abaixo (simples) |
 | Rodapé | cinza acima do texto |
 
@@ -122,7 +122,7 @@ total geral 24 pt.
 - Tudo alinhado à esquerda, na ordem:
   1. `Título do relatório` — 14 pt bold
   2. `Subtítulo` — 9 pt
-  3. `Filtros: Período ... │ Cliente: X │ Filial: Y` — 7.5 pt, cinza 50%
+  3. `Filtros: Período ... │ Cliente: X │ Filial: Y` — 7.5 pt; rótulo bold cinza 50%, valores cinza 35%
 - Topo direito: `CLASSIFICAÇÃO CONTÁBIL: 3.1.00` / `BRL (R$)` — 7.5 pt.
 - Divisória cinza sob o subtítulo e sob os filtros.
 - **Banda de filtros:** banda de 16 pt (0.56 cm) entre as duas divisórias
@@ -131,8 +131,26 @@ total geral 24 pt.
   subtítulo (~0.15 cm) e há respiro de 16 pt (~0.56 cm) entre a divisória
   inferior e o início dos dados/grupo. Medidas (cm): subtítulo 0.75–1.2;
   divisória 1.35; filtros 1.35–1.91; divisória 1.91; PageHeader 2.47.
-- Cabeçalho de colunas 7.5 pt bold; colunas compostas em **2 linhas**
+- Cabeçalho de colunas 7 pt bold cinza 35%; colunas compostas em **2 linhas**
   (ex.: `FORNECEDOR /` + `BENEFICIÁRIO`).
+
+## Regras de conteúdo e hierarquia
+
+- **Rótulos de total em sentence case** (`Total do grupo Comprovante do
+  depósito pago`), com o **valor** em bold: o valor domina, o rótulo apoia. O
+  `TOTAL GERAL DO RELATÓRIO` mantém caixa alta e bold. Total de subgrupo/grupo
+  **sempre identifica o nome** (nunca só "TOTAL SUBGRUPO").
+- **Dados em caixa natural:** o nome do grupo/subgrupo vem do dado em sentence
+  case; o cabeçalho do grupo/subgrupo aplica `.ToUpper()` e o rótulo de total
+  usa o valor como veio.
+- **Cabeçalho de colunas e subgrupo em cinza 35%** para não competir com o
+  nome do grupo (preto, 10.5 bold) — a hierarquia vem de peso, tamanho e tom.
+- **Coluna numérica: largura mínima 2.0 cm**, com ≥ 0.3 cm de respiro entre o
+  texto de duas colunas vizinhas (ex.: `CONVERTIDO` / `RESTITUÍDO`).
+- **Subtítulo descreve o conteúdo**, nunca o layout (proibido "sem grupo",
+  "totais com cabeçalho"). Período de um dia: só a data (`03/03/2026`).
+- **Linhas por grupo:** divisórias pretas do cabeçalho de colunas (2) + uma
+  cinza acima do total. Abaixo do total não há linha (o respiro separa).
 
 ## Alinhamento de colunas (regra fixa)
 
@@ -155,7 +173,7 @@ total geral 24 pt.
 ## Grupos (GroupHeaderBand / GroupFooterBand)
 
 - Grupo: **10.5 pt bold**, rótulo à esquerda.
-- Subgrupo: **9 pt bold**, rótulo à esquerda.
+- Subgrupo: **8.5 pt bold cinza 35%, caixa alta**, rótulo à esquerda.
 - Divisória preta fina da margem esq. apenas **sob o grupo principal**;
   subgrupo segue direto para o cabeçalho de colunas, sem divisória.
 - **Indentação da variante grupo+subgrupo:** grupo na margem (42.6 pt);
@@ -257,7 +275,7 @@ valores (`TOTAL ORÇADO ... TOTAL REALIZADO ... DESVIO ...`). Quando existe
   à esquerda; valores 8 pt bold à direita.
 - **Grupo com subgrupo**: bloco 2 linhas — rótulo `TOTAL GRUPO ...` 8.5 pt
   bold + mini-cabeçalho das colunas de valores (7 pt) + valores 8 pt bold com
-  `R$`. Linhas cinza acima e abaixo do bloco.
+  `R$`. Linha cinza só acima do bloco.
 - **Grupo sem subgrupo**: linha única 8 pt — rótulo `TOTAL GRUPO ...` +
   valores com `R$` à direita.
 - **Total geral**: sempre bloco completo — rótulo `TOTAL GERAL DO RELATÓRIO`
@@ -330,7 +348,7 @@ Antes de entregar/exportar o relatório, conferir:
 - [ ] Tipografia conforme tabela (Arial, tamanhos exatos)
 - [ ] Bandas com altura múltiplo de 8 pt, texto **centralizado verticalmente** (padding simétrico / `VertAlign=Center`)
 - [ ] Divisórias na borda das bandas (cabeçalho de colunas: antes e depois;
-      totalizadores: cinza antes e depois; total geral: preta acima e abaixo)
+      totalizadores: cinza só antes; total geral: preta acima e abaixo)
 - [ ] Alinhamento de colunas: texto/código/data esq, números dir pelo último dígito
 - [ ] Sinal negativo à esquerda, sem deslocar dígitos
 - [ ] Moeda: sem `R$` no detalhe, com `R$` nos totalizadores
