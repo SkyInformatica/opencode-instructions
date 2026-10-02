@@ -64,10 +64,10 @@
       <TextObject Name="TotalSubValor" Left="12" Top="0" Width="6" Height="0.85" Font="Arial, 8pt, style=Bold" VertAlign="Center" HorizAlign="Right" Format="N2" Text="R$ [Sum(Ocorrencias.valor)]"/>
     </GroupFooterBand>
 
-    <GroupFooterBand Name="FooterNota" Width="18" Height="1.41">
+    <GroupFooterBand Name="FooterNota" Width="18" Height="1.13">
       <LineObject Name="LinhaTotalGrupoTopo" StartPoint="0.48, 0" EndPoint="18, 0" LineColor="Gray" LineWidth="0.75"/>
-      <TextObject Name="TotalGrupoRotulo" Left="0.48" Top="0" Width="12" Height="1.13" Font="Arial, 8.5pt" VertAlign="Center" Text="Total do grupo Nota de entrega [Ocorrencias.nota_entrega]"/>
-      <TextObject Name="TotalGrupoValor" Left="12" Top="0" Width="6" Height="1.13" Font="Arial, 8pt, style=Bold" VertAlign="Center" HorizAlign="Right" Format="N2" Text="R$ [Sum(Ocorrencias.valor)]"/>
+      <TextObject Name="TotalGrupoRotulo" Left="0.48" Top="0" Width="12" Height="0.85" Font="Arial, 8.5pt" VertAlign="Center" Text="Total do grupo Nota de entrega [Ocorrencias.nota_entrega]"/>
+      <TextObject Name="TotalGrupoValor" Left="12" Top="0" Width="6" Height="0.85" Font="Arial, 8pt, style=Bold" VertAlign="Center" HorizAlign="Right" Format="N2" Text="R$ [Sum(Ocorrencias.valor)]"/>
     </GroupFooterBand>
 
     <ReportSummaryBand Name="ReportSummary1" Width="18" Height="0.85">

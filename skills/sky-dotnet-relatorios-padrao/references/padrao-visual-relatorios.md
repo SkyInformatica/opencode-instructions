@@ -103,6 +103,12 @@ nunca "empurrar" a banda para acomodar texto. Variantes com coluna única de
 valor (sem mini-cabeçalho de totais) usam bloco reduzido: total grupo 24 pt,
 total geral 24 pt.
 
+**A altura do total de grupo depende do nº de colunas de valor, não da
+presença de subgrupo:** 1 coluna de valor → 24 pt (inclusive em
+grupo+subgrupo, `Exemplo04`); várias colunas com mini-cabeçalho → 32 pt
+(`Exemplo06`). Em ambos, o respiro de 8 pt entre grupos é somado depois
+(24+8 = 32 pt; 32+8 = 40 pt).
+
 ## Divisórias
 
 | Local | Linha |
@@ -257,7 +263,7 @@ TOTAL GERAL            bloco: rótulo 9.5 + mini-cabeçalho + valores R$ 10
 | Subgrupo (9 bold, sem divisória) | sim | — | — |
 | Cabeçalho de colunas | repete por subgrupo | 1 por grupo | 1 |
 | Total do subgrupo (linha única) | sim | — | — |
-| Total do grupo | bloco (mini-cabeçalho) | linha única | — |
+| Total do grupo | linha única (1 valor) ou bloco c/ mini-cabeçalho (vários) | idem | — |
 | TOTAL GERAL | bloco completo | bloco completo | bloco completo |
 
 Regra: o **cabeçalho de colunas repete antes de cada bloco de detalhe** (após
@@ -273,10 +279,12 @@ valores (`TOTAL ORÇADO ... TOTAL REALIZADO ... DESVIO ...`). Quando existe
 
 - **Subgrupo**: linha única — rótulo `Total do subgrupo <nome>` 8 pt itálico
   (sentence case) à esquerda; valores 8 pt bold à direita.
-- **Grupo com subgrupo**: bloco 2 linhas — rótulo `Total do grupo <nome>` 8.5 pt
-  regular (sentence case) + mini-cabeçalho das colunas de valores (7 pt) + valores 8 pt bold com
-  `R$`. Linha cinza só acima do bloco.
-- **Grupo sem subgrupo**: linha única 8 pt — rótulo `Total do grupo <nome>` +
+- **Grupo com várias colunas de valor** (com ou sem subgrupo): bloco 2 linhas
+  (32 pt) — rótulo `Total do grupo <nome>` 8.5 pt regular (sentence case) +
+  mini-cabeçalho das colunas de valores (7 pt) + valores 8 pt bold com `R$`.
+  Linha cinza só acima do bloco.
+- **Grupo com uma coluna de valor** (com ou sem subgrupo): linha única de
+  24 pt — rótulo `Total do grupo <nome>` +
   valores com `R$` à direita.
 - **Total geral**: sempre bloco completo — rótulo `TOTAL GERAL DO RELATÓRIO`
   9.5 pt bold + mini-cabeçalho (7 pt) + valores 10 pt bold com `R$`. Linha
@@ -293,8 +301,8 @@ valores (`TOTAL ORÇADO ... TOTAL REALIZADO ... DESVIO ...`). Quando existe
 - Texto auxiliar opcional (`Espaço para detalhamento se necessário`): 7 pt.
 
 **Resumo da regra:** total geral = bloco com mini-cabeçalho sempre; total de
-grupo = bloco com mini-cabeçalho **apenas quando há subgrupos**, senão linha
-única; total de subgrupo = linha única sempre.
+grupo = bloco com mini-cabeçalho **apenas quando há várias colunas de valor**,
+senão linha única (24 pt); total de subgrupo = linha única sempre.
 **Label identifica o total:** quando há várias colunas de valor, o bloco do
 total usa o **label** (`Total do grupo ...` / `TOTAL GERAL DO RELATÓRIO`) na
 linha de cima e os **valores alinhados sob as colunas** na linha de baixo.
