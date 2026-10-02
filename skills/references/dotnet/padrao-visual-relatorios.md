@@ -3,8 +3,9 @@
 Guia de **visual**: tipografia, margem, cabeçalho, grupos, linhas de detalhe,
 totalizadores e sumário usados nos relatórios FastReport da Sky.
 
-> Padrão **desenhado em preto e branco** (aprovado em design). Revisões
-> futuras ajustam valores aqui, não em cada template.
+> Padrão em **preto e branco**, validado contra o relatório de referência
+> `Exemplo01-Demonstrativo Analítico de Despesas Operacionais.pdf`.
+> Revisões futuras ajustam valores aqui, não em cada template.
 > Para a mecânica do FastReport (lifecycle, `RegisterData`, export) ver a
 > skill `fastreport-dotnet`.
 
@@ -13,36 +14,58 @@ totalizadores e sumário usados nos relatórios FastReport da Sky.
 | Item | Valor |
 |---|---|
 | Folha | A4 retrato; paisagem quando a tabela de colunas for larga |
-| Margens | 15 mm nos 4 lados (não violar) |
-| Cor | preto + cinza (divisórias e linha de filtros), sem cor de fundo |
+| Margens | 15 mm (≈42.6 pt) nos 4 lados — confirmado no PDF de referência |
+| Cor | preto + cinza (divisórias), sem cor de fundo |
 
 ## Tipografia (fonte base: Arial)
 
 | Elemento | Tamanho | Estilo | Alinh. |
 |---|---|---|---|
 | Título do relatório | 14 pt | bold | esquerda |
-| Subtítulo | 10 pt | regular | esquerda |
-| Linha de filtros selecionados | 8.5 pt | regular, cinza 50% | esquerda |
-| Cabeçalho de colunas | 8.5–9 pt | bold | por tipo de coluna |
-| Grupo | 10 pt | bold | esquerda |
+| Subtítulo | 9 pt | regular | esquerda |
+| Linha de filtros selecionados | 7.5 pt | regular (rótulo bold), cinza 50% | esquerda |
+| Moeda / classificação (topo dir.) | 7.5 pt | regular | direita |
+| Cabeçalho de colunas | 7.5 pt | bold | por tipo de coluna |
+| Grupo | 10.5 pt | bold | esquerda |
 | Subgrupo | 9 pt | bold | esquerda |
-| Linha de detalhe | 8–10 pt | regular | por tipo de coluna |
-| Totalizador (subtotal) | 9–10 pt | bold | direita (valor) |
-| Total geral | 10 pt | bold | direita (valor) |
-| Rodapé (data impressão / usuário / página) | 8 pt | regular | esq / centro / dir |
+| Linha de detalhe | 8 pt (faixa 8–10 conforme conteúdo) | regular | por tipo de coluna |
+| Nº de documento (NF-e/CT-e…) | 7.5 pt | monoespaçada (Menlo) | esquerda |
+| Totalizador de subgrupo — rótulo | 8 pt | bold–itálico | esquerda |
+| Totalizador de subgrupo — valores | 8 pt | bold | direita |
+| Totalizador de grupo — rótulo | 8.5 pt | bold | esquerda |
+| Totalizador de grupo — valores | 8 pt | bold | direita |
+| Total geral — rótulo | 9.5 pt | bold | esquerda |
+| Total geral — valores | 10 pt | bold | direita |
+| Rodapé | 8 pt | regular | esq / centro / dir |
 
-Detalhe: 8 pt para colunas com conteúdo extenso, 10 pt para linhas curtas;
-**padrão 9 pt**.
+Detalhe: 8 pt padrão; 9–10 pt apenas em linhas curtas; 7.5–8 pt em colunas
+com conteúdo extenso.
+
+## Divisórias
+
+| Local | Linha |
+|---|---|
+| Sob o subtítulo e sob a linha de filtros | cinza 50%, 0.75 pt, largura útil |
+| Grupo → subgrupo / detalhe | preta fina (~0.7 pt), da margem esq. |
+| Subgrupo → detalhe | preta fina (~0.7 pt), da margem esq. |
+| Totalizador (subgrupo/grupo) | cinza acima e abaixo do bloco |
+| Total geral | preta acima; base reforçada (dupla) |
+| Rodapé | cinza acima do texto |
+
+**Nota:** o relatório de referência só traça a divisória no nível do grupo
+principal. O padrão da Sky exige divisória em **cada nível** (grupo e
+subgrupo) — sempre alinhada à esquerda.
 
 ## Cabeçalho (PageHeaderBand)
 
-- Título, subtítulo e linha de filtros **alinhados à esquerda**:
-  - `Título do relatório` (14 pt bold)
-  - `Subtítulo` (10 pt)
-  - `Filtros: Período ... │ Cliente: X │ Filial: Y` (8.5 pt, cinza 50%)
-- Abaixo da linha de filtros, **linha divisória** (0.5 pt, preta) separando do
-  conteúdo.
-- Cabeçalho de colunas logo abaixo (negrito), também com divisória inferior.
+- Tudo alinhado à esquerda, na ordem:
+  1. `Título do relatório` — 14 pt bold
+  2. `Subtítulo` — 9 pt
+  3. `Filtros: Período ... │ Cliente: X │ Filial: Y` — 7.5 pt, cinza 50%
+- Topo direito: `CLASSIFICAÇÃO CONTÁBIL: 3.1.00` / `BRL (R$)` — 7.5 pt.
+- Divisória cinza sob o subtítulo e sob os filtros.
+- Cabeçalho de colunas 7.5 pt bold; colunas compostas em **2 linhas**
+  (ex.: `FORNECEDOR /` + `BENEFICIÁRIO`).
 
 ## Alinhamento de colunas (regra fixa)
 
@@ -51,42 +74,46 @@ Detalhe: 8 pt para colunas com conteúdo extenso, 10 pt para linhas curtas;
 | Descrição / texto | esquerda |
 | Código | esquerda |
 | Data | esquerda |
+| Nº de documento | esquerda |
 | Quantidade | direita |
 | Valor unitário | direita |
-| Valor total | direita |
+| Valor total / orçado / realizado / desvio | direita |
 
 - Números alinhados **pelo último dígito** (mesma precisão decimal).
-- Moeda **sem símbolo na linha**; símbolo apenas no cabeçalho da coluna.
+- Moeda: **sem `R$` nas linhas de detalhe**; `R$` presente nos totalizadores
+  (grupo/geral); `BRL (R$)`: apenas no topo direito / cabeçalho.
 
 ## Grupos (GroupHeaderBand / GroupFooterBand)
 
-- Grupo: fonte **10 pt bold**, rótulo/valor à esquerda.
-- Subgrupo: **9 pt bold**, à esquerda.
-- **Linha divisória** (0.5 pt) entre o grupo/subgrupo e as linhas de detalhe —
-  sempre alinhada à esquerda.
-- Hierarquia `grupo + subgrupo + detalhe`: divisória em cada nível, sem
-  exceção.
-- Subtotais por subgrupo e por grupo no final de cada nível.
+- Grupo: **10.5 pt bold**, rótulo à esquerda.
+- Subgrupo: **9 pt bold**, rótulo à esquerda.
+- Divisória preta fina entre cada nível e as linhas de detalhe, sempre à
+  esquerda.
+- Subtotais ao final de cada nível, hierarquia `grupo + subgrupo + detalhe`.
 
 ## Linhas de detalhe (DataBand)
 
-- Altura compacta; interlinha mínima (sem espaço extra entre linhas).
-- Fonte 8–10 pt conforme conteúdo (padrão 9 pt).
+- Fonte 8 pt (7.5–8 pt para conteúdo extenso); nº doc em monoespaçada 7.5 pt.
+- Descrição pode quebrar em 2 linhas; altura da linha acompanha o conteúdo
+  (pitch ≈ 29 pt com 2 linhas no exemplo de referência).
 - Sem cor alternada (zebra) por padrão.
 
 ## Totalizadores e sumário
 
-- Subtotal: **linha divisória 0.5 pt** acima, valor à direita, bold 9–10 pt.
-- Total geral: **linha dupla** acima, 10 pt bold, à direita.
-- Sumário do relatório (quando houver) segue o mesmo padrão de
-  totalizadores.
+- Subgrupo: linha cinza acima e abaixo; rótulo `TOTAL SUBGRUPO x.y` em 8 pt
+  bold–itálico à esquerda; valores 8 pt bold à direita.
+- Grupo: linha cinza acima e abaixo; rótulo `TOTAL GRUPO ...` 8.5 pt bold;
+  valores 8 pt bold com `R$` à direita.
+- Total geral: linha preta acima e base dupla; rótulo
+  `TOTAL GERAL DO RELATÓRIO` 9.5 pt bold; valores 10 pt bold com `R$`.
+- Texto auxiliar opcional (`Espaço para detalhamento se necessário`): 7 pt.
 
 ## Rodapé (PageFooterBand)
 
 Presente **no final de todas as páginas**, sempre com divisória:
 
-- **Linha divisória cinza (50%)** acima do texto, ocupando a largura útil.
-- Texto recuado **3 espaços** das margens laterais, 8 pt.
+- **Linha divisória cinza** acima do texto, largura útil.
+- Texto 8 pt, recuado **3 espaços** das margens laterais.
 - Três posições fixas:
   - **esquerda**: data de impressão (`dd/mm/aaaa hh:mm`)
   - **centro**: usuário que gerou o relatório
