@@ -5,8 +5,6 @@ totalizadores e sumário usados nos relatórios FastReport da Sky.
 
 > Padrão em **preto e branco**. Exemplos em
 > `skills/sky-dotnet-relatorios-padrao/examples/`:
-> - `Exemplo01-Referencia-*.pdf` — **referência genérica, NÃO gerada pela
->   skill** (relatórios de terceiros, usados apenas como origem das medidas);
 > - `Exemplo0N-*.GeradoPelaSkill.pdf` + `.frx` — **gerados por esta skill**
 >   (validação do padrão).
 > Revisões futuras ajustam valores aqui, não em cada template.
@@ -41,17 +39,17 @@ Antes de escrever UMA linha de template (.frx) ou código, verificar:
 |---|---|---|---|
 | Título do relatório | 14 pt | bold | esquerda |
 | Subtítulo | 9 pt | regular | esquerda |
-| Linha de filtros selecionados | 7.5 pt | regular (rótulo bold), cinza 50% | esquerda |
+| Linha de filtros selecionados | 7.5 pt | rótulo bold cinza 50%; valores regular **cinza 35% (#595959)** | esquerda |
 | Moeda / classificação (topo dir.) | 7.5 pt | regular | direita |
-| Cabeçalho de colunas | 7.5 pt | bold | por tipo de coluna |
-| Mini-cabeçalho de totais (ORÇADO/REALIZADO/DESVIO) | 7 pt | bold | por tipo de coluna |
+| Cabeçalho de colunas | 7 pt | bold, **cinza 35%** | por tipo de coluna |
+| Mini-cabeçalho de totais (ORÇADO/REALIZADO/DESVIO) | 7 pt | bold, **cinza 35%** | por tipo de coluna |
 | Grupo | 10.5 pt | bold | esquerda |
-| Subgrupo | 9 pt | bold | esquerda |
+| Subgrupo | 8.5 pt | bold, **cinza 35%**, caixa alta | esquerda |
 | Linha de detalhe | 8 pt (faixa 8–10 conforme conteúdo) | regular | por tipo de coluna |
 | Nº de documento (NF-e/CT-e…) | 7.5 pt | monoespaçada (Menlo) | esquerda |
-| Totalizador de subgrupo — rótulo | 8 pt | bold–itálico | esquerda |
+| Totalizador de subgrupo — rótulo (`Total do subgrupo <nome>`) | 8 pt | itálico, sentence case | esquerda |
 | Totalizador de subgrupo — valores | 8 pt | bold | direita |
-| Totalizador de grupo — rótulo | 8.5 pt | bold | esquerda |
+| Totalizador de grupo — rótulo (`Total do grupo <nome>`) | 8.5 pt | regular, sentence case | esquerda |
 | Totalizador de grupo — valores | 8 pt | bold | direita |
 | Total geral — rótulo | 9.5 pt | bold | esquerda |
 | Total geral — valores | 10 pt | bold | direita |
@@ -74,7 +72,7 @@ para centralizar o **bloco de glifos** (ascendente/descendente), não a linha
 de base — senão o texto "flutua" alto na banda.
 
 **Grid de espaçamento: múltiplos de 8 pt** (16 / 24 / 32 / 48). Valores
-originais medidos no `Exemplo01` (pitch grupo→subgrupo 21.7, detalhe 29.3,
+originais medidos em relatórios de referência (pitch grupo→subgrupo 21.7, detalhe 29.3,
 bloco total grupo 33, bloco total geral 48) foram arredondados para o grid —
 o padrão usa o valor de grid, não o medido.
 
@@ -82,7 +80,7 @@ o padrão usa o valor de grid, não o medido.
 |---|---|---|
 | Grupo | 24 pt | ~21.7 pt medido |
 | Subgrupo | 24 pt | igual ao grupo |
-| Cabeçalho de colunas | 16 pt | 3 linhas de 7.5 pt + respiro |
+| Cabeçalho de colunas | 16 pt | 3 linhas de 7 pt + respiro |
 | Detalhe (1 linha) | 16 pt | linha simples |
 | Detalhe (2 linhas — descrição quebra) | 32 pt | pitch da linha = 29.3 pt |
 | Totalizador de subgrupo | 16 pt | ~19 pt medido |
@@ -103,6 +101,12 @@ nunca "empurrar" a banda para acomodar texto. Variantes com coluna única de
 valor (sem mini-cabeçalho de totais) usam bloco reduzido: total grupo 24 pt,
 total geral 24 pt.
 
+**A altura do total de grupo depende do nº de colunas de valor, não da
+presença de subgrupo:** 1 coluna de valor → 24 pt (inclusive em
+grupo+subgrupo, `Exemplo03`); várias colunas com mini-cabeçalho → 32 pt
+(`Exemplo05`). Em ambos, o respiro de 8 pt entre grupos é somado depois
+(24+8 = 32 pt; 32+8 = 40 pt).
+
 ## Divisórias
 
 | Local | Linha |
@@ -110,7 +114,7 @@ total geral 24 pt.
 | Sob o subtítulo e sob a linha de filtros | cinza 50%, 0.75 pt, largura útil |
 | Grupo → conteúdo (subgrupo/detalhe) | preta fina (~0.7 pt), da margem esq. |
 | Cabeçalho de colunas | preta fina ~0.7 pt **antes e depois** do bloco |
-| Totalizador (subgrupo/grupo) | cinza acima e abaixo do bloco |
+| Totalizador (subgrupo/grupo) | cinza **só acima** do bloco (abaixo, o respiro de 8 pt separa) |
 | Total geral | preta acima e abaixo (simples) |
 | Rodapé | cinza acima do texto |
 
@@ -122,7 +126,7 @@ total geral 24 pt.
 - Tudo alinhado à esquerda, na ordem:
   1. `Título do relatório` — 14 pt bold
   2. `Subtítulo` — 9 pt
-  3. `Filtros: Período ... │ Cliente: X │ Filial: Y` — 7.5 pt, cinza 50%
+  3. `Filtros: Período ... │ Cliente: X │ Filial: Y` — 7.5 pt; rótulo bold cinza 50%, valores cinza 35%
 - Topo direito: `CLASSIFICAÇÃO CONTÁBIL: 3.1.00` / `BRL (R$)` — 7.5 pt.
 - Divisória cinza sob o subtítulo e sob os filtros.
 - **Banda de filtros:** banda de 16 pt (0.56 cm) entre as duas divisórias
@@ -131,8 +135,26 @@ total geral 24 pt.
   subtítulo (~0.15 cm) e há respiro de 16 pt (~0.56 cm) entre a divisória
   inferior e o início dos dados/grupo. Medidas (cm): subtítulo 0.75–1.2;
   divisória 1.35; filtros 1.35–1.91; divisória 1.91; PageHeader 2.47.
-- Cabeçalho de colunas 7.5 pt bold; colunas compostas em **2 linhas**
+- Cabeçalho de colunas 7 pt bold cinza 35%; colunas compostas em **2 linhas**
   (ex.: `FORNECEDOR /` + `BENEFICIÁRIO`).
+
+## Regras de conteúdo e hierarquia
+
+- **Rótulos de total em sentence case** (`Total do grupo Comprovante do
+  depósito pago`), com o **valor** em bold: o valor domina, o rótulo apoia. O
+  `TOTAL GERAL DO RELATÓRIO` mantém caixa alta e bold. Total de subgrupo/grupo
+  **sempre identifica o nome** (nunca só "TOTAL SUBGRUPO").
+- **Dados em caixa natural:** o nome do grupo/subgrupo vem do dado em sentence
+  case; o cabeçalho do grupo/subgrupo aplica `.ToUpper()` e o rótulo de total
+  usa o valor como veio.
+- **Cabeçalho de colunas e subgrupo em cinza 35%** para não competir com o
+  nome do grupo (preto, 10.5 bold) — a hierarquia vem de peso, tamanho e tom.
+- **Coluna numérica: largura mínima 2.0 cm**, com ≥ 0.3 cm de respiro entre o
+  texto de duas colunas vizinhas (ex.: `CONVERTIDO` / `RESTITUÍDO`).
+- **Subtítulo descreve o conteúdo**, nunca o layout (proibido "sem grupo",
+  "totais com cabeçalho"). Período de um dia: só a data (`03/03/2026`).
+- **Linhas por grupo:** divisórias pretas do cabeçalho de colunas (2) + uma
+  cinza acima do total. Abaixo do total não há linha (o respiro separa).
 
 ## Alinhamento de colunas (regra fixa)
 
@@ -155,7 +177,7 @@ total geral 24 pt.
 ## Grupos (GroupHeaderBand / GroupFooterBand)
 
 - Grupo: **10.5 pt bold**, rótulo à esquerda.
-- Subgrupo: **9 pt bold**, rótulo à esquerda.
+- Subgrupo: **8.5 pt bold cinza 35%, caixa alta**, rótulo à esquerda.
 - Divisória preta fina da margem esq. apenas **sob o grupo principal**;
   subgrupo segue direto para o cabeçalho de colunas, sem divisória.
 - **Indentação da variante grupo+subgrupo:** grupo na margem (42.6 pt);
@@ -166,7 +188,7 @@ total geral 24 pt.
   **linhas de borda** das bandas de conteúdo começam na indentação
   (56.1 → margem direita); a linha sob o grupo e o rodapé ficam full-width.
 - **Variante somente grupo** (sem subgrupo): conteúdo na margem, sem
-  indentação (exemplos 02/03).
+  indentação (exemplos 01/02).
 - Subtotais ao final de cada nível, hierarquia `grupo + subgrupo + detalhe`.
 
 ## Linhas de detalhe (DataBand)
@@ -188,13 +210,13 @@ total geral 24 pt.
 - **Sem coluna vazia:** não incluir coluna (cabeçalho + detalhe) que não
   tenha dado no relatório. Se uma coluna de texto longo (ex.: lista de
   protocolos) puder invadir a vizinha, alargá-la — o espaço de uma coluna
-  removida vai para a que precisa (`Exemplo05`).
+  removida vai para a que precisa (`Exemplo04`).
 
 ## Variações de layout (3 formas padrão)
 
-A estrutura muda conforme agregação — os três exemplos de referência:
+A estrutura muda conforme agregação — um exemplo gerado para cada uma:
 
-### 1. Grupo + Subgrupo — `Exemplo01-Referencia-Grupo-Subgrupo-Totais.pdf`
+### 1. Grupo + Subgrupo — `Exemplo03`
 
 ```
 Cabeçalho (título/subtítulo/filtros + divisórias)
@@ -202,27 +224,27 @@ Grupo           10.5 bold, esq (margem)   + divisória abaixo
   Subgrupo      9 bold, esq (indentado)   (sem divisória)
   Cabeçalho de colunas                    (indentado; repete a cada subgrupo)
   Detalhe                                 (indentado)
-  TOTAL SUBGRUPO                          (indentado)
+  Total do subgrupo <nome>                (indentado)
   (próximo subgrupo: repete cabeçalho + detalhe + total)
-TOTAL GRUPO            bloco (indentado)
+Total do grupo <nome>   bloco (indentado)
 TOTAL GERAL            bloco (NA MARGEM, não indentado)
 ```
 
 Indentação: conteúdo sob o grupo em **+13.5 pt** (56.1) da margem;
 linhas de borda das bandas de conteúdo começam na indentação.
 
-### 2. Somente Grupo — `Exemplo01-Referencia-Grupo-Totais.pdf`
+### 2. Somente Grupo — `Exemplo01` / `Exemplo02` / `Exemplo05`
 
 ```
 Cabeçalho
 Grupo           10.5 bold, esq        + divisória abaixo
 Cabeçalho de colunas
 Detalhe                              (sem subgrupo)
-TOTAL GRUPO            linha única 8: rótulo + valores R$
+Total do grupo <nome>   linha única 8: rótulo + valores R$
 TOTAL GERAL            bloco: rótulo 9.5 + mini-cabeçalho + valores R$ 10
 ```
 
-### 3. Sem grupo (só detalhe) — `Exemplo01-Referencia-Somente-Detalhe-SemGrupo.pdf`
+### 3. Sem grupo (só detalhe) — `Exemplo04`
 
 ```
 Cabeçalho
@@ -238,8 +260,8 @@ TOTAL GERAL            bloco: rótulo 9.5 + mini-cabeçalho + valores R$ 10
 | Grupo (10.5 bold + divisória) | sim | sim | — |
 | Subgrupo (9 bold, sem divisória) | sim | — | — |
 | Cabeçalho de colunas | repete por subgrupo | 1 por grupo | 1 |
-| TOTAL SUBGRUPO (linha única) | sim | — | — |
-| TOTAL GRUPO | bloco (mini-cabeçalho) | linha única | — |
+| Total do subgrupo (linha única) | sim | — | — |
+| Total do grupo | linha única (1 valor) ou bloco c/ mini-cabeçalho (vários) | idem | — |
 | TOTAL GERAL | bloco completo | bloco completo | bloco completo |
 
 Regra: o **cabeçalho de colunas repete antes de cada bloco de detalhe** (após
@@ -253,12 +275,14 @@ completo.
 valores (`TOTAL ORÇADO ... TOTAL REALIZADO ... DESVIO ...`). Quando existe
 **uma única linha de total**, sem mini-cabeçalho (linha única 8 pt).
 
-- **Subgrupo**: linha única — rótulo `TOTAL SUBGRUPO x.y` 8 pt bold–itálico
-  à esquerda; valores 8 pt bold à direita.
-- **Grupo com subgrupo**: bloco 2 linhas — rótulo `TOTAL GRUPO ...` 8.5 pt
-  bold + mini-cabeçalho das colunas de valores (7 pt) + valores 8 pt bold com
-  `R$`. Linhas cinza acima e abaixo do bloco.
-- **Grupo sem subgrupo**: linha única 8 pt — rótulo `TOTAL GRUPO ...` +
+- **Subgrupo**: linha única — rótulo `Total do subgrupo <nome>` 8 pt itálico
+  (sentence case) à esquerda; valores 8 pt bold à direita.
+- **Grupo com várias colunas de valor** (com ou sem subgrupo): bloco 2 linhas
+  (32 pt) — rótulo `Total do grupo <nome>` 8.5 pt regular (sentence case) +
+  mini-cabeçalho das colunas de valores (7 pt) + valores 8 pt bold com `R$`.
+  Linha cinza só acima do bloco.
+- **Grupo com uma coluna de valor** (com ou sem subgrupo): linha única de
+  24 pt — rótulo `Total do grupo <nome>` +
   valores com `R$` à direita.
 - **Total geral**: sempre bloco completo — rótulo `TOTAL GERAL DO RELATÓRIO`
   9.5 pt bold + mini-cabeçalho (7 pt) + valores 10 pt bold com `R$`. Linha
@@ -270,17 +294,17 @@ valores (`TOTAL ORÇADO ... TOTAL REALIZADO ... DESVIO ...`). Quando existe
   mesma largura. Isso evita valores/cabeçalhos colados quando as colunas do
   detalhe são estreitas. O total de grupo ocupa os últimos slots (mesma grade
   do total geral, para alinhar verticalmente); o total geral usa todos. Ver
-  `Exemplo06`. Quando há **um único total** (ex.: `Exemplo03`), ele fica à
+  `Exemplo05`. Quando há **um único total** (ex.: `Exemplo02`), ele fica à
   direita, sem mini-cabeçalho.
 - Texto auxiliar opcional (`Espaço para detalhamento se necessário`): 7 pt.
 
 **Resumo da regra:** total geral = bloco com mini-cabeçalho sempre; total de
-grupo = bloco com mini-cabeçalho **apenas quando há subgrupos**, senão linha
-única; total de subgrupo = linha única sempre.
+grupo = bloco com mini-cabeçalho **apenas quando há várias colunas de valor**,
+senão linha única (24 pt); total de subgrupo = linha única sempre.
 **Label identifica o total:** quando há várias colunas de valor, o bloco do
-total usa o **label** (`TOTAL GRUPO ...` / `TOTAL GERAL DO RELATÓRIO`) na
+total usa o **label** (`Total do grupo ...` / `TOTAL GERAL DO RELATÓRIO`) na
 linha de cima e os **valores alinhados sob as colunas** na linha de baixo.
-O cabeçalho das colunas na linha do label é **OPCIONAL** — exemplos 03 e 06
+O cabeçalho das colunas na linha do label é **OPCIONAL** — exemplos 02 e 05
 usam com (`CONVERTIDO | RESTITUÍDO`); a variação sem texto é permitida
 (apenas omitir os TextObjects do cabeçalho).
 
@@ -330,7 +354,7 @@ Antes de entregar/exportar o relatório, conferir:
 - [ ] Tipografia conforme tabela (Arial, tamanhos exatos)
 - [ ] Bandas com altura múltiplo de 8 pt, texto **centralizado verticalmente** (padding simétrico / `VertAlign=Center`)
 - [ ] Divisórias na borda das bandas (cabeçalho de colunas: antes e depois;
-      totalizadores: cinza antes e depois; total geral: preta acima e abaixo)
+      totalizadores: cinza só antes; total geral: preta acima e abaixo)
 - [ ] Alinhamento de colunas: texto/código/data esq, números dir pelo último dígito
 - [ ] Sinal negativo à esquerda, sem deslocar dígitos
 - [ ] Moeda: sem `R$` no detalhe, com `R$` nos totalizadores

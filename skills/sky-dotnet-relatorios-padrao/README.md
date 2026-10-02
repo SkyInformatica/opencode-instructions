@@ -8,8 +8,7 @@ Para a mecânica do FastReport (`RegisterData`, `Prepare`, export) use a skill
 `fastreport-dotnet`.
 
 > Padrão em **preto e branco**, fonte **Arial**, A4, margens **15 mm** nos 4
-> lados. Exemplos nas duas extremidades: `examples/` tem os gerados pela
-> skill e as referências (não geradas) — ver catálogo na SKILL.md.
+> lados. Exemplos em `examples/` (PDF + `.frx`) — ver catálogo na SKILL.md.
 
 ---
 
@@ -29,18 +28,18 @@ Para a mecânica do FastReport (`RegisterData`, `Prepare`, export) use a skill
 - **Subtítulo** — 9 pt regular, esquerda.
 - **Divisória cinza** após o subtítulo e após a linha de filtros.
 - **Área de filtros selecionados** — linha própria entre as duas divisórias:
-  7.5 pt, rótulos em bold e valores em regular, **cinza 50%* (ex.:
+  7.5 pt, rótulos em bold **cinza 50%** e valores regular **cinza 35%** (ex.:
   `Período: 01/01 a 31/01 │ Cliente: X │ Filial: Y`).
 - **Opcional no topo direito** — moeda/classificação (`BRL (R$)`) 7.5 pt.
 
 ## 2. Cabeçalho de colunas (linha de detalhe do cabeçalho)
 
 ```
-│  DATA | ORIGEM | PROTOCOLO | RECIBO | VALOR      │  7.5 pt bold
+│  DATA | ORIGEM | PROTOCOLO | RECIBO | VALOR      │  7 pt bold cinza
 │  ──────────────────────────────────────────────── │  ← fechado com divisórias
 ```
 
-- 7.5 pt **bold**, alinhamento por tipo de coluna.
+- 7 pt **bold cinza 35%**, alinhamento por tipo de coluna.
 - **Fechado com divisórias pretas finas antes e depois** (na borda da banda).
 - Colunas compostas podem ter 2 linhas (ex.: `FORNECEDOR /` + `BENEFICIÁRIO`).
 - Alinhamento fixo: texto/código/data **esquerda**; números **direita**
@@ -57,7 +56,7 @@ vêm do C# (`SetParameterValue`) — nomes são contrato com o template.
 
 O corpo do relatório muda conforme a agregação dos dados:
 
-### Versão A — Sem grupo (listagem simples) — `Exemplo05`
+### Versão A — Sem grupo (listagem simples) — `Exemplo04`
 
 ```
 Cabeçalho
@@ -68,30 +67,30 @@ TOTAL GERAL DO RELATÓRIO     (preta acima e abaixo)
 
 Quando usar: listagem pura de registros, sem agrupamento.
 
-### Versão B — Somente grupo — `Exemplo02` / `Exemplo03`
+### Versão B — Somente grupo — `Exemplo01` / `Exemplo02`
 
 ```
 Cabeçalho
 Grupo                        10.5 pt bold + divisória preta abaixo
 Cabeçalho de colunas         (1 por grupo)
 Linhas de detalhe
-── cinza ──  TOTAL GRUPO ... R$  (linha única 8 pt)
+── cinza ──  Total do grupo ... R$  (linha única 8 pt)
 TOTAL GERAL DO RELATÓRIO
 ```
 
 Quando usar: um nível de agrupamento (ex.: por tipo, por nota).
 
-### Versão C — Grupo + Subgrupo — `Exemplo04`
+### Versão C — Grupo + Subgrupo — `Exemplo03`
 
 ```
 Cabeçalho
 Grupo                        10.5 pt bold, na margem + divisória abaixo
-  Subgrupo                   9 pt bold
+  Subgrupo                   8.5 pt bold cinza 35%, caixa alta
   Cabeçalho de colunas       (repete a cada subgrupo)
   Linhas de detalhe
-  ── cinza ──  TOTAL SUBGRUPO
+  ── cinza ──  Total do subgrupo <nome>
   (próximo subgrupo: repete cabeçalho + detalhe + total)
-── cinza ──  TOTAL GRUPO  (bloco)
+── cinza ──  Total do grupo <nome>  (bloco)
 TOTAL GERAL DO RELATÓRIO
 ```
 
@@ -105,18 +104,18 @@ indentado em **+13.5 pt**; as linhas de borda acompanham a indentação.
 
 ## 5. Totalizadores
 
-- **TOTAL SUBGRUPO** — linha única, 8 pt bold–itálico, cinza acima/abaixo.
-- **TOTAL GRUPO** — bloco (rótulo 8.5 + valores 8 bold com `R$`), cinza
-  acima/abaixo; sem subgrupo = linha única.
+- **Total do subgrupo `<nome>`** — linha única, 8 pt itálico (sentence case), valor bold; cinza só acima.
+- **Total do grupo `<nome>`** — bloco (rótulo 8.5 regular sentence case +
+  valores 8 bold com `R$`), cinza só acima; sem subgrupo = linha única.
 - **TOTAL GERAL DO RELATÓRIO** — bloco: rótulo 9.5 / valores 10 bold com
   `R$`, pretas acima e abaixo.
 - `R$` aparece **só nos totalizadores** (linhas de detalhe sem símbolo).
 - Quando há múltiplas colunas de valor (orçado/realizado/desvio), o bloco
   ganha mini-cabeçalho 7 pt.
-- **Totais com cabeçalho (`Exemplo06`):** não acompanham as colunas do
+- **Totais com cabeçalho (`Exemplo05`):** não acompanham as colunas do
   detalhe; usam grade própria de slots iguais (2.8 cm, passo 3.0 cm,
   terminando na margem direita), bem espaçados. Com um único total
-  (`Exemplo03`) fica à direita, sem mini-cabeçalho.
+  (`Exemplo02`) fica à direita, sem mini-cabeçalho.
 
 ## 6. Rodapé
 

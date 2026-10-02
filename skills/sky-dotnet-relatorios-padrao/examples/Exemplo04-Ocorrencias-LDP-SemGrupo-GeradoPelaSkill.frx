@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Exemplo05-Ocorrencias-LDP-SemGrupo-GeradoPelaSkill.frx
+  Exemplo04-Ocorrencias-LDP-SemGrupo-GeradoPelaSkill.frx
   Padrão visual Sky — variante SEM GRUPO / SEM SUBGRUPO (listagem simples)
   Cabeçalho de colunas -> DataBand -> TOTAL GERAL. Conteúdo na margem (sem indentação).
   Units = Centimeters | A4 | margens 1.5cm
@@ -18,19 +18,19 @@
     <ReportTitleBand Name="ReportTitle1" Width="18" Height="0.5"/>
     <PageHeaderBand Name="PageHeader1" Width="18" Height="2.47">
       <TextObject Name="Titulo" Left="0" Top="0" Width="18" Height="0.7" Font="Arial, 14pt, style=Bold" Text="OCORRÊNCIAS — LIVRO DIÁRIO DE PREVENÇÃO (LDP)"/>
-      <TextObject Name="Subtitulo" Left="0" Top="0.75" Width="18" Height="0.45" Font="Arial, 9pt" Text="Listagem de ocorrências (sem grupo, sem subgrupo)"/>
+      <TextObject Name="Subtitulo" Left="0" Top="0.75" Width="18" Height="0.45" Font="Arial, 9pt" Text="Listagem de ocorrências por data e origem"/>
       <LineObject Name="LinhaSub" StartPoint="0, 1.35" EndPoint="18, 1.35" LineColor="Gray" LineWidth="0.75"/>
       <TextObject Name="FiltroRotulo" Left="0" Top="1.35" Width="1.2" Height="0.56" VertAlign="Center" Font="Arial, 7.5pt, style=Bold" TextColor="Gray" Text="Período:"/>
-      <TextObject Name="FiltroValor" Left="1.2" Top="1.35" Width="12" Height="0.56" VertAlign="Center" Font="Arial, 7.5pt" TextColor="Gray" Text=" 04/05/2026   •   Natureza: ocorrências de depósito"/>
+      <TextObject Name="FiltroValor" Left="1.2" Top="1.35" Width="12" Height="0.56" VertAlign="Center" Font="Arial, 7.5pt" TextColor="89, 89, 89" Text=" 04/05/2026   •   Natureza: ocorrências de depósito"/>
       <LineObject Name="LinhaFiltros" StartPoint="0, 1.91" EndPoint="18, 1.91" LineColor="Gray" LineWidth="0.75"/>
     </PageHeaderBand>
 
     <HeaderBand Name="HeaderColunas" Width="18" Height="0.56">
       <LineObject Name="LinhaColTopo" StartPoint="0, 0" EndPoint="18, 0" LineColor="Black" LineWidth="0.75"/>
-      <TextObject Name="ColData" Left="0" Top="0" Width="1.95" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" Text="DATA"/>
-      <TextObject Name="ColOrigem" Left="1.95" Top="0" Width="4.65" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" Text="ORIGEM"/>
-      <TextObject Name="ColProtocolo" Left="7.32" Top="0" Width="7.5" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" Text="PROTOCOLO"/>
-      <TextObject Name="ColValor" Left="16.9" Top="0" Width="1.1" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" HorizAlign="Right" Text="VALOR"/>
+      <TextObject Name="ColData" Left="0" Top="0" Width="1.95" Height="0.56" Font="Arial, 7pt, style=Bold" TextColor="89, 89, 89" VertAlign="Center" Text="DATA"/>
+      <TextObject Name="ColOrigem" Left="1.95" Top="0" Width="4.65" Height="0.56" Font="Arial, 7pt, style=Bold" TextColor="89, 89, 89" VertAlign="Center" Text="ORIGEM"/>
+      <TextObject Name="ColProtocolo" Left="7.32" Top="0" Width="7.5" Height="0.56" Font="Arial, 7pt, style=Bold" TextColor="89, 89, 89" VertAlign="Center" Text="PROTOCOLO"/>
+      <TextObject Name="ColValor" Left="16.9" Top="0" Width="1.1" Height="0.56" Font="Arial, 7pt, style=Bold" TextColor="89, 89, 89" VertAlign="Center" HorizAlign="Right" Text="VALOR"/>
       <LineObject Name="LinhaColBase" StartPoint="0, 0.55" EndPoint="18, 0.55" LineColor="Black" LineWidth="0.75"/>
     </HeaderBand>
 
