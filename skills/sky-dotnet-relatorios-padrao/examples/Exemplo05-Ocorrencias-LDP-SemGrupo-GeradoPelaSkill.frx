@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Exemplo05-Ocorrencias-LDP-SemGrupo-GeradoPelaSkill.frx
+  Padrão visual Sky — variante SEM GRUPO / SEM SUBGRUPO (listagem simples)
+  Cabeçalho de colunas -> DataBand -> TOTAL GERAL. Conteúdo na margem (sem indentação).
+  Units = Centimeters | A4 | margens 1.5cm
+-->
+<Report ScriptLanguage="CSharp" ReportInfo.CreatorVersion="2025.1.0">
+  <Dictionary>
+    <BusinessObjectDataSource Name="Ocorrencias" ReferenceName="Ocorrencias" DataType="System.Collections.Generic.IEnumerable`1[[Ocorrencia, Ocorrencia]]" Enabled="true">
+      <Column Name="data" DataType="System.String"/>
+      <Column Name="origem" DataType="System.String"/>
+      <Column Name="protocolos" DataType="System.String"/>
+      <Column Name="numerorecibo" DataType="System.String"/>
+      <Column Name="valor" DataType="System.Decimal"/>
+    </BusinessObjectDataSource>
+  </Dictionary>
+  <ReportPage Name="Page1" PaperSize="A4" PaperWidth="21" PaperHeight="29.7" LeftMargin="1.5" RightMargin="1.5" TopMargin="1.5" BottomMargin="1.5">
+    <ReportTitleBand Name="ReportTitle1" Width="18" Height="0.5"/>
+    <PageHeaderBand Name="PageHeader1" Width="18" Height="2.4">
+      <TextObject Name="Titulo" Left="0" Top="0" Width="18" Height="0.7" Font="Arial, 14pt, style=Bold" Text="OCORRÊNCIAS — LIVRO DIÁRIO DE PREVENÇÃO (LDP)"/>
+      <TextObject Name="Subtitulo" Left="0" Top="0.75" Width="18" Height="0.45" Font="Arial, 9pt" Text="Listagem de ocorrências (sem grupo, sem subgrupo)"/>
+      <LineObject Name="LinhaSub" StartPoint="0, 1.55" EndPoint="18, 1.55" LineColor="Gray" LineWidth="0.75"/>
+      <TextObject Name="FiltroRotulo" Left="0" Top="1.7" Width="0.95" Height="0.4" Font="Arial, 7.5pt, style=Bold" TextColor="Gray" Text="Período:"/>
+      <TextObject Name="FiltroValor" Left="0.95" Top="1.7" Width="12" Height="0.4" Font="Arial, 7.5pt" TextColor="Gray" Text=" 04/05/2026   •   Natureza: ocorrências de depósito"/>
+      <LineObject Name="LinhaFiltros" StartPoint="0, 2.25" EndPoint="18, 2.25" LineColor="Gray" LineWidth="0.75"/>
+    </PageHeaderBand>
+
+    <HeaderBand Name="HeaderColunas" Width="18" Height="0.56">
+      <LineObject Name="LinhaColTopo" StartPoint="0, 0" EndPoint="18, 0" LineColor="Black" LineWidth="0.75"/>
+      <TextObject Name="ColData" Left="0" Top="0" Width="1.95" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" Text="DATA"/>
+      <TextObject Name="ColOrigem" Left="1.95" Top="0" Width="4.65" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" Text="ORIGEM"/>
+      <TextObject Name="ColProtocolo" Left="7.32" Top="0" Width="2.45" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" Text="PROTOCOLO"/>
+      <TextObject Name="ColRecibo" Left="9.79" Top="0" Width="2.1" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" Text="RECIBO"/>
+      <TextObject Name="ColValor" Left="16.9" Top="0" Width="1.1" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" HorizAlign="Right" Text="VALOR"/>
+      <LineObject Name="LinhaColBase" StartPoint="0, 0.55" EndPoint="18, 0.55" LineColor="Black" LineWidth="0.75"/>
+    </HeaderBand>
+
+    <DataBand Name="Data1" DataSource="Ocorrencias" Width="18" Height="0.56">
+      <TextObject Name="DetData" Left="0" Top="0" Width="1.95" Height="0.56" Font="Arial, 8pt" VertAlign="Center" Text="[Ocorrencias.data]"/>
+      <TextObject Name="DetOrigem" Left="1.95" Top="0" Width="4.65" Height="0.56" Font="Arial, 8pt" VertAlign="Center" Text="[Ocorrencias.origem]"/>
+      <TextObject Name="DetProtocolo" Left="7.32" Top="0" Width="2.45" Height="0.56" Font="Arial, 8pt" VertAlign="Center" Text="[Ocorrencias.protocolos]"/>
+      <TextObject Name="DetRecibo" Left="9.79" Top="0" Width="2.1" Height="0.56" Font="Arial, 8pt" VertAlign="Center" Text="[Ocorrencias.numerorecibo]"/>
+      <TextObject Name="DetValor" Left="16.9" Top="0" Width="1.1" Height="0.56" Font="Arial, 8pt" VertAlign="Center" HorizAlign="Right" Format="N2" Text="[Ocorrencias.valor]"/>
+    </DataBand>
+
+    <ReportSummaryBand Name="ReportSummary1" Width="18" Height="0.85">
+      <LineObject Name="LinhaTotalTopo" StartPoint="0, 0" EndPoint="18, 0" LineColor="Black" LineWidth="0.75"/>
+      <TextObject Name="TotalRotulo" Left="0" Top="0" Width="12" Height="0.85" Font="Arial, 9.5pt, style=Bold" VertAlign="Center" Text="TOTAL GERAL DO RELATÓRIO"/>
+      <TextObject Name="TotalValor" Left="12" Top="0" Width="6" Height="0.85" Font="Arial, 10pt, style=Bold" VertAlign="Center" HorizAlign="Right" Format="N2" Text="R$ [Sum(Ocorrencias.valor)]"/>
+      <LineObject Name="LinhaTotalBase" StartPoint="0, 0.84" EndPoint="18, 0.84" LineColor="Black" LineWidth="0.75"/>
+    </ReportSummaryBand>
+
+    <PageFooterBand Name="PageFooter1" Width="18" Height="1">
+      <LineObject Name="LinhaRodape" StartPoint="0, 0" EndPoint="18, 0" LineColor="Gray" LineWidth="0.75"/>
+      <TextObject Name="RodapeData" Left="0" Top="0.15" Width="6" Height="0.4" Font="Arial, 8pt" TextColor="Gray" Text="Emissão: 02/10/2026 16:00"/>
+      <TextObject Name="RodapeOperador" Left="6" Top="0.15" Width="6" Height="0.4" Font="Arial, 8pt" TextColor="Gray" HorizAlign="Center" Text="Operador: SISTEMA"/>
+      <TextObject Name="RodapePagina" Left="12" Top="0.15" Width="6" Height="0.4" Font="Arial, 8pt" TextColor="Gray" HorizAlign="Right" Text="Página [PageN] de [TotalPages]"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

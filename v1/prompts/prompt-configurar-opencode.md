@@ -79,13 +79,17 @@ Passos:
    Liste o conteúdo da pasta skills via GitHub API:
    https://api.github.com/repos/SkyInformatica/opencode-instructions/contents/skills
 
-   Ignore a subpasta `references/` ao listar/instalar: não é skill (não tem `SKILL.md`), é o acervo de referenciais técnicos compartilhados.
+   Ignore a subpasta `skills/references/` ao listar/instalar: não é skill (não tem `SKILL.md`), é o acervo de referenciais técnicos compartilhados. Não confunda com a subpasta `references/` de dentro de uma skill, que é referencial da própria skill e deve ser instalada junto (item 3a).
 
    Para cada skill selecionada pelo usuário:
    - Baixe sempre a versão atual do repositório:
      https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/skills/<SUBPASTA>/SKILL.md
    - Se %USERPROFILE%\.config\opencode\skills\<SUBPASTA>\SKILL.md já existir, sobrescreva com a versão baixada (a cópia local pode estar desatualizada).
    - Se não existir, crie a pasta %USERPROFILE%\.config\opencode\skills\<SUBPASTA>\ e salve o SKILL.md baixado.
+   - Se a skill tiver subpasta `references/` (referenciais que a própria SKILL.md manda ler), instale também esses arquivos — sem eles a SKILL.md aponta para caminhos inexistentes e a skill fica incompleta na máquina:
+     - Liste: https://api.github.com/repos/SkyInformatica/opencode-instructions/contents/skills/<SUBPASTA>/references
+     - Baixe cada .md de https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/skills/<SUBPASTA>/references/<ARQUIVO>.md
+     - Salve em %USERPROFILE%\.config\opencode\skills\<SUBPASTA>\references\<ARQUIVO>.md (sobrescreva se já existir).
 
 3b. **Se o escopo incluir agents**, baixe os agents selecionados da pasta v1/agents/ do repositório para a pasta global de agents:
    https://github.com/SkyInformatica/opencode-instructions/tree/main/v1/agents
