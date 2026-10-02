@@ -90,6 +90,13 @@ o padrão usa o valor de grid, não o medido.
 | Total geral (bloco) | 48 pt | linhas 480.8→528.8 |
 | Respiro entre blocos de grupo | 8 pt | — |
 
+**Respiro entre grupos (obrigatório):** todo relatório com quebra de grupo
+reserva **8 pt (0.28 cm)** de espaço no fim do rodapé do grupo mais externo
+(`GroupFooterBand` = altura do total + 0.28 cm; os objetos e divisórias ficam
+no topo da banda, o espaço sobra embaixo). Assim o próximo grupo (e o total
+geral) não gruda no total do anterior. Vale para os layouts só-grupo e
+grupo+subgrupo; não se aplica ao layout sem grupo.
+
 Regra: a altura **não varia por relatório** e **sempre múltiplo de 8 pt**.
 Conteúdo maior que 1 linha quebra dentro da banda (altura 2 linhas de 32 pt);
 nunca "empurrar" a banda para acomodar texto. Variantes com coluna única de
@@ -118,6 +125,12 @@ total geral 24 pt.
   3. `Filtros: Período ... │ Cliente: X │ Filial: Y` — 7.5 pt, cinza 50%
 - Topo direito: `CLASSIFICAÇÃO CONTÁBIL: 3.1.00` / `BRL (R$)` — 7.5 pt.
 - Divisória cinza sob o subtítulo e sob os filtros.
+- **Banda de filtros:** banda de 16 pt (0.56 cm) entre as duas divisórias
+  cinzas, com o texto **centralizado verticalmente** (`VertAlign=Center`,
+  altura do objeto = altura da banda). A divisória superior fica próxima do
+  subtítulo (~0.15 cm) e há respiro de 16 pt (~0.56 cm) entre a divisória
+  inferior e o início dos dados/grupo. Medidas (cm): subtítulo 0.75–1.2;
+  divisória 1.35; filtros 1.35–1.91; divisória 1.91; PageHeader 2.47.
 - Cabeçalho de colunas 7.5 pt bold; colunas compostas em **2 linhas**
   (ex.: `FORNECEDOR /` + `BENEFICIÁRIO`).
 
@@ -147,7 +160,9 @@ total geral 24 pt.
   subgrupo segue direto para o cabeçalho de colunas, sem divisória.
 - **Indentação da variante grupo+subgrupo:** grupo na margem (42.6 pt);
   **todo o conteúdo sob o grupo indentado em +13.5 pt (56.1)** — subgrupo,
-  cabeçalho de colunas, linhas de detalhe e todos os totalizadores. As
+  cabeçalho de colunas, linhas de detalhe e os totalizadores de subgrupo e de
+  grupo. **O TOTAL GERAL não é indentado**: fica na margem (42.6), com as
+  linhas preta acima/abaixo também a partir da margem, pois é de nível raiz. As
   **linhas de borda** das bandas de conteúdo começam na indentação
   (56.1 → margem direita); a linha sob o grupo e o rodapé ficam full-width.
 - **Variante somente grupo** (sem subgrupo): conteúdo na margem, sem
@@ -170,6 +185,10 @@ total geral 24 pt.
      Em FastReport: `CanGrow` na célula/banda; sem crescimento o texto
      estoura a banda e **sobrepõe a linha de baixo**.
 - Sem cor alternada (zebra) por padrão.
+- **Sem coluna vazia:** não incluir coluna (cabeçalho + detalhe) que não
+  tenha dado no relatório. Se uma coluna de texto longo (ex.: lista de
+  protocolos) puder invadir a vizinha, alargá-la — o espaço de uma coluna
+  removida vai para a que precisa (`Exemplo05`).
 
 ## Variações de layout (3 formas padrão)
 
@@ -186,7 +205,7 @@ Grupo           10.5 bold, esq (margem)   + divisória abaixo
   TOTAL SUBGRUPO                          (indentado)
   (próximo subgrupo: repete cabeçalho + detalhe + total)
 TOTAL GRUPO            bloco (indentado)
-TOTAL GERAL            bloco (indentado)
+TOTAL GERAL            bloco (NA MARGEM, não indentado)
 ```
 
 Indentação: conteúdo sob o grupo em **+13.5 pt** (56.1) da margem;
@@ -244,6 +263,15 @@ valores (`TOTAL ORÇADO ... TOTAL REALIZADO ... DESVIO ...`). Quando existe
 - **Total geral**: sempre bloco completo — rótulo `TOTAL GERAL DO RELATÓRIO`
   9.5 pt bold + mini-cabeçalho (7 pt) + valores 10 pt bold com `R$`. Linha
   preta acima e abaixo (simples).
+- **Totais com cabeçalho (vários totais)** — os totais **não precisam
+  acompanhar as colunas do detalhe**. Usam **grade própria de slots** iguais
+  (ex.: 4 slots de 2.8 cm, passo 3.0 cm, último slot terminando na margem
+  direita), valores alinhados à direita dentro do slot e mini-cabeçalho de
+  mesma largura. Isso evita valores/cabeçalhos colados quando as colunas do
+  detalhe são estreitas. O total de grupo ocupa os últimos slots (mesma grade
+  do total geral, para alinhar verticalmente); o total geral usa todos. Ver
+  `Exemplo06`. Quando há **um único total** (ex.: `Exemplo03`), ele fica à
+  direita, sem mini-cabeçalho.
 - Texto auxiliar opcional (`Espaço para detalhamento se necessário`): 7 pt.
 
 **Resumo da regra:** total geral = bloco com mini-cabeçalho sempre; total de
@@ -308,7 +336,10 @@ Antes de entregar/exportar o relatório, conferir:
 - [ ] Moeda: sem `R$` no detalhe, com `R$` nos totalizadores
 - [ ] Rodapé com divisória cinza, data impressão (esq) / usuário (centro) / `Página N de M` (dir)
 - [ ] Variante de layout correta (grupo+subgrupo / só grupo / sem grupo)
-- [ ] Grupo+Subgrupo: conteúdo indentado +13.5 pt (56.1) e linhas de borda alinhadas à indentação
+- [ ] Grupo+Subgrupo: conteúdo indentado +13.5 pt (56.1) e linhas de borda alinhadas à indentação — **exceto o total geral, que fica na margem**
+- [ ] Totais com cabeçalho: grade própria de slots (não depende das colunas do detalhe); sem valores/cabeçalhos colados
+- [ ] Nenhuma coluna vazia (cabeçalho sem dado) na tabela
+- [ ] Respiro de 8 pt no fim do rodapé do grupo (próximo grupo não gruda)
 - [ ] Colunas longas: largura adequada + `WordWrap` + respiro ~40 pt da vizinha + banda cresce (`CanGrow`; 2 linhas = 32 pt) — nunca estourar na vizinha nem sobrepor a linha de baixo
 - [ ] Datas `dd/mm/aaaa`, texto pt-BR
 - [ ] Nomes de datasource/parâmetros sincronizados com o C#

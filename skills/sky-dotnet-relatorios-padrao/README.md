@@ -99,8 +99,9 @@ Quando usar: dois níveis de agrupamento (ex.: nota de entrega → tipo de
 ocorrência).
 
 **Indentação (versão C):** o grupo fica na margem e **todo o conteúdo sob
-ele** (subgrupo, colunas, detalhe e totais) é indentado em **+13.5 pt**; as
-linhas de borda das bandas de conteúdo acompanham a indentação.
+ele** (subgrupo, colunas, detalhe, total de subgrupo e total de grupo) é
+indentado em **+13.5 pt**; as linhas de borda acompanham a indentação.
+**O TOTAL GERAL fica na margem, sem indentação.**
 
 ## 5. Totalizadores
 
@@ -112,6 +113,10 @@ linhas de borda das bandas de conteúdo acompanham a indentação.
 - `R$` aparece **só nos totalizadores** (linhas de detalhe sem símbolo).
 - Quando há múltiplas colunas de valor (orçado/realizado/desvio), o bloco
   ganha mini-cabeçalho 7 pt.
+- **Totais com cabeçalho (`Exemplo06`):** não acompanham as colunas do
+  detalhe; usam grade própria de slots iguais (2.8 cm, passo 3.0 cm,
+  terminando na margem direita), bem espaçados. Com um único total
+  (`Exemplo03`) fica à direita, sem mini-cabeçalho.
 
 ## 6. Rodapé
 

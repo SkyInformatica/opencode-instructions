@@ -22,13 +22,13 @@
   </Dictionary>
   <ReportPage Name="Page1" PaperSize="A4" PaperWidth="21" PaperHeight="29.7" LeftMargin="1.5" RightMargin="1.5" TopMargin="1.5" BottomMargin="1.5">
     <ReportTitleBand Name="ReportTitle1" Width="18" Height="0.5"/>
-    <PageHeaderBand Name="PageHeader1" Width="18" Height="2.4">
+    <PageHeaderBand Name="PageHeader1" Width="18" Height="2.47">
       <TextObject Name="Titulo" Left="0" Top="0" Width="18" Height="0.7" Font="Arial, 14pt, style=Bold" Text="DEPÓSITOS — LIVRO DIÁRIO DE PREVENÇÃO (LDP)"/>
       <TextObject Name="Subtitulo" Left="0" Top="0.75" Width="18" Height="0.45" Font="Arial, 9pt" Text="Movimentação de depósitos — Nota de Entrega 586746-A"/>
-      <LineObject Name="LinhaSub" StartPoint="0, 1.55" EndPoint="18, 1.55" LineColor="Gray" LineWidth="0.75"/>
-      <TextObject Name="FiltroRotulo" Left="0" Top="1.7" Width="0.95" Height="0.4" Font="Arial, 7.5pt, style=Bold" TextColor="Gray" Text="Período:"/>
-      <TextObject Name="FiltroValor" Left="0.95" Top="1.7" Width="12" Height="0.4" Font="Arial, 7.5pt" TextColor="Gray" Text=" 01/10/2025 a 10/10/2025   •   Processo: 586746-A   •   Protocolo: 532574"/>
-      <LineObject Name="LinhaFiltros" StartPoint="0, 2.25" EndPoint="18, 2.25" LineColor="Gray" LineWidth="0.75"/>
+      <LineObject Name="LinhaSub" StartPoint="0, 1.35" EndPoint="18, 1.35" LineColor="Gray" LineWidth="0.75"/>
+      <TextObject Name="FiltroRotulo" Left="0" Top="1.35" Width="1.2" Height="0.56" VertAlign="Center" Font="Arial, 7.5pt, style=Bold" TextColor="Gray" Text="Período:"/>
+      <TextObject Name="FiltroValor" Left="1.2" Top="1.35" Width="12" Height="0.56" VertAlign="Center" Font="Arial, 7.5pt" TextColor="Gray" Text=" 01/10/2025 a 10/10/2025   •   Processo: 586746-A   •   Protocolo: 532574"/>
+      <LineObject Name="LinhaFiltros" StartPoint="0, 1.91" EndPoint="18, 1.91" LineColor="Gray" LineWidth="0.75"/>
     </PageHeaderBand>
     <GroupHeaderBand Name="GroupHeader1" Condition="[Depositos.comprovante]" Width="18" Height="0.85">
       <TextObject Name="GrupoNome" Left="0" Top="0" Width="18" Height="0.85" Font="Arial, 10.5pt, style=Bold" VertAlign="Center" Text="COMPROVANTE [Depositos.comprovante]"/>
@@ -53,9 +53,9 @@
       <TextObject Name="DetConvertido" Left="15.3" Top="0" Width="1.01" Height="0.56" Font="Arial, 8pt" VertAlign="Center" HorizAlign="Right" Format="N2" Text="[Depositos.convertido]"/>
       <TextObject Name="DetRestituido" Left="16.9" Top="0" Width="1.08" Height="0.56" Font="Arial, 8pt" VertAlign="Center" HorizAlign="Right" Format="N2" Text="[Depositos.restituido]"/>
     </DataBand>
-    <GroupFooterBand Name="GroupFooter1" Width="18" Height="0.85">
+    <GroupFooterBand Name="GroupFooter1" Width="18" Height="1.13">
       <LineObject Name="LinhaTotalGrupoTopo" StartPoint="0, 0" EndPoint="18, 0" LineColor="Gray" LineWidth="0.75"/>
-      <TextObject Name="TotalGrupoRotulo" Left="0" Top="0" Width="12" Height="0.85" Font="Arial, 8pt, style=Bold" VertAlign="Center" Text="TOTAL GRUPO"/>
+      <TextObject Name="TotalGrupoRotulo" Left="0" Top="0" Width="12" Height="0.85" Font="Arial, 8pt, style=Bold" VertAlign="Center" Text="TOTAL GRUPO COMPROVANTE [Depositos.comprovante]"/>
       <TextObject Name="TotalGrupoValor" Left="12" Top="0" Width="6" Height="0.85" Font="Arial, 8pt, style=Bold" VertAlign="Center" HorizAlign="Right" Format="N2" Text="R$ [Sum(Depositos.valor)]"/>
       <LineObject Name="LinhaTotalGrupoBase" StartPoint="0, 0.84" EndPoint="18, 0.84" LineColor="Gray" LineWidth="0.75"/>
     </GroupFooterBand>
@@ -67,9 +67,9 @@
     </ReportSummaryBand>
     <PageFooterBand Name="PageFooter1" Width="18" Height="1">
       <LineObject Name="LinhaRodape" StartPoint="0, 0" EndPoint="18, 0" LineColor="Gray" LineWidth="0.75"/>
-      <TextObject Name="RodapeData" Left="0" Top="0.15" Width="6" Height="0.4" Font="Arial, 8pt" TextColor="Gray" Text="Emissão: 02/10/2026 16:00"/>
+      <TextObject Name="RodapeData" Left="0" Top="0.15" Width="6" Height="0.4" Font="Arial, 8pt" TextColor="Gray" Text="   Emissão: 02/10/2026 16:00"/>
       <TextObject Name="RodapeOperador" Left="6" Top="0.15" Width="6" Height="0.4" Font="Arial, 8pt" TextColor="Gray" HorizAlign="Center" Text="Operador: SISTEMA"/>
-      <TextObject Name="RodapePagina" Left="12" Top="0.15" Width="6" Height="0.4" Font="Arial, 8pt" TextColor="Gray" HorizAlign="Right" Text="Página [PageN] de [TotalPages]"/>
+      <TextObject Name="RodapePagina" Left="12" Top="0.15" Width="6" Height="0.4" Font="Arial, 8pt" TextColor="Gray" HorizAlign="Right" Text="Página [PageN] de [TotalPages]   "/>
     </PageFooterBand>
   </ReportPage>
 </Report>
