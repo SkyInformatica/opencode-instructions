@@ -5,6 +5,7 @@
   Grupo por comprovante (depósito). Units = Centimeters | A4 | margens 1.5cm
   Alturas (grid 8pt => cm): grupo 0.85 / cabeçalho 0.56 / detalhe 0.56 / total grupo 0.85 / total geral 0.85
   Texto centralizado verticalmente (VertAlign="Center", altura objeto = banda).
+  Coluna RECIBO larga (5.55cm) + WordWrap caso o conteúdo exceda.
 -->
 <Report ScriptLanguage="CSharp" ReportInfo.CreatorVersion="2025.1.0">
   <Dictionary>
@@ -15,7 +16,6 @@
       <Column Name="valor" DataType="System.Decimal"/>
       <Column Name="status" DataType="System.String"/>
       <Column Name="saldo" DataType="System.Decimal"/>
-      <Column Name="data_baixa" DataType="System.String"/>
       <Column Name="convertido" DataType="System.Decimal"/>
       <Column Name="restituido" DataType="System.Decimal"/>
     </BusinessObjectDataSource>
@@ -35,22 +35,22 @@
     </GroupHeaderBand>
     <HeaderBand Name="HeaderColunas" Width="18" Height="0.56">
       <LineObject Name="LinhaColTopo" StartPoint="0, 0" EndPoint="18, 0" LineColor="Black" LineWidth="0.75"/>
-      <TextObject Name="ColRecibo" Left="0" Top="0" Width="2.38" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" Text="RECIBO"/>
-      <TextObject Name="ColDataEntrada" Left="2.38" Top="0" Width="2.82" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" Text="DATA ENTRADA"/>
-      <TextObject Name="ColStatus" Left="5.2" Top="0" Width="3.0" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" Text="STATUS"/>
-      <TextObject Name="ColValor" Left="8.2" Top="0" Width="1.06" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" HorizAlign="Right" Text="VALOR"/>
-      <TextObject Name="ColSaldo" Left="11.0" Top="0" Width="1.08" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" HorizAlign="Right" Text="SALDO"/>
-      <TextObject Name="ColConvertido" Left="14.05" Top="0" Width="1.03" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" HorizAlign="Right" Text="CONVERTIDO"/>
+      <TextObject Name="ColRecibo" Left="0" Top="0" Width="5.55" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" Text="RECIBO"/>
+      <TextObject Name="ColDataEntrada" Left="5.55" Top="0" Width="3.18" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" Text="DATA ENTRADA"/>
+      <TextObject Name="ColStatus" Left="8.73" Top="0" Width="3.17" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" Text="STATUS"/>
+      <TextObject Name="ColValor" Left="10.7" Top="0" Width="1.9" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" HorizAlign="Right" Text="VALOR"/>
+      <TextObject Name="ColSaldo" Left="12.9" Top="0" Width="1.65" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" HorizAlign="Right" Text="SALDO"/>
+      <TextObject Name="ColConvertido" Left="14.7" Top="0" Width="1.6" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" HorizAlign="Right" Text="CONVERTIDO"/>
       <TextObject Name="ColRestituido" Left="16.9" Top="0" Width="1.08" Height="0.56" Font="Arial, 7.5pt, style=Bold" VertAlign="Center" HorizAlign="Right" Text="RESTITUÍDO"/>
       <LineObject Name="LinhaColBase" StartPoint="0, 0.55" EndPoint="18, 0.55" LineColor="Black" LineWidth="0.75"/>
     </HeaderBand>
     <DataBand Name="Data1" DataSource="Depositos" Width="18" Height="0.56">
-      <TextObject Name="DetRecibo" Left="0" Top="0" Width="2.38" Height="0.56" Font="Arial, 8pt" VertAlign="Center" Text="[Depositos.recibo]"/>
-      <TextObject Name="DetDataEntrada" Left="2.38" Top="0" Width="2.82" Height="0.56" Font="Arial, 8pt" VertAlign="Center" Text="[Depositos.data_entrada]"/>
-      <TextObject Name="DetStatus" Left="5.2" Top="0" Width="3.0" Height="0.56" Font="Arial, 8pt" VertAlign="Center" Text="[Depositos.status]"/>
-      <TextObject Name="DetValor" Left="8.2" Top="0" Width="1.06" Height="0.56" Font="Arial, 8pt" VertAlign="Center" HorizAlign="Right" Format="N2" Text="[Depositos.valor]"/>
-      <TextObject Name="DetSaldo" Left="11.0" Top="0" Width="1.08" Height="0.56" Font="Arial, 8pt" VertAlign="Center" HorizAlign="Right" Format="N2" Text="[Depositos.saldo]"/>
-      <TextObject Name="DetConvertido" Left="14.05" Top="0" Width="1.03" Height="0.56" Font="Arial, 8pt" VertAlign="Center" HorizAlign="Right" Format="N2" Text="[Depositos.convertido]"/>
+      <TextObject Name="DetRecibo" Left="0" Top="0" Width="5.55" Height="0.56" Font="Arial, 8pt" VertAlign="Center" WordWrap="True" Text="[Depositos.recibo]"/>
+      <TextObject Name="DetDataEntrada" Left="5.55" Top="0" Width="3.18" Height="0.56" Font="Arial, 8pt" VertAlign="Center" Text="[Depositos.data_entrada]"/>
+      <TextObject Name="DetStatus" Left="8.73" Top="0" Width="3.17" Height="0.56" Font="Arial, 8pt" VertAlign="Center" Text="[Depositos.status]"/>
+      <TextObject Name="DetValor" Left="10.7" Top="0" Width="1.9" Height="0.56" Font="Arial, 8pt" VertAlign="Center" HorizAlign="Right" Format="N2" Text="[Depositos.valor]"/>
+      <TextObject Name="DetSaldo" Left="12.9" Top="0" Width="1.65" Height="0.56" Font="Arial, 8pt" VertAlign="Center" HorizAlign="Right" Format="N2" Text="[Depositos.saldo]"/>
+      <TextObject Name="DetConvertido" Left="14.7" Top="0" Width="1.6" Height="0.56" Font="Arial, 8pt" VertAlign="Center" HorizAlign="Right" Format="N2" Text="[Depositos.convertido]"/>
       <TextObject Name="DetRestituido" Left="16.9" Top="0" Width="1.08" Height="0.56" Font="Arial, 8pt" VertAlign="Center" HorizAlign="Right" Format="N2" Text="[Depositos.restituido]"/>
     </DataBand>
     <GroupFooterBand Name="GroupFooter1" Width="18" Height="0.85">
