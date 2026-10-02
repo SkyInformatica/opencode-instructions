@@ -50,6 +50,7 @@ com conteúdo extenso.
 |---|---|
 | Sob o subtítulo e sob a linha de filtros | cinza 50%, 0.75 pt, largura útil |
 | Grupo → conteúdo (subgrupo/detalhe) | preta fina (~0.7 pt), da margem esq. |
+| Cabeçalho de colunas | preta fina ~0.7 pt **antes e depois** do bloco |
 | Totalizador (subgrupo/grupo) | cinza acima e abaixo do bloco |
 | Total geral | preta acima; base reforçada (dupla) |
 | Rodapé | cinza acima do texto |
