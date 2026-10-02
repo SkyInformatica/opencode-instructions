@@ -151,7 +151,7 @@ total geral 24 pt.
   **linhas de borda** das bandas de conteúdo começam na indentação
   (56.1 → margem direita); a linha sob o grupo e o rodapé ficam full-width.
 - **Variante somente grupo** (sem subgrupo): conteúdo na margem, sem
-  indentação (exemplos 02/03).
+  indentação (exemplo 02; exemplo 06 com totais de várias colunas).
 - Subtotais ao final de cada nível, hierarquia `grupo + subgrupo + detalhe`.
 
 ## Linhas de detalhe (DataBand)

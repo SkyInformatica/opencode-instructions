@@ -68,7 +68,7 @@ TOTAL GERAL DO RELATÓRIO     (preta acima e abaixo)
 
 Quando usar: listagem pura de registros, sem agrupamento.
 
-### Versão B — Somente grupo — `Exemplo02` / `Exemplo03`
+### Versão B — Somente grupo — `Exemplo02` / `Exemplo06`
 
 ```
 Cabeçalho
