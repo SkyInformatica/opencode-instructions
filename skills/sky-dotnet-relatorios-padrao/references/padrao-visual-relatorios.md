@@ -145,6 +145,13 @@ total geral 24 pt.
 - Subgrupo: **9 pt bold**, rótulo à esquerda.
 - Divisória preta fina da margem esq. apenas **sob o grupo principal**;
   subgrupo segue direto para o cabeçalho de colunas, sem divisória.
+- **Indentação da variante grupo+subgrupo:** grupo na margem (42.6 pt);
+  **todo o conteúdo sob o grupo indentado em +13.5 pt (56.1)** — subgrupo,
+  cabeçalho de colunas, linhas de detalhe e todos os totalizadores. As
+  **linhas de borda** das bandas de conteúdo começam na indentação
+  (56.1 → margem direita); a linha sob o grupo e o rodapé ficam full-width.
+- **Variante somente grupo** (sem subgrupo): conteúdo na margem, sem
+  indentação (exemplos 02/03).
 - Subtotais ao final de cada nível, hierarquia `grupo + subgrupo + detalhe`.
 
 ## Linhas de detalhe (DataBand)
@@ -172,15 +179,18 @@ A estrutura muda conforme agregação — os três exemplos de referência:
 
 ```
 Cabeçalho (título/subtítulo/filtros + divisórias)
-Grupo           10.5 bold, esq        + divisória abaixo
-  Subgrupo      9 bold, esq           (sem divisória)
-  Cabeçalho de colunas                (repete a cada subgrupo)
-  Detalhe
-  TOTAL SUBGRUPO        linha única 8 bold-itálico
+Grupo           10.5 bold, esq (margem)   + divisória abaixo
+  Subgrupo      9 bold, esq (indentado)   (sem divisória)
+  Cabeçalho de colunas                    (indentado; repete a cada subgrupo)
+  Detalhe                                 (indentado)
+  TOTAL SUBGRUPO                          (indentado)
   (próximo subgrupo: repete cabeçalho + detalhe + total)
-TOTAL GRUPO            bloco: rótulo 8.5 + mini-cabeçalho + valores R$ 8
-TOTAL GERAL            bloco: rótulo 9.5 + mini-cabeçalho + valores R$ 10
+TOTAL GRUPO            bloco (indentado)
+TOTAL GERAL            bloco (indentado)
 ```
+
+Indentação: conteúdo sob o grupo em **+13.5 pt** (56.1) da margem;
+linhas de borda das bandas de conteúdo começam na indentação.
 
 ### 2. Somente Grupo — `Exemplo01-Referencia-Grupo-Totais.pdf`
 
@@ -292,6 +302,7 @@ Antes de entregar/exportar o relatório, conferir:
 - [ ] Moeda: sem `R$` no detalhe, com `R$` nos totalizadores
 - [ ] Rodapé com divisória cinza, data impressão (esq) / usuário (centro) / `Página N de M` (dir)
 - [ ] Variante de layout correta (grupo+subgrupo / só grupo / sem grupo)
+- [ ] Grupo+Subgrupo: conteúdo indentado +13.5 pt (56.1) e linhas de borda alinhadas à indentação
 - [ ] Colunas longas: largura adequada + `WordWrap` + respiro ~40 pt da vizinha + banda cresce (`CanGrow`; 2 linhas = 32 pt) — nunca estourar na vizinha nem sobrepor a linha de baixo
 - [ ] Datas `dd/mm/aaaa`, texto pt-BR
 - [ ] Nomes de datasource/parâmetros sincronizados com o C#
