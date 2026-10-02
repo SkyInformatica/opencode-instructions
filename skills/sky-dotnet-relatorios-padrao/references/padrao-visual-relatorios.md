@@ -63,6 +63,13 @@ Cada banda tem **altura fixa** — o texto é centralizado verticalmente dentro
 da banda e a linha divisória fica na **borda** (superior/inferior) da própria
 banda, não solta no layout.
 
+**Centralização vertical obrigatória:** o texto da banda deve ficar com o
+mesmo espaço visual acima e abaixo (padding vertical simétrico). Em
+FastReport: objeto de texto com `VertAlign = Center` e altura do objeto =
+altura da banda. Em geração direta (sem FastReport), o baseline é calculado
+para centralizar o **bloco de glifos** (ascendente/descendente), não a linha
+de base — senão o texto "flutua" alto na banda.
+
 **Grid de espaçamento: múltiplos de 8 pt** (16 / 24 / 32 / 48). Valores
 originais medidos no `Exemplo01` (pitch grupo→subgrupo 21.7, detalhe 29.3,
 bloco total grupo 33, bloco total geral 48) foram arredondados para o grid —
@@ -249,6 +256,7 @@ Presente **no final de todas as páginas**, sempre com divisória:
 | Negrito nas linhas de detalhe | só cabeçalho, grupo/subgrupo e totalizadores são bold |
 | Cor fora do preto/cinza (inclusive nas divisórias) | relatório é B&W |
 | Altura de banda fora do grid de 8 pt | espaçamento inconsistente entre relatórios |
+| Texto deslocado verticalmente na banda (não centralizado) | quebra o alinhamento visual — usar `VertAlign=Center` |
 | Linha divisória solta (fora da borda da banda) | desalinha quando conteúdo muda |
 | Número sem alinhamento pelo último dígito | coluna fica "tremida" |
 | `R$` nas linhas de detalhe | só em totalizadores (grupo/geral) |
@@ -261,7 +269,7 @@ Antes de entregar/exportar o relatório, conferir:
 
 - [ ] Margens 15 mm nos 4 lados
 - [ ] Tipografia conforme tabela (Arial, tamanhos exatos)
-- [ ] Bandas com altura múltiplo de 8 pt, texto centralizado na banda
+- [ ] Bandas com altura múltiplo de 8 pt, texto **centralizado verticalmente** (padding simétrico / `VertAlign=Center`)
 - [ ] Divisórias na borda das bandas (cabeçalho de colunas: antes e depois;
       totalizadores: cinza antes e depois; total geral: preta + base dupla)
 - [ ] Alinhamento de colunas: texto/código/data esq, números dir pelo último dígito
