@@ -32,6 +32,8 @@ dos relatórios".
      **referência genérica, NÃO gerada pela skill** (apenas origem das medidas);
    - `examples/Exemplo02-Ocorrencias-LDP-SomenteGrupo-GeradoPelaSkill.pdf/.frx`
      — **somente grupo, sem subgrupo** (gerado pela skill);
+   - `examples/Exemplo03-Depositos-LDP-SomenteGrupo-GeradoPelaSkill.pdf/.frx`
+     — **somente grupo, sem subgrupo** (gerado pela skill);
    - `examples/Exemplo04-Ocorrencias-LDP-GrupoSubgrupo-GeradoPelaSkill.pdf/.frx`
      — **grupo + subgrupo** (gerado pela skill);
    - `examples/Exemplo05-Ocorrencias-LDP-SemGrupo-GeradoPelaSkill.pdf/.frx`

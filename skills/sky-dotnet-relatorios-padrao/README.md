@@ -68,7 +68,7 @@ TOTAL GERAL DO RELATÓRIO     (preta acima e abaixo)
 
 Quando usar: listagem pura de registros, sem agrupamento.
 
-### Versão B — Somente grupo — `Exemplo02` / `Exemplo06`
+### Versão B — Somente grupo — `Exemplo02` / `Exemplo03`
 
 ```
 Cabeçalho
@@ -112,10 +112,6 @@ linhas de borda das bandas de conteúdo acompanham a indentação.
 - `R$` aparece **só nos totalizadores** (linhas de detalhe sem símbolo).
 - Quando há múltiplas colunas de valor (orçado/realizado/desvio), o bloco
   ganha mini-cabeçalho 7 pt.
-- **Label identifica o total:** com várias colunas de valor, o bloco usa o
-  label na linha de cima e os valores alinhados sob as colunas embaixo; o
-  cabeçalho das colunas na linha do label é **opcional** (exemplos 03 e 06
-  usam com).
 
 ## 6. Rodapé
 
