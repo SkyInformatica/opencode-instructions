@@ -152,6 +152,13 @@ total geral 24 pt.
 - Conteúdo longo (ex.: lista de recibos/códigos): alargar a coluna para caber
   o maior valor; se ainda exceder, habilitar **`WordWrap`** na célula para
   quebrar dentro da própria coluna — **nunca estourar sobre a coluna vizinha**.
+- **Quebra exige dois cuidados:**
+  1. **Respiro** para a coluna seguinte — ~40 pt (1.4 cm) entre o fim da
+     coluna com wrap e o início da próxima; texto quebrado não pode grudar
+     na vizinha.
+  2. **A banda cresce** para acomodar as linhas extras — 2 linhas = 32 pt.
+     Em FastReport: `CanGrow` na célula/banda; sem crescimento o texto
+     estoura a banda e **sobrepõe a linha de baixo**.
 - Sem cor alternada (zebra) por padrão.
 
 ## Variações de layout (3 formas padrão)
@@ -261,6 +268,7 @@ Presente **no final de todas as páginas**, sempre com divisória:
 | Cor fora do preto/cinza (inclusive nas divisórias) | relatório é B&W |
 | Altura de banda fora do grid de 8 pt | espaçamento inconsistente entre relatórios |
 | Texto deslocado verticalmente na banda (não centralizado) | quebra o alinhamento visual — usar `VertAlign=Center` |
+| `WordWrap` sem banda que cresce (`CanGrow`) | texto estoura a banda e sobrepõe a linha de baixo |
 | Linha divisória solta (fora da borda da banda) | desalinha quando conteúdo muda |
 | Número sem alinhamento pelo último dígito | coluna fica "tremida" |
 | `R$` nas linhas de detalhe | só em totalizadores (grupo/geral) |
@@ -281,6 +289,6 @@ Antes de entregar/exportar o relatório, conferir:
 - [ ] Moeda: sem `R$` no detalhe, com `R$` nos totalizadores
 - [ ] Rodapé com divisória cinza, data impressão (esq) / usuário (centro) / `Página N de M` (dir)
 - [ ] Variante de layout correta (grupo+subgrupo / só grupo / sem grupo)
-- [ ] Colunas longas: largura adequada + `WordWrap` na célula (nunca estourar na vizinha)
+- [ ] Colunas longas: largura adequada + `WordWrap` + respiro ~40 pt da vizinha + banda cresce (`CanGrow`; 2 linhas = 32 pt) — nunca estourar na vizinha nem sobrepor a linha de baixo
 - [ ] Datas `dd/mm/aaaa`, texto pt-BR
 - [ ] Nomes de datasource/parâmetros sincronizados com o C#
