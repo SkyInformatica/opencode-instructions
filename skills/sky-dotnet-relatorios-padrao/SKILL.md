@@ -35,7 +35,9 @@ dos relatórios".
    - `examples/Exemplo03-Depositos-LDP-SomenteGrupo-GeradoPelaSkill.pdf/.frx`
      — **somente grupo, sem subgrupo** (gerado pela skill);
    - `examples/Exemplo04-Ocorrencias-LDP-GrupoSubgrupo-GeradoPelaSkill.pdf/.frx`
-     — **grupo + subgrupo** (gerado pela skill).
+     — **grupo + subgrupo** (gerado pela skill);
+   - `examples/Exemplo05-Ocorrencias-LDP-SemGrupo-GeradoPelaSkill.pdf/.frx`
+     — **sem grupo e sem subgrupo** (listagem simples, gerado pela skill).
 3. **Mecânica FastReport:** skill `fastreport-dotnet` — lifecycle,
    `RegisterData`, `Prepare`, export, segurança, diagnóstico.
 
