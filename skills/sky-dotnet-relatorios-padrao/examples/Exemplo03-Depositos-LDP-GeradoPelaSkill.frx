@@ -56,8 +56,6 @@
     <GroupFooterBand Name="GroupFooter1" Width="18" Height="1.13">
       <LineObject Name="LinhaTotalGrupoTopo" StartPoint="0.48, 0" EndPoint="18, 0" LineColor="Gray" LineWidth="0.75"/>
       <TextObject Name="TotalGrupoRotulo" Left="0.48" Top="0.03" Width="10" Height="0.5" Font="Arial, 8.5pt, style=Bold" Text="TOTAL GRUPO NOTA DE ENTREGA [Depositos.nota_entrega]"/>
-      <TextObject Name="TotalGrupoValor" Left="10.9" Top="0.6" Width="1.18" Height="0.5" Font="Arial, 8pt, style=Bold" HorizAlign="Right" Format="N2" Text="R$ [Sum(Depositos.valor)]"/>
-      <TextObject Name="TotalGrupoSaldo" Left="13.2" Top="0.6" Width="1.0" Height="0.5" Font="Arial, 8pt, style=Bold" HorizAlign="Right" Format="N2" Text="R$ [Sum(Depositos.saldo)]"/>
       <TextObject Name="TotalGrupoConvertido" Left="15.3" Top="0.6" Width="1.01" Height="0.5" Font="Arial, 8pt, style=Bold" HorizAlign="Right" Format="N2" Text="R$ [Sum(Depositos.convertido)]"/>
       <TextObject Name="TotalGrupoRestituido" Left="16.9" Top="0.6" Width="1.08" Height="0.5" Font="Arial, 8pt, style=Bold" HorizAlign="Right" Format="N2" Text="R$ [Sum(Depositos.restituido)]"/>
       <LineObject Name="LinhaTotalGrupoBase" StartPoint="0.48, 1.12" EndPoint="18, 1.12" LineColor="Gray" LineWidth="0.75"/>
