@@ -146,6 +146,54 @@ Quando o teste resulta **OK**, a tarefa está pronta para entrar em uma versão:
 1. A tarefa de desenvolvimento vai de **Resolvida** (3) para **Fechada** (5).
 2. A tarefa de testes é fechada com **Teste OK - Fechada** (46).
 
+## Fluxo completo de uma tarefa (OBRIGATÓRIO)
+
+Uma tarefa do Redmine quase nunca está sozinha. O mesmo trabalho aparece como **várias issues ligadas por relações**: cópia de sprint em sprint, cópia para o projeto do QS (99), retorno de testes (21), duplicatas. Responder sobre **uma** issue é responder errado.
+
+### Quando aplicar
+
+Sempre que o pedido for sobre **fluxo** ou **custo** de uma tarefa:
+
+- "como está o fluxo da tarefa X", "em que etapa está", "o que aconteceu com a tarefa X"
+- "quanto custou a tarefa X", "quantas horas", "qual o esforço gasto"
+- "por que essa tarefa existe", "qual a tarefa original", "histórico dessa tarefa"
+
+Nesses casos, **nunca** responda só com a issue pedida.
+
+### Regra
+
+1. **Voltar até a primeira tarefa** do fluxo — suba as relações até a origem (a tarefa de onde todas derivam). Se a issue não tiver relação anterior, ela mesma é a origem.
+2. **Percorrer a ligação das tarefas até o fim** — siga as relações até a **última** issue da cadeia, passando por todas as cópias e retornos intermediários.
+3. **Percorrer as duas direções**: para trás (origem) e para frente (destino). A cadeia é uma linha do tempo, não uma árvore — se houver mais de uma origem ou mais de um destino, percorra **todos** os ramos e diga qual chose é o fluxo principal.
+4. **Não pare na primeira página / primeiro nível.** Cadeiras podem ter 3 ou mais cópias, e a cadeia **atravessa projetos** (desenvolvimento → QS → voltar para desenvolvimento). Não filtre por `project_id` ao seguir o fluxo: busque por `issue_id`.
+5. Só considere encerrada a investigação quando a última issue da cadeia não tiver relação que avance o fluxo.
+
+### Como percorrer (API)
+
+1. Issue inicial:
+   ```
+   GET /issues/{id}.json?include=relations
+   GET /issues/{id}/relations.json
+   ```
+   O campo `relations[]` traz cada ligação com `issue_id`, `issue_to_id` e `type`.
+2. Para cada issue vizinha, repita o passo 1 — montando o grafo. Guarde os `issue_id` já visitados para não entrar em laço (relações do tipo "duplicada de" são simétricas).
+   O `type` diz a direção: `Duplicated` = esta é cópia de outra (volte para `issue_to_id`); `Duplicated by` = outra é cópia desta (avance); `Precedes`/`Follows` = ordem; `Relates to` = ligação sem ordem (tarefa de testes, por exemplo).
+3. Ordene a cadeia em ordem cronológica (`created_on`) para montar a linha do tempo do fluxo.
+4. Para o custo, some as horas de **todas** as issues da cadeia:
+   ```
+   GET /time_entries.json?issue_id={id}&limit=100   (loop de paginação)
+   ```
+   Some também `spent_hours` de cada issue e compare com o estimado (`estimated_hours`) para dizer se estourou.
+
+### Como apresentar
+
+Devolva a cadeia inteira em ordem, uma linha por issue:
+
+| # | ID | Tarefa | Projeto | Sprint | Status | Horas |
+|---|----|--------|---------|--------|--------|-------|
+
+E embaixo: **total de horas do fluxo**, quantas issues tem a cadeia e em que status parou. Se alguma issue da cadeia não foi encontrada (sem permissão, deletada), diga qual é — não pule em silêncio.
+
 ## Prioridades das Tarefas
 
 As prioridades são identificadas por `priority_id`:
