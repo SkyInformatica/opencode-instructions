@@ -11,6 +11,19 @@ totalizadores e sumário usados nos relatórios FastReport da Sky.
 > Para a mecânica do FastReport (lifecycle, `RegisterData`, export) ver a
 > skill `fastreport-dotnet`.
 
+### STOP — leia antes de gerar qualquer relatório
+
+Antes de escrever UMA linha de template (.frx) ou código, verificar:
+
+1. Margens 15 mm (42.6 pt) nos 4 lados — nunca violar.
+2. Fonte base **Arial** (regular/bold); sem outra família.
+3. Tamanhos da tabela de tipografia — não inventar tamanho.
+4. Alturas de banda **múltiplos de 8 pt** — não usar altura "quebrada".
+5. Linha divisória sempre na **borda da banda**, não solto no layout.
+6. Alinhamento de números pelo **último dígito** (sinal não desloca).
+7. Variante de layout escolhida entre as 3 padrão (grupo+subgrupo / só grupo / sem grupo).
+8. Nomes de datasource/parâmetros = contrato com o C# (`RegisterData`).
+
 ## Folha e margens
 
 | Item | Valor |
@@ -227,3 +240,34 @@ Presente **no final de todas as páginas**, sempre com divisória:
 - Texto em pt-BR. Datas no formato `dd/mm/aaaa`.
 - Layout vertical (A4 retrato) por padrão; horizontal (paisagem) quando o
   conteúdo da tabela exigir.
+
+## Proibidos
+
+| Item | Por quê |
+|---|---|
+| Fonte fora de Arial (Calibri, Segoe UI, Times, etc.) | famílias diferentes quebram a identidade |
+| Negrito nas linhas de detalhe | só cabeçalho, grupo/subgrupo e totalizadores são bold |
+| Cor fora do preto/cinza (inclusive nas divisórias) | relatório é B&W |
+| Altura de banda fora do grid de 8 pt | espaçamento inconsistente entre relatórios |
+| Linha divisória solta (fora da borda da banda) | desalinha quando conteúdo muda |
+| Número sem alinhamento pelo último dígito | coluna fica "tremida" |
+| `R$` nas linhas de detalhe | só em totalizadores (grupo/geral) |
+| Texto centralizado no corpo | alinhamento padrão é esquerda (números: direita) |
+| Mudar margem/papel/unidades por relatório | divergência só com aval, registrada aqui |
+
+## Checklist pré-geração
+
+Antes de entregar/exportar o relatório, conferir:
+
+- [ ] Margens 15 mm nos 4 lados
+- [ ] Tipografia conforme tabela (Arial, tamanhos exatos)
+- [ ] Bandas com altura múltiplo de 8 pt, texto centralizado na banda
+- [ ] Divisórias na borda das bandas (cabeçalho de colunas: antes e depois;
+      totalizadores: cinza antes e depois; total geral: preta + base dupla)
+- [ ] Alinhamento de colunas: texto/código/data esq, números dir pelo último dígito
+- [ ] Sinal negativo à esquerda, sem deslocar dígitos
+- [ ] Moeda: sem `R$` no detalhe, com `R$` nos totalizadores
+- [ ] Rodapé com divisória cinza, data impressão (esq) / usuário (centro) / `Página N de M` (dir)
+- [ ] Variante de layout correta (grupo+subgrupo / só grupo / sem grupo)
+- [ ] Datas `dd/mm/aaaa`, texto pt-BR
+- [ ] Nomes de datasource/parâmetros sincronizados com o C#

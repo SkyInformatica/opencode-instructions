@@ -40,7 +40,9 @@ dos relatórios".
 
 ## Fluxo
 
-1. Ler `padrao-visual-relatorios.md`.
+1. Ler `padrao-visual-relatorios.md` (e o bloco STOP antes de qualquer código).
 2. Localizar `.frx` de referência (relatório consolidado) se o padrão tiver `TODO` pendente.
 3. Aplicar o padrão ao template, sincronizando datasource/parâmetros com o C#.
-4. Validar: `report.Load` → `RegisterData` → `Prepare` → export (ver skill `fastreport-dotnet`).
+4. Rodar o **checklist pré-geração** do padrão antes de exportar.
+5. Validar: `report.Load` → `RegisterData` → `Prepare` → export (ver skill `fastreport-dotnet`).
+6. Conferência visual: comparar com os PDFs de `examples/` (a skill não "vê" o PDF final — extrair textos/posições pode ser necessário).
