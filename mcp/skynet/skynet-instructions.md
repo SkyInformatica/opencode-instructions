@@ -96,7 +96,7 @@ Se a busca de usuário devolver mais de um homônimo, **pergunte ao usuário** q
 | `privado` | `true` =-restrito; respeite privacidade (só mostre se o usuário tiver contexto legítimo) |
 | `redmineIssueId`, `redmineIssueStatusName`, `redmineIssueFixedVersionName` | Vínculo com tarefa do Redmine (o MCP do Redmine consegue buscar o detalhe) |
 | `urlPesquisa` | Link de consulta no portal do SkyNet |
-| `qtdeAtendimentosPai`, `qtdeAtendimentosFilho` | Atendimento pai/filhos |
+| `qtdeAtendimentosPai`, `qtdeAtendimentosFilho` | Atendimento pai/filhos — **só contagem**; os ids dos vinculados vêm das tarefas de vínculo (ver "Vínculo entre atendimentos" abaixo) |
 | `qtdeRtsVinculados`, `qtdeTermosAceiteVinculados` | RTS (raportes de serviço) e termos de aceite vinculados |
 | `marcadoComoUrgente`, `exibeNoPortal` | Flags |
 
@@ -117,12 +117,24 @@ Tipos mais comuns:
 | `TROCA_PRIORIDADE` | Alteração de prioridade |
 | `RESOLUCAO` / `FINALIZACAO` / `REABERTURA` | Fim, encerramento, reabertura |
 | `VINCULO_A_TAREFA_NO_REDMINE` / `REMOCAO_DO_VINCULO_A_TAREFA_NO_REDMINE` | Ligação/desligamento com o Redmine |
+| `VINCULO_A_ATENDIMENTO_PAI` / `VINCULO_A_ATENDIMENTO_FILHO` (+ `REMOCAO_DO_VINCULO_A_ATENDIMENTO_PAI`, `REMOCAO_DO_VINCULO_A_ATENDIMENTO_FILHO`, `FINALIZACAO_DE_ATENDIMENTO_FILHO`, `REABERTURA_DE_ATENDIMENTO_FILHO`) | Vínculo/desvínculo entre atendimentos pai e filho |
 | `TROCA_FILA_ATENDIMENTO`, `TROCA_CATEGORIA`, `TROCA_PRODUTO_SERVICO`, `TROCA_MODULO`, `TROCA_SUBMODULO` | Reclassificações |
 | `TERMO_ACEITE` | Assinatura/recusa de termo |
 
 A lista completa de tipos está no schema da tool (`tarefas_tipo`). Use-a para filtrar histórico e reduzir ruído — por exemplo, só `COMENTARIO` quando o usuário pergunta o que foi falado.
 
 O histórico vem paginado (`tarefas_offset`, `tarefas_limite`, padrão 50). Se a conversa exigir o histórico inteiro, percorra todas as páginas.
+
+## Vínculo entre atendimentos (pai/filho)
+
+Atendimentos podem ser vinculados entre si (pai/filho — ex.: um atendimento "filho" aberto a partir de uma programação). O detalhe do atendimento só expõe **contagens** (`qtdeAtendimentosPai`, `qtdeAtendimentosFilho`); os **ids** dos vinculados vêm das tarefas de vínculo no histórico:
+
+- Filtre `tarefas_tipo` pelos tipos de vínculo (`VINCULO_A_ATENDIMENTO_PAI`, `VINCULO_A_ATENDIMENTO_FILHO`, `REMOCAO_DO_VINCULO_A_ATENDIMENTO_PAI`, `REMOCAO_DO_VINCULO_A_ATENDIMENTO_FILHO`, `FINALIZACAO_DE_ATENDIMENTO_FILHO`, `REABERTURA_DE_ATENDIMENTO_FILHO`).
+- Em cada tarefa, o campo **`idAtendimentoVinculadoDesvinculado`** traz o **id do outro atendimento** (o pai do atual no `VINCULO_A_ATENDIMENTO_PAI`; o filho no `VINCULO_A_ATENDIMENTO_FILHO`).
+- `descricaoTratada` traz o texto legível com `#id` e o motivo (ex.: `Este atendimento teve o atendimento #2062727 vinculado como seu pai.<br>Motivo do vínculo: Encaminhado para a programação`).
+- Com o id em mãos, **busque o atendimento vinculado com `skynet_atendimento(<id>)`** — o fluxo funciona dos dois lados (ver exemplo na tabela "Exemplos de pergunta → chamada").
+
+Exemplo de fluxo: "ache o atendimento pai de 2063977" → `skynet_atendimento(2063977, tarefas_tipo:["VINCULO_A_ATENDIMENTO_PAI","VINCULO_A_ATENDIMENTO_FILHO"])` → lê `idAtendimentoVinculadoDesvinculado: 2062727` → `skynet_atendimento(2062727)`.
 
 ## Mapa de filtros
 
@@ -191,6 +203,7 @@ Pendências conhecidas:
 | "atendimentos da Clínica X abertos em setembro" | `skynet_buscar_cliente(nome:"Clínica X")` → `skynet_listar_atendimentos(cliente_id:<id>, status:["ABERTO"], data_abertura_de:"2026-09-01T00:00:00", data_abertura_ate:"2026-09-30T23:59:59")` |
 | "atendimentos vinculados à tarefa 4321 do Redmine" | `skynet_listar_atendimentos(redmine_issue_id:4321)` |
 | "qual o prazo/SLA do 12345?" | `skynet_atendimento(12345)` e ler `nomePrioridade`, `dataPrazoAtender` |
+| "quais os atendimentos pai/filho do 12345?" | `skynet_atendimento(12345, tarefas_tipo:["VINCULO_A_ATENDIMENTO_PAI","VINCULO_A_ATENDIMENTO_FILHO","REMOCAO_DO_VINCULO_A_ATENDIMENTO_PAI","REMOCAO_DO_VINCULO_A_ATENDIMENTO_FILHO"])` e ler `idAtendimentoVinculadoDesvinculado`; depois `skynet_atendimento(<id do vinculado>)` para os dados do outro lado |
 
 ## Apresentação da resposta
 
