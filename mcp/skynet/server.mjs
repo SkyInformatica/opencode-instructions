@@ -17,7 +17,6 @@ const TIMEOUT_MS = Number(process.env.SKYNET_TIMEOUT_MS || 30000);
 const DIR = dirname(fileURLToPath(import.meta.url));
 const TOKEN_FILE = process.env.SKYNET_TOKEN_FILE || join(DIR, "token.json");
 // Guia de contexto (exposto como recurso MCP skynet://instrucoes).
-// Default: skynet-instructions.md na raiz .config\opencode (uma pasta acima do server).
 const INSTRUCOES_FILE = process.env.SKYNET_INSTRUCTIONS || join(DIR, "..", "skynet-instructions.md");
 const RENOVAR = "node renovar-token.mjs <usuario> <senha>";
 
@@ -90,7 +89,8 @@ async function api(path, opts = {}) {
 }
 
 // ---------------------------------------------------------------- auxiliares
-const paginacao = (a, padrao = 20, teto = 200) => ({
+// A API recusa max > 100 ("Você pode listar no máximo 100 registro(s) por requisição").
+const paginacao = (a, padrao = 20, teto = 100) => ({
   first: Math.max(Number(a.offset ?? 0), 0),
   max: Math.min(Math.max(Number(a.limite ?? padrao), 1), teto),
 });
@@ -129,6 +129,9 @@ const FILTROS_ATENDIMENTO = {
   status: { type: "array", items: { type: "string", enum: STATUS }, description: "Padrão: todos." },
   prioridade_ids: { type: "array", items: { type: "integer" } },
   produto_servico_ids: { type: "array", items: { type: "integer" } },
+  produto_servico_id: { type: "integer", description: "idProdutoServicoEquals. Ex.: 31 = IMOVEIS AD." },
+  fila: { type: "boolean", description: "true = só sem responsável (fila de aguardando contato); false = só com responsável; omitir = todos." },
+  fila_id: { type: "integer", description: "idFilaEquals — id da fila de atendimento." },
   tipo_interno_ids: { type: "array", items: { type: "integer" } },
   categoria_ids: { type: "array", items: { type: "integer" } },
   area_id: { type: "integer" },
@@ -162,13 +165,13 @@ const TOOLS = [
   {
     name: "skynet_listar_atendimentos",
     description:
-      "Lista atendimentos do SkyNet por filtro — principal uso: atendimentos de um responsável (responsavel_nome ou responsavel_id), por cliente, status, período. 'responsavel_nome' e filtros *_like são cobrem texto; para nome exato descubra o id com skynet_buscar_usuario. Use 'contar: true' para devolver só o total.",
+      "Lista atendimentos do SkyNet por filtro — principal uso: atendimentos de um responsável (responsavel_nome ou responsavel_id), por cliente, status, período, fila (fila: true = sem responsável). 'responsavel_nome' e filtros *_like são cobrem texto; para nome exato descubra o id com skynet_buscar_usuario. Use 'contar: true' para devolver só o total.",
     inputSchema: {
       type: "object",
       properties: {
         ...FILTROS_ATENDIMENTO,
         offset: { type: "integer", default: 0, description: "Pula N registros." },
-        limite: { type: "integer", default: 20, description: "Máx. 200." },
+        limite: { type: "integer", default: 20, description: "Máx. 100 (limite da API)." },
         sort_by: { type: "string", description: "Enviado cru para a API (ex.: 'id desc'). Se omitir, usa a ordenação padrão dela." },
         contar: { type: "boolean", description: "true devolve apenas o total de registros." },
       },
@@ -247,6 +250,9 @@ const HANDLERS = {
         listaStatusIn: a.status,
         listaIdPrioridadeIn: a.prioridade_ids,
         listaIdProdutoServicoIn: a.produto_servico_ids,
+        idProdutoServicoEquals: a.produto_servico_id,
+        usuarioResponsavelAtualIsNull: a.fila,
+        idFilaEquals: a.fila_id,
         listaIdTipoInternoIn: a.tipo_interno_ids,
         listaIdCategoriaIn: a.categoria_ids,
         idAtendimentoAreaEquals: a.area_id,
@@ -262,9 +268,18 @@ const HANDLERS = {
       }),
       ...pag,
     };
-    if (a.contar) return { total: await api("/v1/atendimento/contarClienteEspecifico", { body }) };
-    const atendimentos = await api("/v1/atendimento/listar", { body });
-    return { quantidade: atendimentos?.length ?? 0, ...pag, atendimentos };
+    // Contagem via listarContar (mesmos filtros de RepositorioAtendimentoParams).
+    // O antigo /contarClienteEspecifico devolve 401 para este perfil.
+    if (a.contar) {
+      const r = await api("/v1/atendimento/listarContar", { body: { ...body, first: 0, max: 1 } });
+      if (r?.hasError) throw new Error(JSON.stringify(r.msg));
+      return { total: r?.msg?.total ?? null };
+    }
+    const r = await api("/v1/atendimento/listar", { body });
+    if (r?.hasError) throw new Error(JSON.stringify(r.msg));
+    // /listar devolve {hasError, msg:[...]} nesta API; aceita também array nu.
+    const atendimentos = Array.isArray(r) ? r : r?.msg ?? [];
+    return { quantidade: atendimentos.length, ...pag, atendimentos };
   },
 
   async skynet_buscar_usuario(a) {
@@ -331,7 +346,8 @@ const INSTRUCOES = [
   "",
   "IDs: atendimento por id; responsável e cliente por id (use skynet_buscar_usuario / skynet_buscar_cliente para resolver nomes).",
   "skynet_atendimento já devolve o histórico de tarefas; aumente tarefas_limite se precisar de mais.",
-  "skynet_listar_atendimentos pagina com offset/limite (limite máx. 200); 'contar: true' devolve o total.",
+  "skynet_listar_atendimentos pagina com offset/limite (limite máx. 100); 'contar: true' devolve o total (via /atendimento/listarContar).",
+  "Fila de aguardando contato = sem responsável: use fila:true (usuarioResponsavelAtualIsNull).",
   "Filtros por nome/texto são 'like'. Datas em ISO-8601. Status: ABERTO, EM_ATENDIMENTO, RESOLVIDO, FINALIZADO.",
   "Erro de token expirado (401): peça ao usuário o usuário e a senha e rode `renovar-token.mjs`.",
   "",

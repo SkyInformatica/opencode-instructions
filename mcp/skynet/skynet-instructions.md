@@ -43,7 +43,7 @@ Logs do servidor vão para stderr (`[skynet-mcp] ...`); stdout é só JSON-RPC.
 ## Regra geral: sempre retornar tudo que foi pedido
 
 - A API do SkyNet é paginada (`offset`/`limite`). **Nunca trate uma página como resposta final.**
-- `limite` máximo aceito por esta ferramenta: **200**. Use `limite: 200` e incremente `offset` até o retorno vir vazio ou menor que o limite.
+- `limite` máximo aceito por esta ferramenta: **100** (a API recusa `max` acima de 100). Use `limite: 100` e incremente `offset` até o retorno vir vazio ou menor que o limite.
 - Use `contar: true` para responder "quantos", sem trazer a lista.
 - Se a resposta vier grande para o contexto, apresente um resumo explícito com a **quantidade total**, o recorte exibido e o comando de continuação — nunca trunque silenciosamente.
 
@@ -52,7 +52,7 @@ Logs do servidor vão para stderr (`[skynet-mcp] ...`); stdout é só JSON-RPC.
 | Ferramenta | Use para |
 |---|---|
 | `skynet_atendimento` | Um atendimento pelo id, **com o histórico de tarefas** (comentários, troca de responsável/prioridade, anexos, contatos) |
-| `skynet_listar_atendimentos` | Consultas por filtro: responsável, cliente, status, período, prioridade, produto/serviço, `redmine_issue_id`. `contar: true` devolve só o total |
+| `skynet_listar_atendimentos` | Consultas por filtro: responsável, cliente, status, período, prioridade, produto/serviço, **fila** (`fila: true` = sem responsável), `redmine_issue_id`. `contar: true` devolve só o total |
 | `skynet_buscar_usuario` | Resolver nome de pessoa → id (responsável, atendente, solicitante) |
 | `skynet_buscar_cliente` | Resolver nome/CNS/CNPJ → id de cliente |
 | `skynet_usuario_logado` | Descobrir com qual usuário o MCP está autenticado e quando o token expira |
@@ -76,6 +76,48 @@ Se a busca de usuário devolver mais de um homônimo, **pergunte ao usuário** q
 | `FINALIZADO` | Encerrado |
 
 "Fila de trabalho" costuma significar `ABERTO` + `EM_ATENDIMENTO`.
+
+## Atendimentos na fila
+
+Conceito central para consultas de volume. Existem **dois sentidos** de "fila" — pergunte/infira pelo contexto e deixe claro na resposta qual você usou:
+
+| Sentido | Definição | Como filtrar |
+|---|---|---|
+| **Fila de aguardando contato** (sentido padrão deste MCP) | Atendimento **sem responsável**: `nomeResponsavelAtual` vazio | `fila: true` (API: `usuarioResponsavelAtualIsNull: true`) |
+| **Fila de trabalho** (uso coloquial) | Ainda em andamento: `status` `ABERTO` + `EM_ATENDIMENTO` | `status: ["ABERTO","EM_ATENDIMENTO"]` |
+
+### Filtros da tool
+
+| Parâmetro | Efeito |
+|---|---|
+| `fila: true` | só **sem** responsável (fila de aguardando contato) |
+| `fila: false` | só **com** responsável |
+| omitir `fila` | todos |
+| `fila_id` | id exato da fila de atendimento (`idFilaEquals`) — só se o usuário souber o id |
+
+Combine sempre com `status` quando fizer sentido (na prática a fila de aguardando contato é composta por atendimentos `ABERTO`; consultado em 06/10/2026: ≈ 575 itens, todos `ABERTO`).
+
+### Qualificação da fila — campo `indicadorFila`
+
+| Valor | Significado |
+|---|---|
+| `NAO_LIDO` | na fila, ainda não lido por ninguém |
+| `CLIENTE_AGUARDANDO_RESPOSTA` | cliente aguardando retorno |
+| `null` | sem indicador |
+
+### Fila por produto/serviço
+
+- **Não há filtro por nome de produto** (`nomeProdutoServicoLike` é ignorado em silêncio pela API). Filtrar por **id**:
+  - `produto_servico_ids: [31]` (lista) ou `produto_servico_id: 31` (exato).
+  - **Id conhecido: `31` = IMOVEIS AD.** Outros ids: descobrir por biseção (o payload só traz `nomeProdutoServico`, e `/v1/produtoservico/*` dá 403). Produto "IMOVEIS" simples tem id desconhecido (0 itens na fila, invisível para bisseção).
+- Para **sistema/porta de abertura** use `aberto_via` (`SISTEMA`, `PORTAL`, `WEB_SERVICE`) — é filtro por lista, não precisa de id.
+
+### Respostas padrão
+
+- **"quantos na fila?"** → `skynet_listar_atendimentos(fila:true, contar:true)` → `total`. Nunca conte paginação manualmente.
+- **"lista da fila"** → `skynet_listar_atendimentos(fila:true, limite:100)` e percorra `offset` até virar vazio/menor que 100.
+- **"fila do produto X"** → `skynet_listar_atendimentos(fila:true, produto_servico_ids:[<id>], contar:true)` (base 06/10/2026: Imóveis AD ≈ 50).
+- Ao apresentar: diga **qual fila** (aguardando contato vs. trabalho) e o **corte** (produto/status/data) usado — sem isso o número é ambíguo.
 
 ## Campos do atendimento (`skynet_atendimento` / `skynet_listar_atendimentos`)
 
@@ -148,6 +190,9 @@ Exemplo de fluxo: "ache o atendimento pai de 2063977" → `skynet_atendimento(20
 | `status` | `listaStatusIn` | lista |
 | `prioridade_ids` | `listaIdPrioridadeIn` | lista |
 | `produto_servico_ids` | `listaIdProdutoServicoIn` | lista (id, não nome) |
+| `produto_servico_id` | `idProdutoServicoEquals` | exato (ex.: `31` = IMOVEIS AD) |
+| `fila` | `usuarioResponsavelAtualIsNull` | `true` sem responsável / `false` com responsável / omitir todos |
+| `fila_id` | `idFilaEquals` | exato (id da fila) |
 | `tipo_interno_ids` | `listaIdTipoInternoIn` | lista |
 | `categoria_ids` | `listaIdCategoriaIn` | lista |
 | `area_id` | `idAtendimentoAreaEquals` | exato |
@@ -160,9 +205,12 @@ Exemplo de fluxo: "ache o atendimento pai de 2063977" → `skynet_atendimento(20
 
 Limitações conhecidas da API (não tente contornar com filtros inventados):
 
-- **Não há filtro por nome de produto/serviço, de solicitante por id, nem de cliente por nome/CNS direto no atendimento.** Resolva para id com `skynet_buscar_cliente` / `skynet_buscar_usuario` e filtre por id.
+- **Não há filtro por nome de produto/serviço no atendimento**: `nomeProdutoServicoLike`/`Equals` são **ignorados em silêncio** (total não muda) e nem existem em `RepositorioAtendimentoParams`. Resolva para id com a tabela abaixo ou com `skynet_buscar_cliente` / `skynet_buscar_usuario` e filtre por id.
+- **Não há endpoint aberto de produtos/serviços**: `/v1/produtoservico/*` devolve 403 para este perfil. Os ids de produto não vêm no payload do atendimento (só `nomeProdutoServico`). Ids conhecidos foram descobertos por biseção na fila: **`31` = IMOVEIS AD** (produto "IMOVEIS" simples existe, id desconhecido — 0 itens na fila, invisível para bisseção).
 - `*Like` é busca parcial: "Silva" pode devolver homônimos. Se vier resultado ambíguo, refine ou pergunte.
 - `sort_by` vai cru para a API (`sortBy`) e a sintaxe não está documentada. Se a API recusar, repita sem `sort_by`.
+
+Fonte da verdade dos filtros de atendimento: definição `RepositorioAtendimentoParams` do swagger (cópia local: `%USERPROFILE%\Downloads\swagger.json`, 2026-10; o servidor não hospeda swagger — `swagger-ui`/`api-docs` dão 404).
 
 ## Diagnóstico
 
@@ -173,6 +221,7 @@ Limitações conhecidas da API (não tente contornar com filtros inventados):
 | Login recusado (`E-mail incorreto ou senha incorreta`) | Confirme os dados com o usuário antes de tentar de novo. |
 | Lista vazia sem erro | Pode ser (a) filtro restritivo demais, (b) o usuário não tem permissão para ver aquele cliente/atendimento, (c) consulta no período errado. Cheque com `skynet_usuario_logado` e reduza filtros um a um. |
 | `403` / acesso negado | O token é válido mas o perfil não tem permissão. Informe o usuário e use o MCP do Redmine ou acesso humano. |
+| `403` em `/v1/usuario/*` ou `/v1/cliente/*` | Perfil do token atual bloqueado nesses recursos (ex.: com o token de FERNANDO id54, `skynet_buscar_usuario`/`skynet_buscar_cliente` falham 403; só `/v1/atendimento/*` funciona). Renovar com conta de perfil com acesso, ou viver sem buscar usuário/cliente enquanto isso. |
 | Timeout | A API pode demorar em relatórios grandes. Reduza `limite` e filtre por período/mês. |
 
 ## Renovação do token
@@ -190,7 +239,8 @@ Pendências conhecidas:
 
 - Se a conta exigir **duplo fator**, o login pode não devolver token direto; o script avisa e é preciso gerar o token por outro caminho e gravar em `token.json`.
 - Para restringir o arquivo do token: `icacls "mcp\skynet\token.json" /inheritance:r /grant:r "%USERNAME%:F"`.
-- A sintaxe de `sort_by` (`sortBy`) não está documentada no swagger; o padrão é omitir e deixar a ordenação padrão da API.
+- A sintaxe de `sort_by` (`sortBy`) não está documentada (é string crua em `RepositorioAtendimentoParams`); o padrão é omitir e deixar a ordenação padrão da API.
+- ~~`contar: true` quebrava~~ (antigo endpoint `contarClienteEspecifico` 401): corrigido — a contagem usa `POST /v1/atendimento/listarContar` com os mesmos filtros e lê `msg.total`. Lembrete: `listarContar` é **POST** (GET/PUT dão 405) e `max`/`first` vão no body.
 
 ## Exemplos de pergunta → chamada
 
@@ -200,6 +250,7 @@ Pendências conhecidas:
 | "o que o cliente falou no atendimento 12345?" | `skynet_atendimento(12345, tarefas_tipo:["COMENTARIO","COMENTARIO_DO_CLIENTE"])` |
 | "quais os anexos do 12345?" | `skynet_atendimento(12345, tarefas_tipo:["COMENTARIO","COMENTARIO_DO_CLIENTE","RESOLUCAO"])` e olhar `listaArquivos` |
 | "quantos atendimentos abertos a Maria tem?" | `skynet_buscar_usuario(nome:"Maria")` → `skynet_listar_atendimentos(responsavel_id:<id>, status:["ABERTO","EM_ATENDIMENTO"], contar:true)` |
+| "quantos na fila de aguardando contato do Imóveis?" | `skynet_listar_atendimentos(fila:true, produto_servico_ids:[31], contar:true)` → `total` (base 06/10: ~50) |
 | "atendimentos da Clínica X abertos em setembro" | `skynet_buscar_cliente(nome:"Clínica X")` → `skynet_listar_atendimentos(cliente_id:<id>, status:["ABERTO"], data_abertura_de:"2026-09-01T00:00:00", data_abertura_ate:"2026-09-30T23:59:59")` |
 | "atendimentos vinculados à tarefa 4321 do Redmine" | `skynet_listar_atendimentos(redmine_issue_id:4321)` |
 | "qual o prazo/SLA do 12345?" | `skynet_atendimento(12345)` e ler `nomePrioridade`, `dataPrazoAtender` |
