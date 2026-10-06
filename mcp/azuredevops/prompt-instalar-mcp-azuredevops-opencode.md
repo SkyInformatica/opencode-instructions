@@ -44,7 +44,7 @@ Passos:
 
 2. Configure o arquivo de instruções do Azure DevOps — **baixe SEMPRE, mesmo que o MCP já esteja instalado**:
     - Baixe a versão atual do repositório:
-      https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/azure-instructions.md
+      https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/mcp/azuredevops/azure-instructions.md
     - Salve em `%USERPROFILE%\.config\opencode\azure-instructions.md`
     - Se o arquivo já existir, sobrescreva com a versão baixada — **não pule o download**. Esse arquivo dá contexto à skill/agente sobre a organização, domínios carregados e convenções de uso.
 

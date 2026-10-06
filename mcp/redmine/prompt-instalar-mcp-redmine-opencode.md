@@ -28,7 +28,7 @@ Passos:
 
 2. Baixe o arquivo de instruções do Redmine — **este passo roda SEMPRE, mesmo que o MCP já esteja instalado**:
    - Baixe a versão atual do repositório:
-     https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/redmine-instructions.md
+     https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/mcp/redmine/redmine-instructions.md
    - Salve em `%USERPROFILE%\.config\opencode\redmine-instructions.md`
     - Se o arquivo já existir, sobrescreva com a versão baixada — **não pule o download** quando o `mcp.redmine` já estiver configurado: o `redmine-instructions.md` local pode estar desatualizado e precisa ser sempre atualizado com uma nova cópia. Esse arquivo é usado pela variável `REDMINE_REQUEST_INSTRUCTIONS` para dar contexto à tool `redmine_request`.
 

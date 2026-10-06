@@ -14,7 +14,7 @@ O repositório atende **duas versões** do OpenCode em pastas separadas, para mi
 |---|---|---|
 | **`v2/`** | **V2 — padrão atual** | config nativa, agents, prompts e plugins V2 |
 | `v1/` | V1 (legado) | config antiga (`small_model`, `plugin`), agents e prompts V1 |
-| **raiz** | **compartilhado** | `rules/`, `skills/`, arquivos de instrução (MCP/Redmine/Azure) e os prompts de MCP e de ambiente Windows — válidos nas duas versões |
+| **raiz** | **compartilhado** | `rules/`, `skills/`, `mcp/` (instruções e prompts de instalação dos MCPs, um por servidor) e o prompt de ambiente Windows — válidos nas duas versões |
 
 **Os comandos deste README usam os prompts de `v2/prompts/` (padrão).** Se a máquina ainda roda OpenCode V1, troque `/v2/prompts/` por `/v1/prompts/` na URL do prompt. `rules/` e `skills/` são as mesmas nos dois — instale sempre da raiz.
 
@@ -231,7 +231,7 @@ Configura o MCP global no `opencode.json` com:
 Em uma sessão do OpenCode, use o prompt:
 
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-instalar-mcp-redmine-opencode.md para configurar o MCP do redmine
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/mcp/redmine/prompt-instalar-mcp-redmine-opencode.md para configurar o MCP do redmine
 ```
 
 ## Instalar MCP Azure DevOps
@@ -248,7 +248,23 @@ Configura o MCP global no `opencode.json` com:
 Em uma sessão do OpenCode, use o prompt:
 
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompt-instalar-mcp-azuredevops-opencode.md para configurar o MCP do Azure DevOps
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/mcp/azuredevops/prompt-instalar-mcp-azuredevops-opencode.md para configurar o MCP do Azure DevOps
+```
+
+## Instalar MCP SkyNet
+
+Servidor MCP que conecta o OpenCode ao SkyNet (sistema de atendimentos da Sky), expondo as tools `skynet_atendimento`, `skynet_listar_atendimentos`, `skynet_buscar_usuario`, `skynet_buscar_cliente` e `skynet_usuario_logado`, além do recurso de contexto `skynet://instrucoes`. É um servidor próprio, escrito em Node.js, sem dependências — todas as consultas são **somente leitura**: não abre, altera, finaliza nem exclui atendimentos.
+
+Configura o MCP global no `opencode.json` com:
+- **URL padrão**: `https://erp.skyinformatica.com.br` (a API fica em `<host>/skynet/api`)
+- **Autenticação por token**: o MCP não guarda usuário/senha — o token (~8h) é gerado pelo script `renovar-token.mjs` e gravado em `token.json` (git-ignored); quando expira, o agente pede usuário e senha ao usuário para renovar
+- **Instruções de contexto**: baixa `skynet-instructions.md` deste repositório para `%USERPROFILE%\.config\opencode\` (raiz) e aponta `SKYNET_INSTRUCTIONS` para ele; servidor e script de renovação ficam em `%USERPROFILE%\.config\opencode\mcp\skynet\`
+- Roda via `node.exe` (Node.js 18+), exigindo preferencialmente o instalador oficial do Node
+
+Em uma sessão do OpenCode, use o prompt:
+
+```
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/mcp/skynet/prompt-instalar-mcp-skynet-opencode.md para configurar o MCP do SkyNet
 ```
 
 ## Projetos Sky
@@ -261,8 +277,8 @@ Cada projeto mantém seu `AGENTS.md` (contexto de produto) e `.opencode/skills/`
 - `v1/` — mesma estrutura para o OpenCode **V1 (legado)**: `global/`, `agents/`, `prompts/`
 - `rules/` — regras de engenharia (compartilhadas), carregadas via `instructions`
 - `skills/` — skills globais da Sky (compartilhadas, prefixadas por time — ver taxonomia abaixo)
-- `azure-instructions.md`, `redmine-instructions.md` — contexto dos MCPs (compartilhados)
-- `prompt-instalar-mcp-*.md`, `prompt-configurar-ambiente-windows.md` — prompts compartilhados (valem V1 e V2)
+- `mcp/` — MCPs da Sky, uma pasta por servidor (`redmine/`, `skynet/`, `azuredevops/`): instruções de contexto (`*-instructions.md`), prompts de instalação (`prompt-instalar-mcp-*.md`) e código de apoio (ex.: `skynet/server.mjs`)
+- `prompt-configurar-ambiente-windows.md` — prompt compartilhado (vale V1 e V2)
 - `OPENCODE.md` — guia completo de setup OpenCode
 
 ## Taxonomia de nomes

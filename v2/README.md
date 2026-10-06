@@ -43,7 +43,7 @@ v2/
 | ponytail | ✅ port V2 neste repo (`v2/plugins/ponytail/`); PR [#907](https://github.com/DietrichGebert/ponytail/pull/907) (aberto) tem bloqueio do reviewer (setup retornando hooks é ignorado no V2); upstream 4.x ainda V1 | prompt: `v2/prompts/prompt-instalar-ponytail-opencode.md` |
 | caveman | ✅ port V2 neste repo (`v2/plugins/caveman/`, index.js byte-idêntico ao plugin.js); installer upstream ainda grava plugin V1 | prompt: `v2/prompts/prompt-instalar-caveman-opencode.md` |
 
-Prompts de MCP (azuredevops, redmine) e de ambiente Windows ficam na raiz e são válidos nos dois — o V2 traduz a forma V1 da config `mcp` automaticamente.
+Prompts de MCP ficam em `mcp/` (uma pasta por servidor — `redmine/`, `skynet/`, `azuredevops/`) e o de ambiente Windows na raiz; todos válidos nos dois — o V2 traduz a forma V1 da config `mcp` automaticamente.
 
 ## Como usar
 

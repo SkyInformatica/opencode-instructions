@@ -4,6 +4,13 @@ Novidades deste repositório para quem usa as regras, skills e plugins da Sky.
 Texto em linguagem de usuário final, gerado a partir dos diffs (padrão da skill `sky-oquehadenovo`).
 O que não muda a forma de trabalhar de quem usa o repo (renomeação interna, refatoração, CI, docs de estrutura) não entra.
 
+## 2026-10-06
+
+### Novos recursos e melhorias
+
+- MCP do SkyNet: lançada a instalação oficial do MCP do sistema de atendimentos, com prompt próprio e instruções de contexto, no mesmo padrão dos MCPs de Redmine e Azure DevOps. O servidor e o script de renovação do token (~8h) ficam em `%USERPROFILE%\.config\opencode\mcp\skynet\` e as instruções na raiz do `.config\opencode\`; o README ganhou a seção "Instalar MCP SkyNet".
+- MCPs: os arquivos de instalação de Redmine e Azure DevOps (prompts e instruções de contexto) foram organizados na pasta `mcp/`, com uma subpasta exclusiva por servidor (`mcp/redmine/` e `mcp/azuredevops/`) — os comandos do README e os downloads das instruções já usam os novos caminhos, sem mudança na instalação para quem usa os prompts.
+
 ## 2026-09-30 — semana de 24 a 30/09/2026
 
 ### Novos recursos e melhorias
