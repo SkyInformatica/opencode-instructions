@@ -1,6 +1,6 @@
 {
   "name": "encoding-auto",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": true,
   "description": "OpenCode V2 plugin — auto-detects file encoding on read/edit/write (Sky port)",
   "type": "module",

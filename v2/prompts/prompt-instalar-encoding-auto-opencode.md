@@ -37,11 +37,12 @@ Passos:
           "private": true,
           "type": "module",
           "dependencies": {
+            "@opencode/plugin": "^2.0.0",
             "chardet": "^2.2.0",
             "iconv-lite": "^0.7.0"
           }
         }
-      - Se já existir, apenas adicione `chardet` e `iconv-lite` em "dependencies" (não remova/altere as deps existentes; preserve o resto do arquivo).
+      - Se já existir, apenas adicione `@opencode/plugin`, `chardet` e `iconv-lite` em "dependencies" (não remova/altere as deps existentes; preserve o resto do arquivo).
       - Execute no prompt: `cd %USERPROFILE%\.config\opencode && npm install`
       - Não é preciso registrar o plugin no opencode.json: o OpenCode V2 descobre automaticamente arquivos/ pacotes em %USERPROFILE%\.config\opencode\plugins\ (subpasta com index.ts = pacote).
 
