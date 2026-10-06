@@ -36,7 +36,7 @@ v2/
 
 | Plugin | É V2-compatível hoje? | Onde acompanhar |
 | --- | --- | --- |
-| encoding-auto | ✅ portado neste repo (`v2/plugins/encoding-auto/`) | prompt: `v2/prompts/prompt-instalar-encoding-auto-opencode.md` (atualização: `v2/prompts/prompt-atualizar-encoding-auto-opencode.md`) |
+| encoding-auto | ✅ portado neste repo (`v2/plugins/encoding-auto/`) | prompt: `v2/prompts/prompt-instalar-encoding-auto-opencode.md` |
 | rtk | ⏳ lógica universal dual-API via PR [#4187](https://github.com/rtk-ai/rtk/pull/4187) (aberto) — **sem flag `--opencode-v2`**; porém o PR exporta o plugin como função, e o loader 2.0.x exige `export default` de objeto `{ id, setup }` (senão `Expected object`); prompt converte | prompt instala, converte o shape e valida: `v2/prompts/prompt-instalar-rtk-opencode.md` |
 | secret-redactor | ❌ upstream ainda V1 (0.5.1) | prompt avisa e manda aguardar o port — não há alternativa de redação no V2 hoje (rehydra também bloqueado) |
 | rehydra | ❌ upstream ainda V1 — o `setup()` quebra no V2 com `TypeError: undefined is not an object (evaluating 'client.app')` (testado em 0.13.0); port em andamento no time | prompt bloqueia a instalação em V2; destrava quando sair release > 0.13.0 com suporte V2 |
