@@ -10,6 +10,7 @@ O que não muda a forma de trabalhar de quem usa o repo (renomeação interna, r
 
 - MCP do SkyNet: lançada a instalação oficial do MCP do sistema de atendimentos, com prompt próprio e instruções de contexto, no mesmo padrão dos MCPs de Redmine e Azure DevOps. O servidor e o script de renovação do token (~8h) ficam em `%USERPROFILE%\.config\opencode\mcp\skynet\` e as instruções na raiz do `.config\opencode\`; o README ganhou a seção "Instalar MCP SkyNet".
 - MCPs: os arquivos de instalação de Redmine e Azure DevOps (prompts e instruções de contexto) foram organizados na pasta `mcp/`, com uma subpasta exclusiva por servidor (`mcp/redmine/` e `mcp/azuredevops/`) — os comandos do README e os downloads das instruções já usam os novos caminhos, sem mudança na instalação para quem usa os prompts.
+- MCP do Redmine: as instruções de contexto ficaram mais completas sobre o fluxo das tarefas — o que conta como liberar versão (sair de Resolvida para Fechada ou preencher a Versão estável), que fechar a tarefa de desenvolvimento não fecha a tarefa de testes quando ela ainda está no estoque do QS, e em quais tarefas o teste é dispensado. Também entrou a referência da API de indicadores do plugin, que devolve o fluxo de desenvolvimento já consolidado (datas e tempos em dias de todas as tarefas encadeadas, horas somadas, etapa atual e flags como "versão liberada antes dos testes"), com o significado de cada campo.
 
 ## 2026-09-30 — semana de 24 a 30/09/2026
 

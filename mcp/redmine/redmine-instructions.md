@@ -115,7 +115,7 @@ Se uma tarefa não for concluída na sprint, ela **continua na sprint seguinte**
 
 1. É feita uma **cópia** da tarefa para a próxima sprint (a cópia fica registrada nas **relações entre tarefas** no Redmine).
 2. A tarefa atual fica com status **Continua proxima sprint** (41).
-3. A cópia segue o fluxo normal até ser **Resolvida** (3).
+3. A cópia segue o fluxo normal até ser **Resolvida** (3). Se a tarefa que está sendo copiada está **Em andamento** (2), a cópia já nasce **Em andamento** e com o **mesmo desenvolvedor** responsável — não é preciso remanejar.
 4. Isso pode se repetir (2, 3 ou mais cópias). **Somente a última tarefa da cadeia de cópias** fica **Resolvida**; as anteriores (das sprints anteriores) ficam **Continua proxima sprint**.
 
 ### Fluxo da equipe QS (testes)
@@ -145,6 +145,42 @@ Quando o teste resulta **OK**, a tarefa está pronta para entrar em uma versão:
 
 1. A tarefa de desenvolvimento vai de **Resolvida** (3) para **Fechada** (5).
 2. A tarefa de testes é fechada com **Teste OK - Fechada** (46).
+
+### Liberação de versão
+
+**Liberar a versão** é uma destas duas coisas na tarefa de desenvolvimento — ou
+as duas:
+
+1. **A tarefa sair de Resolvida (3), indo para Fechada (5).** A `Versão estável`
+   **nem sempre é preenchida** (às vezes esquecem), então o fechamento da DEVEL
+   por si só já significa que a versão foi liberada.
+2. **Preencher o campo Versão estável**, com a tarefa ainda em **Resolvida** — é o
+   caminho normal: a versão foi liberada e ainda falta fechar a tarefa.
+
+Vale como "versão liberada" o que acontecer **primeiro**: o preenchimento da
+`Versão estável` ou a passagem de Resolvida para Fechada. É histórico: se a
+versão foi liberada antes de o teste terminar, esse registro permanece mesmo
+depois que a tarefa de testes for fechada.
+
+### Fechar a DEVEL não fecha a tarefa do QS
+
+O fechamento automático da tarefa de testes (de **Teste OK** para **Teste OK -
+Fechada**) só acontece quando a tarefa do QS está em **Teste OK** no momento em
+que a DEVEL passa para **Fechada**.
+
+Se a tarefa do QS estiver em **Nova**, **Em andamento** ou **Teste NOK**, fechar
+a DEVEL **não** fecha a QS. Isso é comum e esperado: é possível ter DEVEL
+**Fechada** com a QS ainda no **estoque do QS** (Nova), ou até com a QS ainda não
+criada. A QS é fechada depois, quando chegar em **Teste OK** ou **Teste NOK**.
+
+### Teste dispensado
+
+Algumas tarefas não passam pelo QS por decisão própria, e nelas **não existe**
+teste a comparar:
+
+- tarefas que vão para **Fechada - sem desenvolvimento** (49);
+- tarefas de **Conversão** (tracker 5);
+- tarefas com o campo **Teste QS** = **Não necessita teste**.
 
 ## Fluxo completo de uma tarefa (OBRIGATÓRIO)
 
@@ -193,6 +229,112 @@ Devolva a cadeia inteira em ordem, uma linha por issue:
 |---|----|--------|---------|--------|--------|-------|
 
 E embaixo: **total de horas do fluxo**, quantas issues tem a cadeia e em que status parou. Se alguma issue da cadeia não foi encontrada (sem permissão, deletada), diga qual é — não pule em silêncio.
+
+## API de indicadores do plugin (o fluxo já vem consolidado)
+
+Antes de percorrer a cadeia de relações à mão, use a API de indicadores do
+plugin. Ela devolve **um registro por fluxo de desenvolvimento** — a demanda
+começa numa issue e termina em outra — com datas, tempos e horas de todas as
+tarefas encadeadas.
+
+### Autenticação e rotas
+
+Precisa da chave de API no header `X-Redmine-API-Key`.
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| GET | `/issues/{id}/indicadores.json` | Indicador do fluxo. Aceita **qualquer** tarefa do fluxo (DEVEL, QS ou cópia do meio) e devolve o mesmo registro. |
+| GET | `/projects/{id}/indicadores.json` | Indicadores de um projeto (ID ou identificador). Exige o módulo Indicadores habilitado e permissão de visualização. |
+| GET | `/indicadores.json` | Todos os indicadores visíveis, com filtros e paginação. |
+
+```sh
+curl -H "X-Redmine-API-Key: $REDMINE_API_KEY" "$REDMINE_URL/issues/96258/indicadores.json"
+```
+
+A resposta vem em `{"indicadores": [...], "total_count": N, "offset": 0, "limit": 25}`.
+Filtros no estilo Redmine (`f[]`, `op[campo]`, `v[campo][]`) ou como parâmetro
+direto (`?projeto=Equipe Notar`), com paginação `limit`/`offset` (máximo 100) e
+ordenação `?sort=tempo_gasto:desc`. Erros: `401` chave inválida, `404` tarefa ou
+projeto não encontrado/sem permissão, `422` filtro ou ordenação inválidos.
+
+### O que significa cada campo
+
+Sem sufixo = lado **DEVEL** do fluxo. Com sufixo `_qs` = lado **QS** (vazio se o
+fluxo não passou pelo QS).
+
+**Identificação do fluxo**
+
+| Campo | Significado |
+|-------|-------------|
+| `id_tarefa` | **Primeira tarefa DEVEL** do fluxo — a chave lógica do indicador. |
+| `id_ultima_tarefa` | Última tarefa DEVEL (após continuidades e retornos de testes). |
+| `id_tarefa_qs` / `id_ultima_tarefa_qs` | Primeira e última tarefa de QS do fluxo. |
+| `tipo` | Tracker da primeira DEVEL (Defeito, Funcionalidade, Conversão…). |
+| `status` | Status atual da **última** DEVEL. |
+| `projeto` / `sprint` | Projeto e sprint da primeira DEVEL. |
+| `sprint_ultima_tarefa` | Sprint da última DEVEL. |
+| `atribuido_para` | Responsável da primeira DEVEL. |
+| `categoria` | Categoria da primeira DEVEL. |
+| `sistema`, `origem`, `skynet`, `cliente`, `clientenome`, `clientecidade`, `qtde_skynet` | Campos personalizados da primeira DEVEL. |
+
+**Planejamento**
+
+| Campo | Significado |
+|-------|-------------|
+| `data_prevista` | Data prevista (due date) da primeira DEVEL. |
+| `tarefa_nao_planejada_imediata` | `Sim`/`Não` — alguma DEVEL do fluxo é não planejada imediata. |
+| `tarefa_antecipada_sprint` | `Sim`/`Não` — alguma DEVEL foi antecipada na sprint. |
+| `versao_estavel` / `versao_teste` | Versões da última DEVEL. A `versao_estavel` preenchida com a tarefa em Resolvida é a etapa "versão liberada, falta fechar". |
+| `teste_no_desenvolvimento` | Teste feito dentro do desenvolvimento (`Não testada`, `Teste OK`, `Teste NOK`). |
+| `tarefa_complementar` | `SIM`, `NAO` ou o rótulo de tarefa não planejada (tarefas de teste, vídeo, documentação, suporte, planejamento). |
+
+**Tempos e datas** (tempos em **dias**, as datas lidas do histórico das tarefas)
+
+| Campo | Significado |
+|-------|-------------|
+| `tempo_estimado` / `tempo_gasto` | Soma das horas estimadas / gastas de **todas** as DEVEL do fluxo. |
+| `data_criacao_ou_atendimento` | Data de criação da primeira DEVEL (ou o campo "Data de_ATendimento", se houver). |
+| `data_andamento` | Início do desenvolvimento no primeiro ciclo DEVEL. |
+| `data_resolvida` / `data_fechamento` | Resolução e fechamento da última DEVEL. |
+| `tempo_andamento` | Da criação até o início do desenvolvimento. |
+| `tempo_resolucao` | Do início do desenvolvimento até a resolução. |
+| `tempo_fechamento` | Da resolução até o fechamento. |
+| `tempo_para_encaminhar_qs` | Da resolução da DEVEL até a criação da tarefa QS. |
+| `tempo_total_devel` | Da criação até a resolução. |
+| `tempo_total_liberar_versao` | Da criação até o fechamento (liberar a versão). |
+| `tempo_total_devel_concluir_testes` | Da criação até a conclusão dos testes no QS. |
+| `tempo_*_detalhes` | Texto do intervalo, ex.: `De 01/10/2026 até 01/10/2026`. |
+| `qtd_retorno_testes_qs` | Quantas vezes o fluxo voltou do QS para o DEVEL. |
+| `qtd_retorno_testes_devel` | Quantas dessas voltadas foram criadas como **Retorno de testes**. |
+
+**QS** (vazio se o fluxo não passou pelo QS)
+
+| Campo | Significado |
+|-------|-------------|
+| `status_qs` | Status atual da última tarefa QS. |
+| `projeto_qs` / `sprint_qs` | Projeto e sprint da primeira QS. |
+| `atribuido_para_qs` | Responsável da primeira QS. |
+| `tempo_estimado_qs` / `tempo_gasto_qs` | Soma das horas estimadas / gastas de todas as QS. |
+| `houve_teste_nok` | `true` se alguma QS passou por **Teste NOK**. |
+| `categoria_teste_nok` / `categoria_teste_nok_todas_tarefas_qs` | Categoria do Teste NOK: a primeira e a lista de todas. |
+| `data_criacao_qs`, `data_andamento_qs`, `data_resolvida_qs`, `data_fechamento_qs` | Datas do ciclo de testes. |
+| `tempo_andamento_qs`, `tempo_resolucao_qs`, `tempo_fechamento_qs` | Tempos do ciclo de testes, em dias. |
+| `tempo_concluido_testes_versao_liberada` | Da conclusão dos testes até o fechamento da DEVEL. |
+| `tempo_total_testes` | Da criação da QS até a conclusão (quando o teste deu OK). |
+
+**Situação atual e flags**
+
+| Campo | Significado |
+|-------|-------------|
+| `etapa_atual` | Etapa em que o fluxo está agora: `E01` estoque, `E02` em andamento, `E03` aguarda testes no desenvolvimento, `E04` aguarda encaminhar ao QS, `E05` estoque no QS, `E06` QS em andamento, `E07` aguarda versão / retorno de testes, `E08` versão liberada, `E99` interrompida, cancelada ou desconhecida. O sufixo `_RT` marca as etapas depois de um retorno de testes. |
+| `equipe_responsavel_atual` | Onde o fluxo está: `DEVEL`, `QS` ou `FECHADA`. |
+| `data_etapa_atual` | Data em que a etapa atual foi identificada. |
+| `tarefa_fechada_sem_testes` | `SIM` quando a versão foi liberada antes de o teste do QS concluir. Registro histórico: não volta de `SIM` para `NAO`. É `NAO` quando o teste é dispensado (`Fechada - sem desenvolvimento`, Conversão ou "Teste QS" = `Não necessita teste`) ou quando a QS foi cancelada. |
+| `motivo_situacao_desconhecida` | Por que a etapa caiu em `E99_DESCONHECIDA` (ex.: tarefa `Continua proxima sprint` sem cópia). |
+
+Use a API para o consolidado e as issues para o detalhe (descrição, journals,
+anexos) de uma tarefa específica. A referência completa está em
+`docs/api_indicadores.md`, no repositório do plugin `sky_redmine_plugin`.
 
 ## Prioridades das Tarefas
 
