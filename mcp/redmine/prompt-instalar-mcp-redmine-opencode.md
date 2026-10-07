@@ -43,10 +43,14 @@ Passos:
    ```markdown
    ## MCP do Redmine
 
-   - Endpoints do plugin `sky_redmine_plugin` **não** aparecem em `redmine_paths_list`/`redmine_paths_info` (leem só o spec embutido do pacote `mcp-redmine`). Chame direto por `path`: `/indicadores.json`, `/projects/{id}/indicadores.json`, `/issues/{id}/indicadores.json`, `/issue/{id}/indicadores.json`.
+   **Use a API de Indicadores do Redmine.** Para qualquer pergunta sobre uma tarefa do Redmine — em que etapa está, quanto custou, quantas voltas o QS deu, quanto tempo levou — chame a API de indicadores **antes** de percorrer issues e journals na mão. Ela já devolve o fluxo inteiro consolidado, uma linha por demanda.
+
+   - `redmine_request` com `path` = `/issues/{id}/indicadores.json` — aceita qualquer tarefa do fluxo (DEVEL, QS ou cópia do meio) e devolve o mesmo registro.
+   - Outras rotas: `/indicadores.json` (todos, com filtros), `/projects/{id}/indicadores.json` (do projeto).
+   - **Não procure essas rotas no `redmine_paths_list`**: ele só lê o spec padrão do Redmine e não conhece rotas de plugin. Chame direto pelo `path`.
    - Filtros vão no argumento `params` (dict, com os colchetes no nome: `"f[]"`, `"op[status]"`, `"v[status][]"`), nunca colados no `path`.
-   - Significado de cada campo da API de indicadores, códigos de `etapa_atual`, operadores e paginação: ler `%USERPROFILE%\.config\opencode\redmine-instructions.md` **antes** de responder sobre fluxo, etapas, custos ou tempos de uma tarefa. Não adivinhar campo.
-   - Referência completa no repo do plugin: `sky_redmine_plugin/docs/api_indicadores.md`.
+   - Para saber o que cada campo significa (tempos, flags, códigos de `etapa_atual`), ler `%USERPROFILE%\.config\opencode\redmine-instructions.md` antes de responder. Não adivinhar nome de campo.
+   - Detalhe de uma tarefa específica (descrição, journals, anexos) continua vindo da API de issues.
    ```
    Se o arquivo já tiver esse bloco, atualize-o sem duplicar. Não altere as demais regras do `AGENTS.md` (caveman, ponytail etc.).
 

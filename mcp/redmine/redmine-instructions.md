@@ -187,21 +187,15 @@ teste a comparar:
 - tarefas de **Conversão** (tracker 5);
 - tarefas com o campo **Teste QS** = **Não necessita teste**.
 
-## Fluxo completo de uma tarefa (OBRIGATÓRIO)
+## Fluxo completo de uma tarefa (somente quando solicitado)
 
-Uma tarefa do Redmine quase nunca está sozinha. O mesmo trabalho aparece como **várias issues ligadas por relações**: cópia de sprint em sprint, cópia para o projeto do QS (99), retorno de testes (21), duplicatas. Responder sobre **uma** issue é responder errado.
+O Redmine da Sky Informática tem um **plugin personalizado de indicadores**, cuja API consolida o fluxo e os dados das tarefas relacionadas. Para consultar etapa atual, custo, horas, retornos de testes ou tempos, use essa API: ela já considera as issues encadeadas e evita percorrer manualmente todas as relações.
 
-### Quando aplicar
+Percorra manualmente as relações entre issues **somente quando o usuário pedir explicitamente o fluxo completo**, por exemplo, a cadeia inteira de tarefas, todas as cópias e retornos ou uma linha do tempo issue por issue. Não faça essa investigação apenas porque o usuário perguntou pela etapa atual, pelo custo ou pelo histórico resumido: use os indicadores e consulte issues individuais apenas para detalhes que a API não fornece, como descrição ou journals.
 
-Sempre que o pedido for sobre **fluxo** ou **custo** de uma tarefa:
+Uma tarefa pode envolver várias issues ligadas por relações: cópias entre sprints, cópia para o projeto QS (99), retorno de testes (21) ou duplicatas. Se o pedido exigir esse detalhamento completo, siga as regras abaixo:
 
-- "como está o fluxo da tarefa X", "em que etapa está", "o que aconteceu com a tarefa X"
-- "quanto custou a tarefa X", "quantas horas", "qual o esforço gasto"
-- "por que essa tarefa existe", "qual a tarefa original", "histórico dessa tarefa"
-
-Nesses casos, **nunca** responda só com a issue pedida.
-
-### Regra
+### Como percorrer o fluxo completo
 
 1. **Voltar até a primeira tarefa** do fluxo — suba as relações até a origem (a tarefa de onde todas derivam). Se a issue não tiver relação anterior, ela mesma é a origem.
 2. **Percorrer a ligação das tarefas até o fim** — siga as relações até a **última** issue da cadeia, passando por todas as cópias e retornos intermediários.
@@ -235,12 +229,15 @@ Devolva a cadeia inteira em ordem, uma linha por issue:
 
 E embaixo: **total de horas do fluxo**, quantas issues tem a cadeia e em que status parou. Se alguma issue da cadeia não foi encontrada (sem permissão, deletada), diga qual é — não pule em silêncio.
 
-## API de indicadores do plugin (o fluxo já vem consolidado)
+## API de indicadores do plugin personalizado da Sky (o fluxo já vem consolidado)
 
-Antes de percorrer a cadeia de relações à mão, use a API de indicadores do
-plugin. Ela devolve **um registro por fluxo de desenvolvimento** — a demanda
+Use esta API como fonte padrão para consultar o consolidado de uma tarefa, sem
+percorrer manualmente a cadeia de relações. O plugin personalizado, desenvolvido
+pela Sky Informática, devolve **um registro por fluxo de desenvolvimento** — a demanda
 começa numa issue e termina em outra — com datas, tempos e horas de todas as
-tarefas encadeadas.
+tarefas encadeadas. Percorra as relações manualmente somente se o usuário pedir
+explicitamente o fluxo completo issue por issue; para descrição, journals e
+outros detalhes de uma issue, consulte a API de issues.
 
 ### Autenticação e rotas
 
