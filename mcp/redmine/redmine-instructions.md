@@ -1,4 +1,9 @@
-# Instruções de contexto — Redmine Sky Informática
+> Redmine da Sky. Ao mudar o fluxo no plugin, atualizar os dois arquivos.
+
+> Cópia das instruções usadas pelo servidor **MCP do Redmine** no OpenCode
+> (`REDMINE_REQUEST_INSTRUCTIONS`, em `~/.config/opencode/redmine-instructions.md`).
+> Aqui vale como referência do fluxo de tarefas e das convenções da API do
+> Redmine da Sky. Ao mudar o fluxo no plugin, atualizar os dois arquivos.
 
 Este documento descreve o contexto do ambiente Redmine da Sky Informática para auxiliar nas interações com a API (tool `redmine_request`).
 
@@ -251,11 +256,66 @@ Precisa da chave de API no header `X-Redmine-API-Key`.
 curl -H "X-Redmine-API-Key: $REDMINE_API_KEY" "$REDMINE_URL/issues/96258/indicadores.json"
 ```
 
+**Estas rotas não aparecem em `redmine_paths_list`** — aquela tool só lê o spec
+padrão do Redmine embarcado no pacote do MCP. Chame-as direto pelo `path`; estão
+funcionando normalmente.
+
 A resposta vem em `{"indicadores": [...], "total_count": N, "offset": 0, "limit": 25}`.
-Filtros no estilo Redmine (`f[]`, `op[campo]`, `v[campo][]`) ou como parâmetro
-direto (`?projeto=Equipe Notar`), com paginação `limit`/`offset` (máximo 100) e
-ordenação `?sort=tempo_gasto:desc`. Erros: `401` chave inválida, `404` tarefa ou
-projeto não encontrado/sem permissão, `422` filtro ou ordenação inválidos.
+Paginação `limit`/`offset` (máximo 100, loop até `total_count` como na regra geral).
+Erros: `401` chave inválida, `404` tarefa ou projeto não encontrado/sem permissão,
+`422` filtro ou ordenação inválidos.
+
+### Como filtrar (via `params`, não query string)
+
+Os filtros vão no argumento **`params`** da tool, como **dict** — não cole uma
+query string no `path`. Dois formatos equivalentes:
+
+**1 — parâmetro direto** (mais simples, operador `=`). Qualquer coluna da tabela
+serve de filtro:
+
+```json
+{ "path": "/indicadores.json",
+  "params": { "projeto": "Equipe Notar",
+              "etapa_atual": "E01_ESTOQUE_DEVEL",
+              "limit": 100, "offset": 0 } }
+```
+
+**2 — forma `f[]` / `op[campo]` / `v[campo][]`**, quando precisar de operador.
+As chaves do dict **incluem os colchetes**:
+
+```json
+{ "path": "/indicadores.json",
+  "params": { "f[]": "status", "op[status]": "~",
+              "v[status][]": "Resolvida", "limit": 100 } }
+```
+
+| Operador | Significado |
+|----------|-------------|
+| `=` | igual a qualquer valor |
+| `!` | diferente de todos |
+| `~` / `!~` | contém / não contém |
+| `><` | entre dois valores (inclusive) |
+| `>=` / `<=` | maior ou igual / menor ou igual |
+| `*` / `!*` | vazio-nulo / preenchido |
+| `o` / `c` | status aberto / fechado (só `status_id`) |
+
+Detalhes que evitam erro:
+
+- **Atalhos que aceitam ID** do Redmine e traduzem para as colunas:
+
+  | Atalho | Procura em |
+  |--------|------------|
+  | `project_id` | `projeto`, `projeto_qs` |
+  | `status_id` | `status`, `status_qs` |
+  | `assigned_to_id` | `atribuido_para`, `atribuido_para_qs` |
+  | `issue_id` | `id_tarefa`, `id_ultima_tarefa`, `id_tarefa_qs`, `id_ultima_tarefa_qs` |
+
+- **`op[campo]` sozinho é ignorado silenciosamente** — o operador só é validado e
+  aplicado quando vem junto com o `f[]` correspondente. Sempre mande os dois.
+- Ordenação: `sort` = `"campo:direcao"`, vírgula para múltiplos, ex.
+  `"tempo_gasto:desc,id_tarefa:asc"`. Padrão `id_tarefa:desc`. Campo inválido → 422.
+- Datas seguem `YYYY-MM-DD` e aceitam os mesmos operadores da tabela de
+  `created_on` mais abaixo (`>=`, `<=`, `><` com `|`).
 
 ### O que significa cada campo
 
@@ -282,11 +342,16 @@ fluxo não passou pelo QS).
 | Campo | Significado |
 |-------|-------------|
 | `data_prevista` | Data prevista (due date) da primeira DEVEL. |
-| `tarefa_nao_planejada_imediata` | `Sim`/`Não` — alguma DEVEL do fluxo é não planejada imediata. |
-| `tarefa_antecipada_sprint` | `Sim`/`Não` — alguma DEVEL foi antecipada na sprint. |
+| `tarefa_nao_planejada_imediata` | `true`/`false` — alguma DEVEL do fluxo é não planejada imediata. |
+| `tarefa_antecipada_sprint` | `true`/`false` — alguma DEVEL do fluxo foi antecipada na sprint. |
 | `versao_estavel` / `versao_teste` | Versões da última DEVEL. A `versao_estavel` preenchida com a tarefa em Resolvida é a etapa "versão liberada, falta fechar". |
 | `teste_no_desenvolvimento` | Teste feito dentro do desenvolvimento (`Não testada`, `Teste OK`, `Teste NOK`). |
 | `tarefa_complementar` | `SIM`, `NAO` ou o rótulo de tarefa não planejada (tarefas de teste, vídeo, documentação, suporte, planejamento). |
+
+> **Padrão de valores:** `tarefa_complementar` e `tarefa_fechada_sem_testes` usam
+> `SIM` / `NAO` — tudo maiúsculo e sem acento. Já `tarefa_nao_planejada_imediata`,
+> `tarefa_antecipada_sprint` e as variantes `_qs` são booleanas e saem como
+> `true` / `false` (ou vazio). Filtre cada um com o formato que ele devolve.
 
 **Tempos e datas** (tempos em **dias**, as datas lidas do histórico das tarefas)
 
@@ -326,11 +391,39 @@ fluxo não passou pelo QS).
 
 | Campo | Significado |
 |-------|-------------|
-| `etapa_atual` | Etapa em que o fluxo está agora: `E01` estoque, `E02` em andamento, `E03` aguarda testes no desenvolvimento, `E04` aguarda encaminhar ao QS, `E05` estoque no QS, `E06` QS em andamento, `E07` aguarda versão / retorno de testes, `E08` versão liberada, `E99` interrompida, cancelada ou desconhecida. O sufixo `_RT` marca as etapas depois de um retorno de testes. |
+| `etapa_atual` | Etapa em que o fluxo está agora (ver tabela abaixo). É também o valor de filtro. |
+| `etapa_atual_agrupado_retorno_testes` | A mesma etapa **sem** o sufixo `_RT`, para agrupar idas e voltas do QS. |
 | `equipe_responsavel_atual` | Onde o fluxo está: `DEVEL`, `QS` ou `FECHADA`. |
 | `data_etapa_atual` | Data em que a etapa atual foi identificada. |
 | `tarefa_fechada_sem_testes` | `SIM` quando a versão foi liberada antes de o teste do QS concluir. Registro histórico: não volta de `SIM` para `NAO`. É `NAO` quando o teste é dispensado (`Fechada - sem desenvolvimento`, Conversão ou "Teste QS" = `Não necessita teste`) ou quando a QS foi cancelada. |
 | `motivo_situacao_desconhecida` | Por que a etapa caiu em `E99_DESCONHECIDA` (ex.: tarefa `Continua proxima sprint` sem cópia). |
+
+**Códigos de `etapa_atual`** — o sufixo `_RT` marca as etapas posteriores a um retorno de testes:
+
+| Código | Etapa |
+|--------|-------|
+| `E01_ESTOQUE_DEVEL` | Estoque, ainda não começou |
+| `E02_EM_ANDAMENTO_DEVEL` | Em desenvolvimento |
+| `E03_AGUARDA_TESTES_DEVEL` | Aguardando teste no desenvolvimento |
+| `E03_AGUARDA_ENCAMINHAR_RT_DEVEL` | Aguardando encaminhar um retorno de testes ao QS |
+| `E04_AGUARDA_ENCAMINHAR_QS` | Resolvida, aguardando encaminhar ao QS |
+| `E05_ESTOQUE_QS` | Com o QS, aguardando |
+| `E06_EM_ANDAMENTO_QS` | QS testando |
+| `E07_AGUARDA_VERSAO` / `E07_AGUARDA_ENCAMINHAR_RT` | Aguardando versão / aguardando encaminhar retorno |
+| `E08_VERSAO_LIBERADA` | Versão liberada (fluxo concluído) |
+| `E08_VERSAO_LIBERADA_FALTA_FECHAR` | Versão já preenchida, tarefa DEVEL ainda não fechada |
+| `E08_FECHADA_SEM_DESENVOLVIMENTO` / `E08_CANCELADA` | Encerrado sem desenvolvimento / cancelado |
+| `E99_INTERROMPIDA` / `E99_INTERROMPIDA_ANALISE` | Interrompida / interrompida para análise |
+| `E99_DESCONHECIDA` | Fora do esperado — ver `motivo_situacao_desconhecida` |
+
+Dois cuidados ao filtrar por `etapa_atual`:
+
+- **O prefixo `E0x` agrupa etapas diferentes.** Filtrar por `E08` traz 14416
+  registros, misturando `VERSAO_LIBERADA` (12855), `VERSAO_LIBERADA_FALTA_FECHAR`
+  (71), `FECHADA_SEM_DESENVOLVIMENTO` (888) e `CANCELADA` (602) — filtre pelo
+  código **completo** quando a diferença importar.
+- **Considere `equipe_responsavel_atual` para "quantas tarefas estão onde"**, já
+  que `DEVEL` \| `QS` \| `FECHADA` é o corte gerencial mais útil.
 
 Use a API para o consolidado e as issues para o detalhe (descrição, journals,
 anexos) de uma tarefa específica. A referência completa está em
