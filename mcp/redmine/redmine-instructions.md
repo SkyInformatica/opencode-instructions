@@ -1,10 +1,3 @@
-> Redmine da Sky. Ao mudar o fluxo no plugin, atualizar os dois arquivos.
-
-> Cópia das instruções usadas pelo servidor **MCP do Redmine** no OpenCode
-> (`REDMINE_REQUEST_INSTRUCTIONS`, em `~/.config/opencode/redmine-instructions.md`).
-> Aqui vale como referência do fluxo de tarefas e das convenções da API do
-> Redmine da Sky. Ao mudar o fluxo no plugin, atualizar os dois arquivos.
-
 Este documento descreve o contexto do ambiente Redmine da Sky Informática para auxiliar nas interações com a API (tool `redmine_request`).
 
 ## Regra geral: sempre retornar todas as tarefas solicitadas
@@ -57,7 +50,7 @@ Os trackers definem o tipo de cada tarefa. Use o campo `tracker_id` para filtrar
 | 1 | Defeito | Tarefas de correção de defeitos |
 | 2 | Funcionalidade | Tarefas de nova funcionalidade |
 | 5 | Conversão | Tarefas de implementação/envolvimento com a conversão do sistema durante a implantação de um novo cliente (converter os dados de um sistema que o cliente utilizava para o nosso sistema) |
-| 21 | Retorno de testes | Correção de um defeito encontrado pelo QS (testes), como continuação de uma tarefa anterior de defeito ou funcionalidade |
+| 21 | Retorno de testes | Correção encontrada pelo QS ou nos testes entre pares do desenvolvimento, como continuação da tarefa original |
 
 ### Tarefas complementares
 
@@ -90,6 +83,8 @@ Os status são identificados por `status_id`. São dois fluxos distintos: o das 
 | 5 | Fechada | sim |
 | 8 | Cancelada | sim |
 | 41 | Continua proxima sprint | sim |
+| 48 | Fechada - cont retorno testes | sim |
+| 49 | Fechada - sem desenvolvimento | sim |
 
 ### Status de testes (QS)
 
@@ -99,8 +94,6 @@ Os status são identificados por `status_id`. São dois fluxos distintos: o das 
 | 45 | Teste NOK | sim |
 | 46 | Teste OK - Fechada | sim |
 | 47 | Teste NOK - Fechada | sim |
-| 48 | Fechada - cont retorno testes | sim |
-| 49 | Fechada - sem desenvolvimento | sim |
 
 ### Fluxo das tarefas de desenvolvimento
 
@@ -127,7 +120,9 @@ Se uma tarefa não for concluída na sprint, ela **continua na sprint seguinte**
 
 A equipe **QS** tem um projeto próprio no Redmine para organizar tarefas e sprints: **projeto ID 99**.
 
-Quando uma tarefa de desenvolvimento fica **Resolvida** (3), ela vai para os testes. É feita uma **cópia** dela para o projeto da equipe QS.
+Quando uma tarefa de desenvolvimento que precisa de teste QS fica **Resolvida**
+(3), ela pode ser encaminhada aos testes por uma **cópia** para o projeto da
+equipe QS. Conversão e tarefas dispensadas não precisam passar pelo QS.
 
 A tarefa copiada para QS segue outro fluxo:
 
@@ -135,14 +130,32 @@ A tarefa copiada para QS segue outro fluxo:
 2. Vai para **Em andamento** (2) enquanto o QS testa.
 3. Conclui como **Teste OK** (44) — se tudo funcionou — ou **Teste NOK** (45) — se houve alguma não conformidade.
 
+O encaminhamento é uma ação do plugin, disponível para tarefa fora do projeto QS
+em status **Resolvida**, desde que ainda não exista cópia no QS. A cópia é criada
+no projeto QS (ID 99), normalmente na versão **Tarefas para testar**, e o campo **Teste
+QS** da DEVEL passa para **Nova**. A estimativa da cópia é 34% das horas gastas
+na cadeia do mesmo projeto, arredondada para cima, com mínimo de uma hora. Para
+retornos de testes, há opções para encaminhar à sprint atual do QS.
+
 #### Teste NOK → Retorno de testes
 
 Quando o teste resulta **NOK**:
 
-1. É criada uma **cópia** da tarefa para correção, que volta para a equipe de desenvolvimento como tarefa do tipo **Retorno de testes** (tracker 21). Isso acontece **somente para tarefas originais de desenvolvimento** dos tipos **Defeito** ou **Funcionalidade**.
+1. É criada uma **cópia** para correção no projeto de desenvolvimento de origem, como tarefa do tipo **Retorno de testes** (tracker 21). A ação aceita a tarefa QS em **Teste NOK** sem validar o tracker da tarefa original.
 2. A tarefa de testes que estava **Teste NOK** (45) é fechada com o status **Teste NOK - Fechada** (47).
-3. A tarefa de desenvolvimento que estava **Resolvida** também é fechada com o status **Continua proxima sprint** (41).
+3. A tarefa de desenvolvimento que estava **Resolvida** é fechada com o status **Fechada - cont retorno testes** (48), e **Teste QS** recebe **Teste NOK - Fechada**.
 4. O **Retorno de testes** reinicia todo o fluxo de desenvolvimento até que os testes concluam com **Teste OK**.
+
+Um retorno também pode ser criado a partir de uma tarefa DEVEL **Resolvida**,
+quando um teste entre pares encontra um problema. Nesse caso, a original passa
+para **Fechada - cont retorno testes** (48) e **Teste no desenvolvimento** recebe
+**Teste NOK**. Se já existir cópia QS ainda **Nova**, o plugin a remove; se o QS
+já começou a testar, não cria o retorno por esse caminho.
+
+O retorno recebe estimativa de **uma hora** e, por padrão, a versão **Aptas para
+desenvolvimento**. Ao criar o retorno a partir do QS, pode-se escolher a sprint
+atual; se não houver sprint atual, usa **Aptas para desenvolvimento**. O texto
+preenchido em **Resultado Teste NOK** é incluído na descrição do retorno.
 
 #### Teste OK → Fechamento
 
@@ -186,6 +199,10 @@ teste a comparar:
 - tarefas que vão para **Fechada - sem desenvolvimento** (49);
 - tarefas de **Conversão** (tracker 5);
 - tarefas com o campo **Teste QS** = **Não necessita teste**.
+
+Só tarefas de **Defeito** e **Funcionalidade** precisam de teste QS por padrão.
+O campo **Teste no desenvolvimento** = **Não necessita teste** dispensa apenas
+os testes entre pares; não dispensa o QS.
 
 ## Fluxo completo de uma tarefa (somente quando solicitado)
 
@@ -355,10 +372,11 @@ fluxo não passou pelo QS).
 | Campo | Significado |
 |-------|-------------|
 | `tempo_estimado` / `tempo_gasto` | Soma das horas estimadas / gastas de **todas** as DEVEL do fluxo. |
-| `data_criacao_ou_atendimento` | Data de criação da primeira DEVEL (ou o campo "Data de_ATendimento", se houver). |
-| `data_andamento` | Início do desenvolvimento no primeiro ciclo DEVEL. |
-| `data_resolvida` / `data_fechamento` | Resolução e fechamento da última DEVEL. |
-| `tempo_andamento` | Da criação até o início do desenvolvimento. |
+| `data_criacao_ou_atendimento` | Campo **Data de Atendimento** da primeira DEVEL; se vazio, data de criação. |
+| `data_andamento` | Primeira transição para Em andamento do primeiro ciclo DEVEL; se a tarefa foi direto para Resolvida/Fechada, usa a data de criação. |
+| `data_resolvida` | Primeira transição da última tarefa do fluxo para Resolvida (DEVEL) ou Teste OK/Teste NOK (QS). |
+| `data_fechamento` | Primeira transição da última DEVEL para Fechada, Fechada - sem desenvolvimento, Fechada - cont retorno testes ou Continua proxima sprint; no QS, para Teste OK/NOK - Fechada. Só vale enquanto o status estiver fechado. |
+| `tempo_andamento` | De `data_criacao_ou_atendimento` até o início do desenvolvimento. |
 | `tempo_resolucao` | Do início do desenvolvimento até a resolução. |
 | `tempo_fechamento` | Da resolução até o fechamento. |
 | `tempo_para_encaminhar_qs` | Da resolução da DEVEL até a criação da tarefa QS. |
@@ -392,7 +410,8 @@ fluxo não passou pelo QS).
 | `etapa_atual_agrupado_retorno_testes` | A mesma etapa **sem** o sufixo `_RT`, para agrupar idas e voltas do QS. |
 | `equipe_responsavel_atual` | Onde o fluxo está: `DEVEL`, `QS` ou `FECHADA`. |
 | `data_etapa_atual` | Data em que a etapa atual foi identificada. |
-| `tarefa_fechada_sem_testes` | `SIM` quando a versão foi liberada antes de o teste do QS concluir. Registro histórico: não volta de `SIM` para `NAO`. É `NAO` quando o teste é dispensado (`Fechada - sem desenvolvimento`, Conversão ou "Teste QS" = `Não necessita teste`) ou quando a QS foi cancelada. |
+| `tarefa_necessita_testes` | `true`/`false` — se o fluxo, pela tarefa DEVEL original e pelos campos de dispensa, precisa passar pelo QS. Por padrão, só Defeito e Funcionalidade precisam. |
+| `tarefa_fechada_sem_testes` | `SIM`/`NAO` somente quando o fluxo necessita teste QS; fica vazio quando não há teste a comparar. `SIM` registra que a versão foi liberada antes da conclusão do teste e é histórico. Fica `NAO` se o QS foi cancelado ou se a versão foi liberada na mesma data ou depois do fechamento do QS. |
 | `motivo_situacao_desconhecida` | Por que a etapa caiu em `E99_DESCONHECIDA` (ex.: tarefa `Continua proxima sprint` sem cópia). |
 
 **Códigos de `etapa_atual`** — o sufixo `_RT` marca as etapas posteriores a um retorno de testes:
