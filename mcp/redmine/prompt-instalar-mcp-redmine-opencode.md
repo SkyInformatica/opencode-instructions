@@ -39,6 +39,17 @@ Passos:
    ```
    Se o usuário preferir não memorizar agora, **não crie** o arquivo — o agente perguntará sob demanda durante o uso (comportamento já descrito nas instruções). O `redmine-config.json` passa a valer a partir da próxima sessão do OpenCode.
 
+2c. Registre no `%USERPROFILE%\.config\opencode\AGENTS.md` o bloco "MCP do Redmine" (crie o arquivo se não existir) — o OpenCode carrega o `AGENTS.md` global em todo prompt, enquanto a descrição das tools MCP é truncada no primeiro parágrafo e **não** entrega o contexto das instruções:
+   ```markdown
+   ## MCP do Redmine
+
+   - Endpoints do plugin `sky_redmine_plugin` **não** aparecem em `redmine_paths_list`/`redmine_paths_info` (leem só o spec embutido do pacote `mcp-redmine`). Chame direto por `path`: `/indicadores.json`, `/projects/{id}/indicadores.json`, `/issues/{id}/indicadores.json`, `/issue/{id}/indicadores.json`.
+   - Filtros vão no argumento `params` (dict, com os colchetes no nome: `"f[]"`, `"op[status]"`, `"v[status][]"`), nunca colados no `path`.
+   - Significado de cada campo da API de indicadores, códigos de `etapa_atual`, operadores e paginação: ler `%USERPROFILE%\.config\opencode\redmine-instructions.md` **antes** de responder sobre fluxo, etapas, custos ou tempos de uma tarefa. Não adivinhar campo.
+   - Referência completa no repo do plugin: `sky_redmine_plugin/docs/api_indicadores.md`.
+   ```
+   Se o arquivo já tiver esse bloco, atualize-o sem duplicar. Não altere as demais regras do `AGENTS.md` (caveman, ponytail etc.).
+
 3. Configure o MCP no `opencode.json` global:
    - Leia `%USERPROFILE%\.config\opencode\opencode.json` (ou `opencode.jsonc`) e verifique se já existe a seção `mcp.redmine`.
    - Se NÃO existir, adicione o bloco abaixo ao campo `mcp` (se o campo `mcp` não existir, crie-o):
