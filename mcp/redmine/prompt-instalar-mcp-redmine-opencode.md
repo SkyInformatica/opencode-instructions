@@ -39,20 +39,20 @@ Passos:
    ```
    Se o usuário preferir não memorizar agora, **não crie** o arquivo — o agente perguntará sob demanda durante o uso (comportamento já descrito nas instruções). O `redmine-config.json` passa a valer a partir da próxima sessão do OpenCode.
 
-2c. Registre no `%USERPROFILE%\.config\opencode\AGENTS.md` o bloco "MCP do Redmine" (crie o arquivo se não existir) — o OpenCode carrega o `AGENTS.md` global em todo prompt, enquanto a descrição das tools MCP é truncada no primeiro parágrafo e **não** entrega o contexto das instruções:
+2c. Registre no `%USERPROFILE%\.config\opencode\AGENTS.md` o bloco delimitado por `<!-- redmine-mcp-begin -->` e `<!-- redmine-mcp-end -->` (crie o arquivo se não existir) — o OpenCode carrega o `AGENTS.md` global em todo prompt, enquanto a descrição das tools MCP é truncada no primeiro parágrafo e **não** entrega o contexto das instruções:
    ```markdown
+   <!-- redmine-mcp-begin -->
    ## MCP do Redmine
 
-   **Use a API de Indicadores do Redmine.** Para qualquer pergunta sobre uma tarefa do Redmine — em que etapa está, quanto custou, quantas voltas o QS deu, quanto tempo levou — chame a API de indicadores **antes** de percorrer issues e journals na mão. Ela já devolve o fluxo inteiro consolidado, uma linha por demanda.
+   **Indicadores primeiro** para etapa, horas/custo, tempos, liberação de versão e retornos. Percorra relações issue a issue somente se pedirem explicitamente cadeia ou linha do tempo completa.
 
-   - `redmine_request` com `path` = `/issues/{id}/indicadores.json` — aceita qualquer tarefa do fluxo (DEVEL, QS ou cópia do meio) e devolve o mesmo registro.
-   - Outras rotas: `/indicadores.json` (todos, com filtros), `/projects/{id}/indicadores.json` (do projeto).
-   - **Não procure essas rotas no `redmine_paths_list`**: ele só lê o spec padrão do Redmine e não conhece rotas de plugin. Chame direto pelo `path`.
-   - Filtros vão no argumento `params` (dict, com os colchetes no nome: `"f[]"`, `"op[status]"`, `"v[status][]"`), nunca colados no `path`.
-   - Para saber o que cada campo significa (tempos, flags, códigos de `etapa_atual`), ler `%USERPROFILE%\.config\opencode\redmine-instructions.md` antes de responder. Não adivinhar nome de campo.
-   - Detalhe de uma tarefa específica (descrição, journals, anexos) continua vindo da API de issues.
-   ```
-   Se o arquivo já tiver esse bloco, atualize-o sem duplicar. Não altere as demais regras do `AGENTS.md` (caveman, ponytail etc.).
+   - `redmine_request`: `/issues/{id}/indicadores.json` aceita qualquer issue do fluxo; `/projects/{id}/indicadores.json` consulta projeto; `/indicadores.json` consulta todos os fluxos visíveis. Rotas do plugin não aparecem em `redmine_paths_list`: chame-as diretamente.
+   - Filtros em `params` (dict), nunca no `path`. Use campos diretos ou `f[]` + `op[campo]` + `v[campo][]` (chaves incluem colchetes). Em listas, `limit: 100` e pagine `offset` até `total_count`.
+   - Cada registro representa um fluxo; `id_tarefa` é a DEVEL de origem, campos sem sufixo são DEVEL e `_qs` são QS. Para semântica de campos/etapas, consulte `%USERPROFILE%\.config\opencode\redmine-instructions.md`; não adivinhe.
+   - Descrição, journals e anexos vêm da API de issues.
+   <!-- redmine-mcp-end -->
+    ```
+   Se os marcadores já existirem, substitua somente o conteúdo entre eles. Se houver bloco antigo `## MCP do Redmine` sem marcadores, atualize-o no lugar e adicione os marcadores. Nunca duplique o bloco nem altere o restante do `AGENTS.md` (caveman, ponytail etc.).
 
 3. Configure o MCP no `opencode.json` global:
    - Leia `%USERPROFILE%\.config\opencode\opencode.json` (ou `opencode.jsonc`) e verifique se já existe a seção `mcp.redmine`.
