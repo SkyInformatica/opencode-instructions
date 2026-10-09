@@ -1141,7 +1141,8 @@ Todo novo container deve possuir finalidade clara.
 
 Nunca renomeie componentes existentes apenas para melhorar a organização.
 
-Exemplos:
+Os exemplos abaixo são nomes **de outras casas/platforms**, usados só para
+ilustrar a regra — **não** são o padrão da Sky:
 
 ```text
 edtNome
@@ -1150,9 +1151,25 @@ grdClientes
 pnlFiltros
 ```
 
-devem permanecer intactos.
+devem permanecer intactos, mesmo que o nome não seja ideal: alterar pode
+quebrar referências existentes.
 
-Mesmo que o nome não seja ideal, alterar pode quebrar referências existentes.
+Para componente **novo**, usar o prefixo da casa:
+
+| Prefixo | Componente |
+|---|---|
+| `pa` / `pn` | painel |
+| `bt` | botão |
+| `lb` | label |
+| `ed` | edit |
+| `cb` | combo |
+| `gr` | grid |
+| `jvgrphdr` | `TJvGroupHeader` |
+| `qr` | query |
+| `ds` | datasource |
+| `mn` | menu item |
+
+Referência viva: `Financeiro/fontesDX/Modulo/Financeiro_Dll/VCL/LinkDePagamentoForm.dfm`.
 
 ---
 
@@ -1344,6 +1361,29 @@ maior ganho visual possível
 ```
 
 Não faça modernizações invasivas apenas por preferência estética.
+
+---
+
+# 41-A. QUANDO TROCAR O COMPONENTE
+
+Trocar a classe do componente (`TButton` → `TcxButton`, `TJvButton` →
+`TcxButton`) **só quando a tarefa é modernizar ou padronizar** a tela. Em
+correção pontual de defeito ou ajuste pequeno, manter o componente que já
+existe.
+
+Como decidir:
+
+```text
+A tarefa pede padronização/modernização?
+├── SIM → trocar para o padrão (ver SKILL.md "Padrão de componentes")
+└── NÃO → manter o componente existente
+```
+
+Ao trocar, é obrigatório: acrescentar `cxButtons` no `uses` e trocar a
+declaração do campo no `.pas`. O `.dfm` sozinho não compila.
+
+Ver também §42 (não fazer alterações desnecessárias) — trocar componente numa
+tarefa que não é de padronização é alteração desnecessária.
 
 ---
 
