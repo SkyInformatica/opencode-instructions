@@ -1,6 +1,6 @@
 ---
 name: sky-dotnet-relatorios-padrao
-description: "Aplica o padrão visual de relatórios da Sky (fonte, espaçamento, cabeçalho, banda de dados, grupos, rodapé) em templates FastReport .frx. Use ao criar, ajustar ou revisar o visual de um relatório. Complementa a skill fastreport-dotnet, que cobre a mecânica (RegisterData, Prepare, export)."
+description: "Aplica o padrão visual de relatórios da Sky (fonte Open Sans, espaçamento, cabeçalho, banda de dados, grupos, rodapé) em templates FastReport .frx. Use ao criar, ajustar ou revisar o visual de um relatório. Complementa a skill fastreport-dotnet, que cobre a mecânica (RegisterData, Prepare, export)."
 ---
 
 # sky-dotnet-relatorios-padrao
@@ -24,7 +24,8 @@ dos relatórios".
   `.frx` — ela define as regras visuais que o template deve seguir.
 
 1. **Padrão visual (OBRIGATÓRIO ler primeiro):** `references/padrao-visual-relatorios.md`
-   — fonte, cabeçalho, banda de dados, grupo, rodapé e regras gerais.
+   — fonte (**Open Sans**), unidades do `.frx` (**px a 96 dpi**), cabeçalho,
+   banda de dados, grupo, rodapé e regras gerais.
 2. **Exemplos (PDF):**
    - `examples/Exemplo01-Ocorrencias-LDP-SomenteGrupo-GeradoPelaSkill.pdf/.frx`
      — **somente grupo, sem subgrupo** (gerado pela skill);
@@ -51,6 +52,22 @@ dos relatórios".
   `padrao-visual-relatorios.md`; **a geração/edição do `.frx` usa a skill
   `fastreport-dotnet`** (bandas, expressões, datasource, export) — ative-a
   para qualquer mudança de template.
+- **Fonte obrigatória: `Open Sans` (TTF estática).** Todo `Font` do `.frx` —
+  objetos, bandas, `Watermark.Font` e coleções de estilo — usa **Open Sans**;
+  **Arial é proibida** (apresentou falha em alguns ambientes/SO). Tamanhos e
+  estilos existentes **não mudam**: troca-se apenas a família. Exigir os
+  arquivos **estáticos** (`OpenSans-Regular.ttf`, `OpenSans-Bold.ttf`; itálico
+  idem), **nunca** fonte variável (`*VariableFont*.ttf`), e garantir a família
+  instalada em **todo** ambiente que gera ou exporta — o `.frx` não carrega a
+  fonte junto.
+- **Geometria do `.frx` é em px (96 dpi), não em pt.** O padrão é escrito em
+  pt; no XML, `Left`/`Width`/`Top`/`Height` são **px a 96 dpi** e
+  `LeftMargin`/`RightMargin`/`TopMargin`/`BottomMargin`/`Paper*` são **mm**
+  (`Font` continua em **pt**). Converter antes de escrever — geometria em pt
+  direto ocupa ~75% da folha, sem erro visível.
+- **Macros de página com sufixo `#`.** No rodapé, usar `[Page#]` e
+  `[TotalPages#]`; sem o `#` não resolve e `[PageNumber]` gera erro de
+  compilação (`CS0103`).
 - **Não mudar valor marcado como `[TODO: extrair de .frx]`** no padrão sem
   antes extrair o valor real de um relatório consolidado e atualizar o doc.
 - **Não inventar padrão.** Se a seção não estiver definida, apontar o `TODO`
