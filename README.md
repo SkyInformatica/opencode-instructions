@@ -117,7 +117,7 @@ Isso configurará automaticamente:
 
 - **`%USERPROFILE%\.config\opencode\opencode.json`** — modelo e small_model do agente, `instructions` apontando para todas as regras em `rules/` deste repositório
 - **`%USERPROFILE%\.config\opencode\rules\`** — regras da Sky (`sky-principios`, `sky-delphi-diretivas`, `sky-delphi-svn`)
-- **`%USERPROFILE%\.config\opencode\skills\`** — skills da Sky, prefixadas por time (`sky-delphi-*`, `sky-dotnet-*`) e as compartilhadas `sky-oquehadenovo`
+- **`%USERPROFILE%\.config\opencode\skills\`** — skills da Sky, prefixadas por time (`sky-delphi-*`, `sky-dotnet-*`) e as compartilhadas (`sky-oquehadenovo`, `sky-oquehadenovo-skai`)
 - **`%USERPROFILE%\.config\opencode\agents\`** — agents da Sky (orquestrador, executor)
 
 Tudo carregado da pasta global (rules copiados da repo para `%USERPROFILE%\.config\opencode\rules\`), sem copiar arquivos para cada projeto. O prompt é seguro para executar múltiplas vezes: nunca duplica nem sobrescreve configurações existentes.

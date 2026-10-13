@@ -1,5 +1,5 @@
 ---
-name: "sky-dotnet-oquehadenovo-skai"
+name: "sky-oquehadenovo-skai"
 description: "gera o texto 'O que há de novo' para o sistema Sk.AI, em linguagem para o usuário final. Delega à skill genérica `sky-oquehadenovo` e adiciona apenas as regras específicas do Sk.AI: como definir a área (domínios → área de usuário final) e como gravar o resultado em arquivo markdown."
 ---
 

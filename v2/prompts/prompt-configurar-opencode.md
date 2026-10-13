@@ -16,9 +16,9 @@ Tudo segue `sky-<time>-<assunto>`, onde `<time>` é `delphi` ou `dotnet`:
 |---|---|---|
 | **Delphi** | Redmine + SVN | `sky-delphi-` |
 | **.NET** | Azure DevOps + git | `sky-dotnet-` |
-| **Geral / compartilhado** | — | `sky-` sem time (`sky-principios`, `sky-oquehadenovo`) |
+| **Geral / compartilhado** | — | `sky-` sem time (`sky-principios`, `sky-oquehadenovo`, `sky-oquehadenovo-skai`) |
 
-Quando o usuário pedir por **time** (ex.: "somente delphi", "só o que é do dotnet", "minhas regras e skills do time Delphi"), **não** exija nomes: resolva para os itens cujo nome começa com o prefixo do time (`sky-delphi-` ou `sky-dotnet-`) e liste o que foi selecionado antes de baixar. Inclua sempre os gerais (`sky-principios` para regras; `sky-oquehadenovo` quando o pedido incluir skills), avisando que são compartilhados.
+Quando o usuário pedir por **time** (ex.: "somente delphi", "só o que é do dotnet", "minhas regras e skills do time Delphi"), **não** exija nomes: resolva para os itens cujo nome começa com o prefixo do time (`sky-delphi-` ou `sky-dotnet-`) e liste o que foi selecionado antes de baixar. Inclua sempre os gerais (`sky-principios` para regras; `sky-oquehadenovo` e `sky-oquehadenovo-skai` quando o pedido incluir skills), avisando que são compartilhados.
 
 **Antes de executar qualquer passo técnico, você DEVE perguntar ao usuário o seguinte:**
 
@@ -44,7 +44,7 @@ C. **Se o escopo incluir skills:**
    Pergunte: "Quais skills deseja instalar? (informe os nomes separados por vírgula, um time ('delphi'/'dotnet'), ou 'todas')"
 
    - Se usuário responder "todas" → instale todas as skills disponíveis na pasta skills/
-   - Se usuário informar um time → instale as skills com o prefixo daquele time (`sky-delphi-*` / `sky-dotnet-*`) e inclua a compartilhada `sky-oquehadenovo`
+   - Se usuário informar um time → instale as skills com o prefixo daquele time (`sky-delphi-*` / `sky-dotnet-*`) e inclua as compartilhadas `sky-oquehadenovo` e `sky-oquehadenovo-skai`
    - Se usuário informar nomes específicos → instale apenas as skills com esses nomes
    - Se usuário não informar nada / deixar em branco → liste as skills disponíveis (consultando a pasta skills/ do repositório via GitHub API) e peça para o usuário escolher quais deseja. Repita a pergunta até obter uma resposta válida (nomes específicos, time, ou "todas").
 
@@ -120,7 +120,7 @@ Passos:
    | `proposta-dotnet` | `sky-dotnet-proposta` |
    | `implementar-proposta-dotnet` | `sky-dotnet-implementar-proposta` |
    | `manutencao-testes-automatizados` | `sky-dotnet-testes` |
-   | `gerar-oquehadenovo-skai` | `sky-dotnet-oquehadenovo-skai` |
+   | `gerar-oquehadenovo-skai` | `sky-oquehadenovo-skai` |
    | `gerar-oquehadenovo` | `sky-oquehadenovo` |
 
    Regras — remova o arquivo `%USERPROFILE%\.config\opencode\rules\<legado>.md`:
