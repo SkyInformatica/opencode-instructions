@@ -17,13 +17,15 @@ totalizadores e sumário usados nos relatórios FastReport da Sky.
 Antes de escrever UMA linha de template (.frx) ou código, verificar:
 
 1. Margens 15 mm (42.6 pt) nos 4 lados — nunca violar.
-2. Fonte base **Arial** (regular/bold); sem outra família.
-3. Tamanhos da tabela de tipografia — não inventar tamanho.
-4. Alturas de banda **múltiplos de 8 pt** — não usar altura "quebrada".
-5. Linha divisória sempre na **borda da banda**, não solto no layout.
-6. Alinhamento de números pelo **último dígito** (sinal não desloca).
-7. Variante de layout escolhida entre as 3 padrão (grupo+subgrupo / só grupo / sem grupo).
-8. Nomes de datasource/parâmetros = contrato com o C# (`RegisterData`).
+2. Geometria do `.frx` em **px (96 dpi)**: `Left`/`Width`/`Top`/`Height` em px,
+   margens/papel em mm, `Font` em pt — **converter** de pt/cm/mm antes de escrever.
+3. Fonte base **Open Sans** (TTF estática, regular/bold); sem outra família.
+4. Tamanhos da tabela de tipografia — não inventar tamanho.
+5. Alturas de banda **múltiplos de 8 pt** — não usar altura "quebrada".
+6. Linha divisória sempre na **borda da banda**, não solto no layout.
+7. Alinhamento de números pelo **último dígito** (sinal não desloca).
+8. Variante de layout escolhida entre as 3 padrão (grupo+subgrupo / só grupo / sem grupo).
+9. Nomes de datasource/parâmetros = contrato com o C# (`RegisterData`).
 
 ## Folha e margens
 
@@ -33,7 +35,46 @@ Antes de escrever UMA linha de template (.frx) ou código, verificar:
 | Margens | 15 mm (≈42.6 pt) nos 4 lados — confirmado no PDF de referência |
 | Cor | preto + cinza (divisórias), sem cor de fundo |
 
-## Tipografia (fonte base: Arial)
+### Unidades no `.frx` (geometria em px a 96 dpi)
+
+O padrão é escrito em **pt**, mas a geometria gravada no `.frx` é em **px a 96 dpi**:
+
+| Atributo | Unidade | Conversão |
+|---|---|---|
+| `Left`, `Width`, `Top`, `Height` (bandas e objetos) | **px a 96 dpi** | `1 px = 0.75 pt` · `1 pt = 1,3333 px` |
+| `LeftMargin`/`RightMargin`/`TopMargin`/`BottomMargin` | **mm** | `15 mm = 42.52 pt = 56.69 px` |
+| `PaperWidth`/`PaperHeight` | **mm** | `210 mm = 595.28 pt = 793.7 px` |
+| `Font` | **pt** | — |
+| `Border.Width` | **px** | `0.75 pt ≈ 1 px` |
+
+Converter os valores do padrão (em pt/cm) para px antes de escrever no XML.
+**Geometria em pt direto ocupa ~75% da folha, sem erro visível** — a página fica
+com a largura certa e sobra uma faixa branca à direita, no PDF, no PNG e no designer.
+
+| Valor do padrão | em pt | **em px (atributo do `.frx`)** |
+|---|---|---|
+| Grid mínimo / respiro | 8 pt | 10.67 px |
+| Altura detalhe (1 linha) | 16 pt | 21.33 px |
+| Altura grupo / total 1 valor | 24 pt | 32 px |
+| Altura detalhe (2 linhas) / total bloco | 32 pt | 42.67 px |
+| Bloco total geral | 48 pt | 64 px |
+| Indentação de conteúdo sob o grupo | 13.5 pt | **18 px** |
+| Respiro entre grupos | 0.28 cm (≈8 pt) | 7.94 px |
+| Respiro p/ coluna com wrap | ~1.4 cm (≈40 pt) | 39.69 px |
+| Coluna numérica — largura mínima | 2.0 cm | 75.59 px |
+| Slot de total / passo da grade | 2.8 cm / 3.0 cm | 79.37 px / 85.04 px |
+| Divisória | 0.75 pt | 1 px (`Border.Width`) |
+| Divisória sob subtítulo | ~0.15 cm | 4.25 px |
+
+Largura útil (A4 retrato) = `(papel_mm − margens_laterais_mm) × 96 / 25.4`:
+
+| Margens laterais | Largura útil | **em px (atributo `Width`)** |
+|---|---|---|
+| 15 mm (padrão) | 180 mm | **680.31 px** |
+| 10 mm | 190 mm | 718.11 px |
+| 7.5 mm | 195 mm | 737.01 px |
+
+## Tipografia (fonte base: Open Sans)
 
 | Elemento | Tamanho | Estilo | Alinh. |
 |---|---|---|---|
@@ -57,6 +98,36 @@ Antes de escrever UMA linha de template (.frx) ou código, verificar:
 
 Detalhe: 8 pt padrão; 9–10 pt apenas em linhas curtas; 7.5–8 pt em colunas
 com conteúdo extenso.
+
+## Fonte: Open Sans (TTF estática)
+
+A fonte base do padrão é **Open Sans**.
+
+- **Toda** fonte do `.frx` usa `Open Sans` — objetos, bandas, `Watermark.Font`
+  e coleções de estilo. **Arial é proibida** (apresentou falha em alguns
+  ambientes/SO).
+- **Tamanhos e estilos não mudam** na troca de família — só o nome da família.
+- Formato exigido: **TTF estática** — `OpenSans-Regular.ttf`, `OpenSans-Bold.ttf`
+  (e `OpenSans-Italic.ttf`/`OpenSans-BoldItalic.ttf` se houver itálico).
+  **Não usar fonte variável** (`OpenSans-VariableFont_*.ttf`).
+- A família precisa estar instalada em **todo** ambiente que gera/exporta — o
+  `.frx` não carrega a fonte junto; sem ela há *fallback* silencioso e o PDF sai
+  com tipografia errada.
+
+**Por que não variável:** o engine **não embute** os desenhos de uma fonte
+variável no PDF — o export emite `TTF: Alternate format not supported`, embute
+apenas o Regular e **sintetiza o bold** (faux). Com a TTF estática o PDF traz
+`OpenSans-Regular` **e** `OpenSans-Bold`.
+
+**Provisionamento:**
+
+| Ambiente | Como garantir |
+|---|---|
+| Windows (serviço/agente/desktop) | instalar o TTF por máquina (`C:\Windows\Fonts`) ou por usuário; conferir em `HKLM\`/`HKCU\...\CurrentVersion\Fonts` |
+| Linux / container | `apt-get install -y fonts-open-sans && fc-cache -f` (ou copiar os TTF para `/usr/share/fonts/truetype/open-sans/` e rodar `fc-cache -f`) |
+
+> O nome de família é **`Open Sans`** (com espaço) — o valor da tabela `name`
+> do TTF, não o nome do arquivo. É esse nome que o `.frx` referencia.
 
 ## Alturas de banda (padrão)
 
@@ -318,7 +389,11 @@ Presente **no final de todas as páginas**, sempre com divisória:
 - Três posições fixas:
   - **esquerda**: data de impressão (`dd/mm/aaaa hh:mm`)
   - **centro**: usuário que gerou o relatório
-  - **direita**: `Página N de M`
+  - **direita**: `Página [Page#] de [TotalPages#]`
+
+> As macros de página exigem o **sufixo `#`**: `[Page#]` e `[TotalPages#]`.
+> Sem o `#` não resolvem, e `[PageNumber]` gera erro de compilação
+> (`CS0103: The name 'PageNumber' does not exist in the current context`).
 
 ## Regras gerais
 
@@ -334,7 +409,9 @@ Presente **no final de todas as páginas**, sempre com divisória:
 
 | Item | Por quê |
 |---|---|
-| Fonte fora de Arial (Calibri, Segoe UI, Times, etc.) | famílias diferentes quebram a identidade |
+| Fonte fora de **Open Sans** (Arial, Calibri, Segoe UI, Times, etc.) | famílias diferentes quebram a identidade; Arial falhou em alguns ambientes/SO |
+| Fonte **variável** (`*VariableFont*.ttf`) | o engine não embute os desenhos no PDF (bold vira falsificado) — usar TTF estática |
+| Geometria em **pt** direto no `.frx` | ocupa ~75% da folha, sem erro visível |
 | Negrito nas linhas de detalhe | só cabeçalho, grupo/subgrupo e totalizadores são bold |
 | Cor fora do preto/cinza (inclusive nas divisórias) | relatório é B&W |
 | Altura de banda fora do grid de 8 pt | espaçamento inconsistente entre relatórios |
@@ -351,14 +428,16 @@ Presente **no final de todas as páginas**, sempre com divisória:
 Antes de entregar/exportar o relatório, conferir:
 
 - [ ] Margens 15 mm nos 4 lados
-- [ ] Tipografia conforme tabela (Arial, tamanhos exatos)
+- [ ] Geometria do `.frx` em **px (96 dpi)** — largura útil confere com a margem (`(papel−margens)×96/25,4`)
+- [ ] Tipografia conforme tabela (**Open Sans**, tamanhos exatos)
+- [ ] Fonte **Open Sans (TTF estática)** instalada no ambiente; PDF embute `OpenSans-Regular`+`OpenSans-Bold` (sem aviso `TTF: Alternate format not supported`)
 - [ ] Bandas com altura múltiplo de 8 pt, texto **centralizado verticalmente** (padding simétrico / `VertAlign=Center`)
 - [ ] Divisórias na borda das bandas (cabeçalho de colunas: antes e depois;
       totalizadores: cinza só antes; total geral: preta acima e abaixo)
 - [ ] Alinhamento de colunas: texto/código/data esq, números dir pelo último dígito
 - [ ] Sinal negativo à esquerda, sem deslocar dígitos
 - [ ] Moeda: sem `R$` no detalhe, com `R$` nos totalizadores
-- [ ] Rodapé com divisória cinza, data impressão (esq) / usuário (centro) / `Página N de M` (dir)
+- [ ] Rodapé com divisória cinza, data impressão (esq) / usuário (centro) / `Página [Page#] de [TotalPages#]` (dir)
 - [ ] Variante de layout correta (grupo+subgrupo / só grupo / sem grupo)
 - [ ] Grupo+Subgrupo: conteúdo indentado +13.5 pt (56.1) e linhas de borda alinhadas à indentação — **exceto o total geral, que fica na margem**
 - [ ] Totais com cabeçalho: grade própria de slots (não depende das colunas do detalhe); sem valores/cabeçalhos colados
