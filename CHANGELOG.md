@@ -4,6 +4,18 @@ Novidades deste repositório para quem usa as regras, skills e plugins da Sky.
 Texto em linguagem de usuário final, gerado a partir dos diffs (padrão da skill `sky-oquehadenovo`).
 O que não muda a forma de trabalhar de quem usa o repo (renomeação interna, refatoração, CI, docs de estrutura) não entra.
 
+## 2026-10-19
+
+### Novos recursos e melhorias
+
+- Skill `sky-dotnet-relatorios-padrao`: o alinhamento do texto entre fontes de tamanhos diferentes passou a ser tratado. O motor do FastReport recua o texto proporcionalmente ao tamanho da fonte — e o negrito recua um pouco mais — então um cabeçalho de 7 pt e o detalhe de 8 pt da mesma coluna começavam em pontos diferentes mesmo com a posição declarada idêntica. A skill agora traz a tabela de deslocamento medida e a regra de compensação, e as divisórias passam a começar e terminar junto com o texto. (hash)
+- Skill `sky-dotnet-relatorios-padrao`: a propriedade de preenchimento (`Padding`) do FastReport aceita apenas números inteiros — valor com casas decimais é descartado **sem erro** e volta ao padrão, o que fazia o ajuste desaparecer silenciosamente. Quando a diferença entre dois tamanhos de fonte é menor que 1 px (o caso do cabeçalho de 7 pt contra o detalhe de 8 pt), a compensação vai em parte no preenchimento e em parte na posição do objeto. (hash)
+- Skill `sky-dotnet-relatorios-padrao`: duas ferramentas novas — uma que mede o deslocamento do texto por tamanho e peso de fonte, exportando a 600 dpi (a 96 dpi a diferença não aparece), e um script que aplica a compensação num `.frx` em modo de simulação, gravando só quando pedido. (hash)
+
+### Soluções de problemas
+
+- Skill `sky-dotnet-relatorios-padrao`: o guia rápido citava a fonte **Arial**, que o padrão proíbe; corrigido para **Open Sans**. As margens citadas (15 mm) foram mantidas. (hash)
+
 ## 2026-10-06
 
 ### Novos recursos e melhorias

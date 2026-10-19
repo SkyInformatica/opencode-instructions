@@ -1,0 +1,16 @@
+# Só as fontes C# deste projeto vão para o repositório.
+# Saída de build (bin/, obj/) e qualquer outro artefato ficam fora.
+#
+# Nota: o padrao "Ajustar-Padding.ps1" fica na pasta irma
+# ajustar-padding-alinhamento-fechamento/ e nao e afetado por este arquivo.
+
+# Saída de build do dotnet
+bin/
+obj/
+
+# Todo o resto é ignorado...
+*
+# ...exceto as fontes e o proprio .gitignore.
+!*.cs
+!*.csproj
+!.gitignore

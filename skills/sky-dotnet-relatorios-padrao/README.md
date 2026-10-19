@@ -7,7 +7,7 @@ Guia de leitura rápida do padrão visual usado nos relatórios da Sky
 Para a mecânica do FastReport (`RegisterData`, `Prepare`, export) use a skill
 `fastreport-dotnet`.
 
-> Padrão em **preto e branco**, fonte **Arial**, A4, margens **15 mm** nos 4
+> Padrão em **preto e branco**, fonte **Open Sans**, A4, margens **15 mm** nos 4
 > lados. Exemplos em `examples/` (PDF + `.frx`) — ver catálogo na SKILL.md.
 
 ---

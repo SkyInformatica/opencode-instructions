@@ -1,6 +1,6 @@
 ---
 name: sky-dotnet-relatorios-padrao
-description: "Aplica o padrão visual de relatórios da Sky (fonte Open Sans, espaçamento, cabeçalho, banda de dados, grupos, rodapé) em templates FastReport .frx. Use ao criar, ajustar ou revisar o visual de um relatório. Complementa a skill fastreport-dotnet, que cobre a mecânica (RegisterData, Prepare, export)."
+description: "Aplica o padrão visual de relatórios da Sky (fonte Open Sans, espaçamento, alinhamento do texto, cabeçalho, banda de dados, grupos, rodapé) em templates FastReport .frx. Use ao criar, ajustar ou revisar o visual de um relatório. Complementa a skill fastreport-dotnet, que cobre a mecânica (RegisterData, Prepare, export)."
 ---
 
 # sky-dotnet-relatorios-padrao
@@ -26,7 +26,13 @@ dos relatórios".
 1. **Padrão visual (OBRIGATÓRIO ler primeiro):** `references/padrao-visual-relatorios.md`
    — fonte (**Open Sans**), unidades do `.frx` (**px a 96 dpi**), cabeçalho,
    banda de dados, grupo, rodapé e regras gerais.
-2. **Exemplos (PDF):**
+2. **Alinhamento do texto (Padding):** `references/padding-alinhamento-texto.md`
+   — por que `Left` igual **não** alinha o texto, a tabela de deslocamento por
+   tamanho/peso de fonte e a regra de compensação (`Padding` inteiro + o resto no
+   `Left`/`Width`). Ler sempre que a tarefa envolver alinhar texto, colunas ou
+   divisórias. Ferramentas em `tools/` (medir o deslocamento a 600 dpi e aplicar
+   a compensação num `.frx`).
+3. **Exemplos (PDF):**
    - `examples/Exemplo01-Ocorrencias-LDP-SomenteGrupo-GeradoPelaSkill.pdf/.frx`
      — **somente grupo, sem subgrupo** (gerado pela skill);
    - `examples/Exemplo02-Depositos-LDP-SomenteGrupo-GeradoPelaSkill.pdf/.frx`
@@ -40,7 +46,7 @@ dos relatórios".
      — **totais com label identificando o total + cabeçalho** (gerado pela
      skill; sem texto é variação permitida, só omitir). Os totais usam
      **grade própria de slots**, independente das colunas do detalhe.
-3. **Mecânica FastReport:** skill `fastreport-dotnet` — lifecycle,
+4. **Mecânica FastReport:** skill `fastreport-dotnet` — lifecycle,
    `RegisterData`, `Prepare`, export, segurança, diagnóstico.
 
 > O arquivo do padrão fica em `references/` desta skill no repositório de
@@ -68,6 +74,15 @@ dos relatórios".
 - **Macros de página com sufixo `#`.** No rodapé, usar `[Page#]` e
   `[TotalPages#]`; sem o `#` não resolve e `[PageNumber]` gera erro de
   compilação (`CS0103`).
+- **Alinhamento do texto não vem do `Left`.** Objetos com o mesmo `Left` e fontes
+  de tamanhos ou pesos diferentes **não** começam o texto no mesmo ponto: o motor
+  recua o texto proporcionalmente ao tamanho da fonte, e o negrito recua um pouco
+  mais. Compensar conforme `references/padding-alinhamento-texto.md`. Atenção:
+  **`Padding` do FastReport é inteiro** (`System.Windows.Forms.Padding`, membros
+  `Int32`) — fração no XML é descartada sem erro, então a parte sub-pixel vai no
+  `Left`/`Width`. As divisórias acompanham a borda do **texto**, não a do objeto.
+  Medir o deslocamento a **600 dpi**; a 96 dpi a granularidade de 1 px esconde as
+  diferenças.
 - **Não mudar valor marcado como `[TODO: extrair de .frx]`** no padrão sem
   antes extrair o valor real de um relatório consolidado e atualizar o doc.
 - **Não inventar padrão.** Se a seção não estiver definida, apontar o `TODO`
@@ -78,7 +93,9 @@ dos relatórios".
 
 ## Fluxo
 
-1. Ler `padrao-visual-relatorios.md` (e o bloco STOP antes de qualquer código).
+1. Ler `padrao-visual-relatorios.md` (e o bloco STOP antes de qualquer código);
+   se a tarefa envolver alinhar texto, colunas ou divisórias, ler também
+   `padding-alinhamento-texto.md`.
 2. Localizar `.frx` de referência (relatório consolidado) se o padrão tiver `TODO` pendente.
 3. Aplicar o padrão ao layout; a **mecânica do `.frx` (gerar/editar) fica com
    a skill `fastreport-dotnet`** — ativar/delegar ao mexer no template.
