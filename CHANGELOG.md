@@ -21,6 +21,7 @@ O que não muda a forma de trabalhar de quem usa o repo (renomeação interna, r
 ### Novos recursos e melhorias
 
 - Instalação do Caveman no OpenCode V2: o prompt passou a usar a versão estável oficial (`v4.0.1`), que já instala o plugin no formato do V2 — junto com 9 skills, 8 comandos e 3 subagentes — sem precisar aplicar um port manual. Quem tinha a instalação manual antiga (`index.js`) migra com `--force`, que faz backup da pasta antes de substituir. O port que ficava em `v2/plugins/caveman/` foi removido.
+- Headroom: novo prompt de instalação para o OpenCode V2 no Windows. O Headroom roda um proxy local (`127.0.0.1:8787`) que comprime tool outputs, logs, JSON e código antes do envio ao provedor, complementando o RTK — que comprime a saída de bash. O prompt instala o CLI via `uv`, sobe o proxy persistente pelo Task Scheduler, desliga o beacon de telemetria e adiciona o provider `headroom` no `opencode.json` sem trocar o provider atual. Para usar, basta escolher um modelo `headroom/<id>` em `/model`.
 
 ### Soluções de problemas
 

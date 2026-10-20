@@ -196,6 +196,18 @@ Em uma sessão do OpenCode, use o prompt:
 siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/v2/prompts/prompt-instalar-rtk-opencode.md para instalar o RTK
 ```
 
+### Headroom (compressão de contexto no tráfego do LLM)
+
+Proxy local que comprime tool outputs, logs, JSON e trechos de código antes de enviar ao provedor, reduzindo tokens de entrada. Complementa o RTK: o RTK comprime a saída de bash; o Headroom comprime o que chega ao modelo, inclusive resultados de MCP.
+
+Requer Python 3.13 via `uv`. O prompt instala o CLI, sobe o proxy persistente no Windows (Task Scheduler), desliga o beacon de telemetria e adiciona um provider `headroom` no `opencode.json` sem trocar o provider atual.
+
+Em uma sessão do OpenCode, use o prompt:
+
+```
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/v2/prompts/prompt-instalar-headroom-opencode.md para instalar o Headroom
+```
+
 ### PonyTail (código mínimo)
 
 Skill que força o agente a escrever apenas o necessário — YAGNI, stdlib primeiro, KISS. Reduz ~54% de código gerado (ate 94%) e ~20% de custo.
