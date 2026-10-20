@@ -18,6 +18,10 @@ O que não muda a forma de trabalhar de quem usa o repo (renomeação interna, r
 
 ## 2026-10-20
 
+### Novos recursos e melhorias
+
+- Instalação do Caveman no OpenCode V2: o prompt passou a usar a versão estável oficial (`v4.0.1`), que já instala o plugin no formato do V2 — junto com 9 skills, 8 comandos e 3 subagentes — sem precisar aplicar um port manual. Quem tinha a instalação manual antiga (`index.js`) migra com `--force`, que faz backup da pasta antes de substituir. O port que ficava em `v2/plugins/caveman/` foi removido.
+
 ### Soluções de problemas
 
 - Instalação do RTK no OpenCode V2: o prompt deixou de mandar instalar um build de desenvolvimento e baixar o plugin de um PR. O suporte ao V2 chegou na versão estável oficial (`v1.0.0`) e o próprio `rtk init` já instala o plugin no formato que o V2 carrega — a instalação volta a ser só baixar o binário e rodar o comando, sem conversão manual. O comando usa `--hook-only --no-patch` para não configurar outros agentes por engano, e o caminho do `config.toml` no Windows (`%APPDATA%\rtk\`) e a validação foram corrigidos (o `rtk init --show` não mostra o plugin do OpenCode).
