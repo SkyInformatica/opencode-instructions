@@ -1,4 +1,4 @@
-Instale o Headroom (compressão de contexto) no OpenCode global da minha máquina Windows. Tudo que já estiver configurado deve ser mantido — nunca duplicar, nunca sobrescrever configurações existentes.
+Instale o Headroom (compressão de contexto) no OpenCode global da minha máquina Windows ou macOS. Tudo que já estiver configurado deve ser mantido — nunca duplicar, nunca sobrescrever configurações existentes.
 
 Referência oficial:
 - https://docs.headroomlabs.ai/docs/opencode
@@ -8,15 +8,16 @@ Referência oficial:
 
 O que o Headroom faz:
 - Roda um proxy local (`127.0.0.1:8787`) que comprime tool outputs, logs, JSON e trechos de código antes de enviar ao provedor.
-- O original fica em cache local (CCR). O MCP do Headroom expõe `headroom_retrieve` para o modelo pedir o texto completo quando precisar.
+- O original fica em cache local (CCR). O proxy injeta a ferramenta `headroom_retrieve` na requisição para o modelo pedir o texto completo quando precisar.
 - Atua no tráfego do provedor, não nos comandos. Complementa o RTK: o RTK comprime a saída de bash; o Headroom comprime o que chega ao modelo, inclusive JSON de MCP.
 - **Não** ligue o output shaper (`HEADROOM_OUTPUT_SHAPER`): ele duplica o que o Caveman/Ponytail já fazem.
 
 Requisitos:
-- Windows 10/11 x64.
+- Windows 10/11 x64 ou macOS.
 - Python 3.13 (o `uv` baixa um interpretador gerenciado se necessário).
 - Node.js **não** é necessário para o CLI (o pacote npm é só SDK TypeScript).
-- Acesso de usuário. No Windows o preset `persistent-service` cai automaticamente para `persistent-task`: o proxy sobe no boot e um watchdog do Task Scheduler verifica a saúde a cada 5 minutos. Não precisa de admin.
+- Acesso de usuário. No Windows o preset `persistent-service` cai automaticamente para `persistent-task`: o proxy sobe no boot e um watchdog do Task Scheduler verifica a saúde a cada 5 minutos. No macOS o mesmo preset usa `launchd`. Não precisa de admin.
+- Nos comandos abaixo, `curl.exe` é o Windows. No macOS use `curl`.
 
 Passos:
 
@@ -67,16 +68,17 @@ Passos:
      - **Gateway próprio/OpenRouter/Together**: use o `baseURL` existente.
    - **Provider gerenciado `opencode/...`**: não serve como upstream (sem `baseURL` público). Se existir outro provider OpenAI-compatible no arquivo, use ele. Se só houver o `opencode/...`, pare e me avise.
    - O `model` global pode continuar no provider gerenciado. O Headroom só entra quando você escolher um modelo `headroom/<id>`.
+   - Antes de instalar o proxy, valide a chave direto no upstream com uma chamada mínima de chat. Se retornar `401` ou `Invalid or revoked API key`, escolha outro provider e repita. Não adianta instalar o Headroom com uma chave morta.
    - A chave de API continua vindo do `opencode.json` do provider escolhido; não copie chave para o prompt nem para o log.
 
 5. Suba o proxy persistente:
    ```
-   headroom install apply --preset persistent-service --providers manual --port 8787 --env HEADROOM_BEACON=off --env HEADROOM_TELEMETRY=off
+   headroom install apply --preset persistent-service --providers manual --port 8787 --no-rate-limit --code-aware --env HEADROOM_BEACON=off --env HEADROOM_TELEMETRY=off
    ```
    - `--providers manual` **sem** `--target` instala só o runtime, sem reescrever `opencode.json` nem configurar outros agentes. Não omita essas flags e não use `headroom deploy` nem `headroom wrap opencode`: eles reescrevem a config ou exigem abrir o OpenCode pelo wrapper.
    - Passe também o upstream, quando não for o padrão. Exemplo DeepSeek:
      ```
-     headroom install apply --preset persistent-service --providers manual --port 8787 --env HEADROOM_BEACON=off --env HEADROOM_TELEMETRY=off --env OPENAI_TARGET_API_URL=https://api.deepseek.com/v1
+     headroom install apply --preset persistent-service --providers manual --port 8787 --no-rate-limit --code-aware --env HEADROOM_BEACON=off --env HEADROOM_TELEMETRY=off --env OPENAI_TARGET_API_URL=https://api.deepseek.com/v1
      ```
      O instalador copia `OPENAI_TARGET_API_URL` do ambiente atual, mas o `--env` explícito não depende do shell.
    - No Windows o comando avisa que `persistent-service` não é suportado e usa `persistent-task` (Task Scheduler) automaticamente. É o comportamento esperado.
@@ -88,6 +90,7 @@ Passos:
      ```
      `/health` deve retornar `"status": "healthy"`.
    - Se o runtime não subir, pare e me informe o erro. Não deixe um proxy efêmero como solução permanente.
+   - Se um reapply falhar com `runtime identity changed`, rode `headroom install remove`, confirme que a porta 8787 está livre e repita o `apply`. O snapshot fica em `~/.headroom/deploy/default.recovery.json`.
 
 6. Configure o provider `headroom` no `opencode.json`:
    - Faça backup: copie `opencode.json` para `opencode.json.bak-headroom`.
@@ -116,11 +119,7 @@ Passos:
    - Preserve todo o resto: `$schema`, `model`, `agents`, `mcp`, permissões e os outros providers.
    - **Não** altere o `model` global sem me perguntar. O uso fica em `headroom/<id>` via `/model`; se eu pedir para tornar padrão, aí sim troque.
    - Não crie `opencode.jsonc` se já existe `opencode.json` — ter os dois na mesma pasta causa conflito.
-   - Registre o MCP de recuperação (opcional, mas recomendado para o modelo conseguir pedir o texto original):
-     ```
-     headroom mcp install --agent opencode --proxy-url http://127.0.0.1:8787
-     ```
-     Confira que não duplicou uma entrada `headroom` existente no `mcp` do `opencode.json`.
+   - **Não** rode `headroom mcp install --agent opencode` no V2: essa versão do registrador grava o MCP no formato V1 (`mcp.headroom`) e o V2 espera `mcp.servers`. O proxy já injeta `headroom_retrieve` na requisição, então o MCP não é necessário para a compressão.
 
 7. Reinicie e valide:
    - `opencode service restart`.
@@ -139,7 +138,6 @@ Passos:
      - Em serviço, use `headroom install restart`.
    - Remover o runtime: `headroom install remove`.
    - Remover o provider: restaure `opencode.json.bak-headroom` (ou remova só o bloco `provider.headroom`).
-   - Remover o MCP: `headroom mcp uninstall --agent opencode` (ou remova a entrada `headroom` do `mcp`).
    - Remover o CLI: `uv tool uninstall headroom-ai`.
    - Remover as variáveis de usuário `HEADROOM_*` e `OPENAI_TARGET_API_URL` se não forem mais usadas.
 

@@ -200,7 +200,7 @@ siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/o
 
 Proxy local que comprime tool outputs, logs, JSON e trechos de código antes de enviar ao provedor, reduzindo tokens de entrada. Complementa o RTK: o RTK comprime a saída de bash; o Headroom comprime o que chega ao modelo, inclusive resultados de MCP.
 
-Requer Python 3.13 via `uv`. O prompt instala o CLI, sobe o proxy persistente no Windows (Task Scheduler), desliga o beacon de telemetria e adiciona um provider `headroom` no `opencode.json` sem trocar o provider atual.
+Requer Python 3.13 via `uv`. O prompt instala o CLI, sobe o proxy persistente no Windows (Task Scheduler) ou macOS (`launchd`), desliga o beacon de telemetria e adiciona um provider `headroom` no `opencode.json` sem trocar o provider atual.
 
 Em uma sessão do OpenCode, use o prompt:
 
