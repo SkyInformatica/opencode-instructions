@@ -22,10 +22,12 @@ O que não muda a forma de trabalhar de quem usa o repo (renomeação interna, r
 
 - Instalação do Caveman no OpenCode V2: o prompt passou a usar a versão estável oficial (`v4.0.1`), que já instala o plugin no formato do V2 — junto com 9 skills, 8 comandos e 3 subagentes — sem precisar aplicar um port manual. Quem tinha a instalação manual antiga (`index.js`) migra com `--force`, que faz backup da pasta antes de substituir. O port que ficava em `v2/plugins/caveman/` foi removido.
 - Headroom: novo prompt de instalação para o OpenCode V2 no Windows e no macOS. O Headroom roda um proxy local (`127.0.0.1:8787`) que comprime tool outputs, logs, JSON e código antes do envio ao provedor, complementando o RTK — que comprime a saída de bash. O prompt instala o CLI via `uv`, sobe o proxy persistente pelo Task Scheduler (Windows) ou `launchd` (macOS), desliga o beacon de telemetria, remove o limite de 60 req/min e adiciona o provider `headroom` no `opencode.json` sem trocar o provider atual. Para usar, basta escolher um modelo `headroom/<id>` em `/model`.
+- Rehydra: o prompt de instalação voltou a valer para o OpenCode V2. A partir da versão `0.15.0` o plugin publica os dois formatos no mesmo pacote e o V2 carrega sozinho, sem arquivo local `plugins/rehydra.ts`; o prompt agora exige `0.15.0` ou maior e orienta a conferir a versão instalada antes de concluir. Em máquina V1 nada muda. (8e80c4d)
 
 ### Soluções de problemas
 
 - Instalação do RTK no OpenCode V2: o prompt deixou de mandar instalar um build de desenvolvimento e baixar o plugin de um PR. O suporte ao V2 chegou na versão estável oficial (`v1.0.0`) e o próprio `rtk init` já instala o plugin no formato que o V2 carrega — a instalação volta a ser só baixar o binário e rodar o comando, sem conversão manual. O comando usa `--hook-only --no-patch` para não configurar outros agentes por engano, e o caminho do `config.toml` no Windows (`%APPDATA%\rtk\`) e a validação foram corrigidos (o `rtk init --show` não mostra o plugin do OpenCode).
+- Secret Redactor: o prompt de instalação passou a parar antes de instalar em máquina V2. A versão disponível (`0.5.1`) ainda é só para V1 e não carrega no V2; o prompt agora confere a versão do OpenCode e a versão publicada, informa que o suporte está em revisão no projeto e só instala quando sair uma versão compatível. A orientação anterior, que tratava o Rehydra como igualmente bloqueado, foi corrigida — o Rehydra já funciona no V2, mas é outro plugin e não deve ser trocado sem o usuário pedir. (8e80c4d)
 
 ## 2026-10-06
 
