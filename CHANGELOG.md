@@ -58,3 +58,9 @@ O que não muda a forma de trabalhar de quem usa o repo (renomeação interna, r
 - Instalação do RTK: a instalação no OpenCode V2 deixa de descartar o plugin logo após instalar — a conversão exigida pelo carregador da nova versão virou passo obrigatório das instruções, com validação pelo log. (5ba3d24)
 - Instalação: o Secret Redactor deixou de ser sugerido como alternativa ao Rehydra no OpenCode V2, já que os dois falham pelo mesmo motivo; o caminho agora é aguardar a versão compatível. (88e3d39)
 - Instalação: as regras e skills receberam nomes padronizados por time (ex.: `sky-delphi-*`, `sky-dotnet-*`). Quem instalou a versão anterior precisa rodar a instalação de novo, senão fica com regras antigas de encoding e SVN ativas. (1863e68, 25c449e)
+
+## 2026-10-21
+
+### Novos recursos e melhorias
+
+- Skill `opencode-usage-leaderboard`: nova skill para gerar ranking de uso do OpenCode Console por membro e por modelo. Calcula totais de tokens (incluindo cache), participação no total da equipe, custo e custo médio por requisição, e monta os dois cards (membros e modelos) para Google Chat a partir de um snapshot JSON, usando o script em `scripts/build_cards.py`. O ranking de modelos é limitado aos até 10 modelos de maior custo retornados por membro pelo Console.
