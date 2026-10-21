@@ -30,7 +30,7 @@ dos relatórios".
    — por que `Left` igual **não** alinha o texto, a tabela de deslocamento por
    tamanho/peso de fonte e a regra de compensação (`Padding` inteiro + o resto no
    `Left`/`Width`). Ler sempre que a tarefa envolver alinhar texto, colunas ou
-   divisórias. Ferramentas em `tools/` (medir o deslocamento a 600 dpi e aplicar
+   divisórias. Ferramentas em `scripts/` (medir o deslocamento a 600 dpi e aplicar
    a compensação num `.frx`).
 3. **Exemplos (PDF):**
    - `examples/Exemplo01-Ocorrencias-LDP-SomenteGrupo-GeradoPelaSkill.pdf/.frx`

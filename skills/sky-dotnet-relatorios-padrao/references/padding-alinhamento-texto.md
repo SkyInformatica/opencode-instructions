@@ -94,12 +94,12 @@ double gL = (inicio - leftImg) / escala;
 O texto de referência importa: `gL` é o *bearing* do **primeiro glifo**. Use o
 mesmo texto para comparar tamanhos; para prever um objeto real, use o texto dele.
 
-**Ferramentas desta skill (`tools/`):**
+**Ferramentas desta skill (`scripts/`):**
 
-- `tools/medir-deslocamento-texto-fastreport/` — C# + FastReport. Implementa
+- `scripts/medir-deslocamento-texto-fastreport/` — C# + FastReport. Implementa
   exatamente o método acima: um `TextObject` por linha, exporta a **600 dpi** e
   imprime `gL`/`gR` por tamanho e peso (regular e negrito). Rodar com `dotnet run`.
-- `tools/ajustar-padding-alinhamento-fechamento/Ajustar-Padding.ps1` — aplica a
+- `scripts/ajustar-padding-alinhamento-fechamento/Ajustar-Padding.ps1` — aplica a
   regra de compensação e ajusta as divisórias em um `.frx`. **Dry-run por
   padrão**; só grava com `-Aplicar`.
 

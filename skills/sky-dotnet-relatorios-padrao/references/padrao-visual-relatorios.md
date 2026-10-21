@@ -11,6 +11,8 @@ totalizadores e sumário usados nos relatórios FastReport da Sky.
 > **Este doc define apenas o VISUAL.** A geração/edição do `.frx` (estrutura
 > XML, `RegisterData`, `Prepare`, export) é da skill **`fastreport-dotnet`**
 > — carregue-a obrigatoriamente ao gerar/editar templates.
+> **Alinhamento do texto (Padding):** ver `padding-alinhamento-texto.md` — o
+> `Left` igual **não** alinha o texto entre tamanhos/pesos de fonte diferentes.
 
 ### STOP — leia antes de gerar qualquer relatório
 
@@ -244,6 +246,10 @@ grupo+subgrupo, `Exemplo03`); várias colunas com mini-cabeçalho → 32 pt
   (ex.: `-58,03` alinha o `3` com `58,03`).
 - Moeda: **sem `R$` nas linhas de detalhe**; `R$` presente nos totalizadores
   (grupo/geral); `BRL (R$)`: apenas no topo direito / cabeçalho.
+- **`Left` igual não basta:** o motor recua o texto proporcionalmente ao tamanho
+  da fonte (e o negrito recua um pouco mais), então colunas com tamanhos/pesos
+  diferentes ficam desalinhadas mesmo com o mesmo `Left`. Compensar conforme
+  `padding-alinhamento-texto.md`; as divisórias acompanham a borda do **texto**.
 
 ## Grupos (GroupHeaderBand / GroupFooterBand)
 
@@ -435,6 +441,7 @@ Antes de entregar/exportar o relatório, conferir:
 - [ ] Divisórias na borda das bandas (cabeçalho de colunas: antes e depois;
       totalizadores: cinza só antes; total geral: preta acima e abaixo)
 - [ ] Alinhamento de colunas: texto/código/data esq, números dir pelo último dígito
+- [ ] Alinhamento do texto entre tamanhos/pesos diferentes compensado (`Padding` inteiro + `Left`/`Width`); divisórias nas bordas do **texto** — ver `padding-alinhamento-texto.md`
 - [ ] Sinal negativo à esquerda, sem deslocar dígitos
 - [ ] Moeda: sem `R$` no detalhe, com `R$` nos totalizadores
 - [ ] Rodapé com divisória cinza, data impressão (esq) / usuário (centro) / `Página [Page#] de [TotalPages#]` (dir)
