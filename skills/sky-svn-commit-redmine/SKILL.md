@@ -31,6 +31,7 @@ Antes de gerar o commit, verifique se o usuário forneceu o número da tarefa do
 4. **Restrições:**
    - Nunca invente contexto ou regras de negócio que não estejam no código fornecido.
    - Evite adjetivos desnecessários.
+   - Não execute `svn commit`. Entregue apenas o texto da mensagem.
    - Responda APENAS com o bloco de código do commit (sem nenhum texto de introdução ou conclusão fora do bloco).
 
 ## Exemplo de Saída Esperada:
