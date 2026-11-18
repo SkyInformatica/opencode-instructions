@@ -35,7 +35,7 @@ Antes de gerar o commit, verifique se o usuário forneceu o número da tarefa do
 
 ## Exemplo de Saída Esperada:
 
-` ``` `text
+` ``` `
 t #97614 - fix: importa contatos no layout expandido de Porto Alegre
 
 [fontesDX/Modulo/Share/Protesto.Classes.Febraban.Apontamento.pas]: Detecta layout expandido e lê telefone, e-mail e complemento.
