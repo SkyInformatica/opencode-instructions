@@ -39,8 +39,8 @@ v2/
 | rtk | ✅ V2 na versão estável oficial: plugin dual-shape `{ id, setup, server }`, instalado pelo próprio `rtk init` sem conversão | prompt instala e valida: `v2/prompts/prompt-instalar-rtk-opencode.md` |
 | secret-redactor | ❌ upstream ainda V1 (0.5.1) | prompt avisa e manda aguardar o port — não há alternativa de redação no V2 hoje (rehydra também bloqueado) |
 | rehydra | ❌ upstream ainda V1 — o `setup()` quebra no V2 com `TypeError: undefined is not an object (evaluating 'client.app')` (testado em 0.13.0); port em andamento no time | prompt bloqueia a instalação em V2; destrava quando sair release > 0.13.0 com suporte V2 |
-| ponytail | ✅ port V2 neste repo (`v2/plugins/ponytail/`); PR [#907](https://github.com/DietrichGebert/ponytail/pull/907) (aberto) tem bloqueio do reviewer (setup retornando hooks é ignorado no V2); upstream 4.x ainda V1 | prompt: `v2/prompts/prompt-instalar-ponytail-opencode.md` |
-| caveman | ✅ V2 na versão estável oficial desde a `v4.0.1`: o plugin traz `server.js` com `{ id, setup }` e o instalador grava esse arquivo | prompt instala e valida: `v2/prompts/prompt-instalar-caveman-opencode.md` |
+| ponytail | ✅ V2 oficial desde `v4.10.1`; release estável atual `v5.3.3`. O port Sky (`v2/plugins/ponytail/`) permanece como variante customizada | prompt instala/atualiza upstream: `v2/prompts/prompt-instalar-ponytail-opencode.md` |
+| caveman | ✅ V2 oficial desde `v4.0.1`; release estável atual `v4.2.0`. O instalador publica `server.js` para V2 | prompt consulta a release estável e instala somente OpenCode: `v2/prompts/prompt-instalar-caveman-opencode.md` |
 
 Prompts de MCP ficam em `mcp/` (uma pasta por servidor — `redmine/`, `skynet/`, `azuredevops/`) e o de ambiente Windows na raiz; todos válidos nos dois — o V2 traduz a forma V1 da config `mcp` automaticamente.
 
