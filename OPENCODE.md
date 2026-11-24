@@ -79,7 +79,7 @@ Regras carregadas em **toda sessão, todo prompt**, combinando duas fontes:
 }
 ```
 
-O wildcard `~/.config/opencode/rules/*.md` (sintaxe interna do OpenCode, expandida em qualquer SO) carrega **todas** as regras da pasta local, incluindo novas regras baixadas depois. As regras são **copiadas** para a máquina do usuário na instalação (via script em `prompt-configurar-opencode.md`), não carregadas por URL — a pasta `rules/` do repositório é a fonte, e a cópia local é sempre atualizada com a versão do repositório. Instruções específicas de domínio (backend, frontend, deploy) vão em skills, carregadas sob demanda.
+O wildcard `~/.config/opencode/rules/*.md` (sintaxe interna do OpenCode, expandida em qualquer SO) carrega **todas** as regras da pasta local, incluindo novas regras baixadas depois. As regras são **copiadas** para a máquina do usuário na instalação (via `prompts/prompt-configurar-opencode.md`), não carregadas por URL — a pasta `rules/` do repositório é a fonte, e a cópia local é sempre atualizada com a versão do repositório. Instruções específicas de domínio (backend, frontend, deploy) vão em skills, carregadas sob demanda.
 
 ## Skills (`.opencode/skills`) — carregadas sob demanda
 

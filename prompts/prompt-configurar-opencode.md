@@ -51,9 +51,9 @@ C. **Se o escopo incluir skills:**
 D. **Se o escopo incluir agents:**
    Pergunte: "Quais agents deseja instalar? (informe os nomes separados por vírgula, ou 'todos')"
 
-   - Se usuário responder "todos" → instale todos os agents disponíveis na pasta v1/agents/
+   - Se usuário responder "todos" → instale todos os agents disponíveis na pasta agents/
    - Se usuário informar nomes específicos → instale apenas os agents com esses nomes
-   - Se usuário não informar nada / deixar em branco → liste os agents disponíveis (consultando a pasta v1/agents/ do repositório via GitHub API) e peça para o usuário escolher quais deseja. Repita a pergunta até obter uma resposta válida (nomes específicos ou "todos").
+   - Se usuário não informar nada / deixar em branco → liste os agents disponíveis (consultando a pasta agents/ do repositório via GitHub API) e peça para o usuário escolher quais deseja. Repita a pergunta até obter uma resposta válida (nomes específicos ou "todos").
 
 **Após obter as escolhas do usuário, execute os passos abaixo:**
 
@@ -91,15 +91,15 @@ Passos:
      - Baixe cada .md de https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/skills/<SUBPASTA>/references/<ARQUIVO>.md
      - Salve em %USERPROFILE%\.config\opencode\skills\<SUBPASTA>\references\<ARQUIVO>.md (sobrescreva se já existir).
 
-3b. **Se o escopo incluir agents**, baixe os agents selecionados da pasta v1/agents/ do repositório para a pasta global de agents:
-   https://github.com/SkyInformatica/opencode-instructions/tree/main/v1/agents
+3b. **Se o escopo incluir agents**, baixe os agents selecionados da pasta agents/ do repositório para a pasta global de agents:
+   https://github.com/SkyInformatica/opencode-instructions/tree/main/agents
 
    Liste o conteúdo da pasta agents via GitHub API:
-   https://api.github.com/repos/SkyInformatica/opencode-instructions/contents/v1/agents
+   https://api.github.com/repos/SkyInformatica/opencode-instructions/contents/agents
 
    Para cada agent selecionado pelo usuário:
    - Baixe sempre a versão atual do repositório:
-     https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/v1/agents/<SUBPASTA>.md
+      https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/agents/<SUBPASTA>.md
    - Se %USERPROFILE%\.config\opencode\agents\<SUBPASTA>.md já existir, sobrescreva com a versão baixada (a cópia local pode estar desatualizada).
    - Se não existir, crie a pasta %USERPROFILE%\.config\opencode\agents\ e salve o <SUBPASTA>.md baixado.
 
@@ -132,17 +132,14 @@ Passos:
    | `principios.md` | `sky-principios.md` |
 
 4. **Se o escopo incluir regras**, configure o opencode.json global:
-   - Se %USERPROFILE%\.config\opencode\opencode.json já existir, leia o conteúdo atual.
-     - Garanta que o array "instructions" contenha o padrão global (apenas uma vez, sem duplicar):
-       "~/.config/opencode/rules/*.md"
-       Esse wildcard carrega automaticamente todas as regras da pasta local, inclusive novas regras baixadas depois. Não liste arquivos de regra individualmente. Se o array ainda tiver URLs raw antigas do repositório (raw.githubusercontent.com/SkyInformatica/opencode-instructions/.../rules/...), remova-as e deixe apenas o wildcard.
-       Obs.: o "~" aqui é sintaxe interna do OpenCode (expandida por ele em qualquer SO, inclusive Windows) — escreva exatamente assim no JSON; não substitua por %USERPROFILE%.
-      - Se "model" ou "small_model" não estiverem definidos, defina ambos como `opencode/deepseek-v4-flash`.
-      - Garanta que `"shell": "bash"` esteja presente no JSON. Isso garante que o OpenCode use o Git Bash (que já inclui comandos Unix nativos), e não cmd/PowerShell.
-     - Mantenha todo o resto inalterado ($schema, plugins, MCPs, permissões).
-   - Se não existir, crie usando como modelo:
-     https://github.com/SkyInformatica/opencode-instructions/blob/main/v1/global/opencode.json
-      Adapte model (`opencode/deepseek-v4-flash`), small_model (`opencode/deepseek-v4-flash`), instructions e `"shell": "bash"` conforme necessário.
+   - Se `%USERPROFILE%\.config\opencode\opencode.json` existir, leia o conteúdo atual.
+     - Garanta que `instructions` contenha exatamente uma vez `"~/.config/opencode/rules/*.md"`. Esse wildcard carrega todas as regras locais, inclusive as adicionadas depois.
+     - Remova URLs `raw.githubusercontent.com/SkyInformatica/opencode-instructions/.../rules/...` de `instructions`; mantenha o wildcard.
+     - O `~` é sintaxe interna do OpenCode em qualquer SO. Escreva-o literalmente; não o substitua por `%USERPROFILE%`.
+     - Se `model` não estiver definido, use `opencode/deepseek-v4-flash`. Configure `agents.title.model` com o mesmo modelo se necessário.
+     - Garanta que `"shell": "bash"` esteja presente para usar Git Bash no Windows.
+     - Preserve todos os outros campos (`$schema`, `plugins`, MCPs e permissões).
+   - Se não existir, use como modelo `https://github.com/SkyInformatica/opencode-instructions/blob/main/global/opencode.json` e adapte `model`, `agents.title.model`, `instructions` e `shell`.
 
 5. Verifique se os arquivos estão corretos lendo %USERPROFILE%\.config\opencode\opencode.json.
 

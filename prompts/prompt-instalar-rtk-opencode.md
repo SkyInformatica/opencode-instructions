@@ -6,7 +6,7 @@ Fontes oficiais:
 - https://github.com/rtk-ai/rtk/releases
 
 1. Verifique `opencode --version`, `rtk --version` e `where.exe rtk`.
-   - Exija OpenCode 1.18.29 ou mais novo. Se não atender, pare e informe.
+   - Confirme que `opencode --version` informa OpenCode 2.x. Se não, pare e informe.
    - Identifique o executável RTK efetivamente resolvido pelo PATH. Não presuma que esteja em `%USERPROFILE%\.local\bin`.
    - Verifique se `%USERPROFILE%\.config\opencode\plugins\rtk.ts` já existe. Preserve plugins personalizados; se o arquivo não for claramente gerenciado pelo RTK, pare e peça autorização antes de substituí-lo.
 
@@ -29,7 +29,7 @@ Fontes oficiais:
    - Não edite manualmente o plugin nem adicione RTK ao array `plugins` de `opencode.json`.
 
 5. Valide a integração.
-   - Confirme que `%USERPROFILE%\.config\opencode\plugins\rtk.ts` exporta um objeto com `id: "rtk"`, `setup(ctx)` e `server()`.
+   - Confirme que `%USERPROFILE%\.config\opencode\plugins\rtk.ts` exporta um objeto com `id: "rtk"` e `setup(ctx)`.
    - Confirme os hooks V2 `ctx.tool.hook("execute.before", ...)` e `ctx.shell.hook("create.before", ...)`.
    - Execute `rtk hook opencode --help` e confirme código de saída zero.
    - Execute `rtk hook opencode "git status"` e confirme resposta JSON válida. `{}` é válido quando uma reescrita mudaria a decisão de permissões do OpenCode.

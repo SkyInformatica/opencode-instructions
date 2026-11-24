@@ -6,19 +6,28 @@ Repositório global de regras e configuração do [OpenCode](https://opencode.ai
 
 > **Acompanhe as novidades em [CHANGELOG.md](CHANGELOG.md).**
 
-## Versões V1 e V2
+## Layout do repositório
 
-O repositório atende **duas versões** do OpenCode em pastas separadas, para migrar máquina por máquina:
+Este repositório atende somente **OpenCode V2**. Configuração, agents, plugins e prompts ficam na raiz:
 
-| Pasta | Versão | Conteúdo |
+| Pasta | Conteúdo |
+|---|---|
+| `global/` | modelo de configuração global V2 |
+| `agents/` | agents da Sky |
+| `plugins/` | plugins V2 mantidos pela Sky |
+| `prompts/` | prompts de configuração e instalação |
+| `rules/`, `skills/`, `mcp/` | regras, skills e MCPs compartilhados |
+
+## Status dos plugins
+
+| Plugin | Compatibilidade atual | Prompt |
 |---|---|---|
-| **`v2/`** | **V2 — padrão atual** | config nativa, agents, prompts e plugins V2 |
-| `v1/` | V1 (legado) | config antiga (`small_model`, `plugin`), agents e prompts V1 |
-| **raiz** | **compartilhado** | `rules/`, `skills/`, `mcp/` (instruções e prompts de instalação dos MCPs, um por servidor) e o prompt de ambiente Windows — válidos nas duas versões |
-
-**Os comandos deste README usam os prompts de `v2/prompts/` (padrão).** Se a máquina ainda roda OpenCode V1, troque `/v2/prompts/` por `/v1/prompts/` na URL do prompt. `rules/` e `skills/` são as mesmas nos dois — instale sempre da raiz.
-
-Detalhes da migração V1→V2: [`v2/README.md`](v2/README.md).
+| encoding-auto | Port V2 da Sky em `plugins/encoding-auto/` | `prompts/prompt-instalar-encoding-auto-opencode.md` |
+| RTK | Plugin oficial compatível com V2; instalação pelo próprio `rtk init` | `prompts/prompt-instalar-rtk-opencode.md` |
+| Secret Redactor | Pacote oficial `0.5.1` ainda não suporta V2; prompt bloqueia instalação incompatível | `prompts/prompt-instalar-secret-redactor-opencode.md` |
+| Rehydra | Suporte V2 desde `0.15.0`; versão estável atual `0.17.0` | `prompts/prompt-instalar-rehydra-opencode.md` |
+| Ponytail | Suporte V2 upstream desde `4.10.1`; versão atual `5.3.3`; port Sky opcional em `plugins/ponytail/` | `prompts/prompt-instalar-ponytail-opencode.md` |
+| Caveman | Suporte V2 oficial desde `v4.0.1`; versão atual `v4.2.0` | `prompts/prompt-instalar-caveman-opencode.md` |
 
 ## Instalação
 
@@ -61,61 +70,59 @@ Isso instalará (se necessário) e configurará no PATH:
 A configuração pode ser feita via **OpenCode Desktop** ou **OpenChamber** — ambos usam o mesmo arquivo `opencode.json` global. Em uma sessão do OpenCode, use o prompt abaixo:
 
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/v2/prompts/prompt-configurar-opencode.md para configurar meu opencode
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompts/prompt-configurar-opencode.md para configurar meu opencode
 ```
 
 O prompt é interativo e perguntará o escopo desejado. Você pode personalizar a instalação de diversas formas:
-
-> Para OpenCode **V1**, use `v1/prompts/prompt-configurar-opencode.md` no lugar de `v2/prompts/...`.
 
 #### Exemplos de uso
 
 **Instalação completa (regras + skills + modelos):**
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/v2/prompts/prompt-configurar-opencode.md para instalar todas as regras e skills da Sky
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompts/prompt-configurar-opencode.md para instalar todas as regras e skills da Sky
 ```
 
 **Somente skills (todas):**
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/v2/prompts/prompt-configurar-opencode.md para instalar somente as skills da Sky
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompts/prompt-configurar-opencode.md para instalar somente as skills da Sky
 ```
 
 **Somente um time (regras + skills):**
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/v2/prompts/prompt-configurar-opencode.md para instalar somente as regras e skills do time delphi
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompts/prompt-configurar-opencode.md para instalar somente as regras e skills do time delphi
 ```
 Troque `delphi` por `dotnet` para o outro time. O prompt resolve pelo prefixo `sky-delphi-`/`sky-dotnet-` e inclui os itens gerais (`sky-principios`, `sky-oquehadenovo`).
 
 **Somente regras (todas):**
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/v2/prompts/prompt-configurar-opencode.md para instalar somente as regras da Sky
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompts/prompt-configurar-opencode.md para instalar somente as regras da Sky
 ```
 
 **Somente regras Delphi e SVN:**
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/v2/prompts/prompt-configurar-opencode.md para instalar somente as regras sky-delphi-diretivas e sky-delphi-svn da Sky
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompts/prompt-configurar-opencode.md para instalar somente as regras sky-delphi-diretivas e sky-delphi-svn da Sky
 ```
 
 **Somente regra de princípios:**
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/v2/prompts/prompt-configurar-opencode.md para instalar somente a regra sky-principios da Sky
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompts/prompt-configurar-opencode.md para instalar somente a regra sky-principios da Sky
 ```
 
 **Somente skills do time .NET (C#):**
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/v2/prompts/prompt-configurar-opencode.md para instalar somente as skills sky-dotnet-testes e sky-dotnet-proposta da Sky
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompts/prompt-configurar-opencode.md para instalar somente as skills sky-dotnet-testes e sky-dotnet-proposta da Sky
 ```
 
 **Somente configurar modelos:**
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/v2/prompts/prompt-configurar-opencode.md para configurar somente os modelos do OpenCode Zen
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompts/prompt-configurar-opencode.md para configurar somente os modelos do OpenCode Zen
 ```
 
 Nota: o prompt não configura mais whitelist de modelos — os modelos ficam livres, sem restrição no `opencode.json`.
 
 Isso configurará automaticamente:
 
-- **`%USERPROFILE%\.config\opencode\opencode.json`** — modelo e small_model do agente, `instructions` apontando para todas as regras em `rules/` deste repositório
+- **`%USERPROFILE%\.config\opencode\opencode.json`** — modelo, `agents.title.model` e `instructions` apontando para todas as regras em `rules/` deste repositório
 - **`%USERPROFILE%\.config\opencode\rules\`** — regras da Sky (`sky-principios`, `sky-delphi-diretivas`, `sky-delphi-svn`)
 - **`%USERPROFILE%\.config\opencode\skills\`** — skills da Sky, prefixadas por time (`sky-delphi-*`, `sky-dotnet-*`) e as compartilhadas (`sky-oquehadenovo`, `sky-oquehadenovo-skai`)
 - **`%USERPROFILE%\.config\opencode\agents\`** — agents da Sky (orquestrador, executor)
@@ -132,7 +139,7 @@ Estrutura de **dois agents complementares** para desenvolvimento guiado por plan
 Instalam juntos com regras e skills pelo prompt de configuração:
 
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/v2/prompts/prompt-configurar-opencode.md para instalar somente os agents da Sky
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompts/prompt-configurar-opencode.md para instalar somente os agents da Sky
 ```
 
 ### Como usar
@@ -154,7 +161,7 @@ O `executor` também pode ser chamado diretamente via task tool com um plano já
 
 ## Instalar plugins
 
-> Os comandos abaixo usam os prompts de `v2/prompts/`. Para OpenCode **V1**, troque `/v2/prompts/` por `/v1/prompts/`.
+> Todos os prompts abaixo são para OpenCode V2.
 
 ### Secret Redactor (proteção contra vazamento de segredos)
 
@@ -163,7 +170,7 @@ Plugin que anonimiza chaves, tokens e strings de conexão antes de enviar ao LLM
 Em uma sessão do OpenCode, use o prompt:
 
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/v2/prompts/prompt-instalar-secret-redactor-opencode.md para instalar o plugin
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompts/prompt-instalar-secret-redactor-opencode.md para instalar o plugin
 ```
 
 ### Rehydra (anonimização de PII e secrets)
@@ -173,7 +180,7 @@ Plugin oficial que detecta e anonimiza PII (emails, telefones, CPFs, cartões) e
 Em uma sessão do OpenCode, use o prompt:
 
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/v2/prompts/prompt-instalar-rehydra-opencode.md para instalar o plugin
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompts/prompt-instalar-rehydra-opencode.md para instalar o plugin
 ```
 
 ### Caveman (respostas compactas)
@@ -183,7 +190,7 @@ Skill que comprime respostas do agente em formato terse/caveman, reduzindo token
 Em uma sessão do OpenCode, use o prompt:
 
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/v2/prompts/prompt-instalar-caveman-opencode.md para instalar o caveman
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompts/prompt-instalar-caveman-opencode.md para instalar o caveman
 ```
 
 ### RTK (compressão de output de bash)
@@ -193,7 +200,7 @@ Proxy CLI que intercepta comandos shell e comprime a saída antes do agente ler,
 Em uma sessão do OpenCode, use o prompt:
 
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/v2/prompts/prompt-instalar-rtk-opencode.md para instalar o RTK
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompts/prompt-instalar-rtk-opencode.md para instalar o RTK
 ```
 
 ### PonyTail (código mínimo)
@@ -203,7 +210,7 @@ Skill que força o agente a escrever apenas o necessário — YAGNI, stdlib prim
 Em uma sessão do OpenCode, use o prompt:
 
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/v2/prompts/prompt-instalar-ponytail-opencode.md para instalar o PonyTail
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompts/prompt-instalar-ponytail-opencode.md para instalar o PonyTail
 ```
 
 ### Encoding Auto (arquivos ANSI/LATIN1)
@@ -215,7 +222,7 @@ Usa a versão ajustada pela Sky: corrige a corrupção de .pas ANSI (Windows-125
 Em uma sessão do OpenCode, use o prompt:
 
 ```
-siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/v2/prompts/prompt-instalar-encoding-auto-opencode.md para instalar o plugin
+siga as instrucoes do arquivo https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/refs/heads/main/prompts/prompt-instalar-encoding-auto-opencode.md para instalar o plugin
 ```
 
 ## Instalar MCP Redmine
@@ -273,12 +280,14 @@ Cada projeto mantém seu `AGENTS.md` (contexto de produto) e `.opencode/skills/`
 
 ## Estrutura
 
-- `v2/` — configuração e prompts do OpenCode **V2 (padrão)**: `global/`, `agents/`, `prompts/`, `plugins/`
-- `v1/` — mesma estrutura para o OpenCode **V1 (legado)**: `global/`, `agents/`, `prompts/`
+- `global/` — modelo de configuração global do OpenCode V2
+- `agents/` — agents da Sky
+- `prompts/` — prompts de configuração e instalação
+- `plugins/` — plugins V2 mantidos pela Sky
 - `rules/` — regras de engenharia (compartilhadas), carregadas via `instructions`
 - `skills/` — skills globais da Sky (compartilhadas, prefixadas por time — ver taxonomia abaixo)
 - `mcp/` — MCPs da Sky, uma pasta por servidor (`redmine/`, `skynet/`, `azuredevops/`): instruções de contexto (`*-instructions.md`), prompts de instalação (`prompt-instalar-mcp-*.md`) e código de apoio (ex.: `skynet/server.mjs`)
-- `prompt-configurar-ambiente-windows.md` — prompt compartilhado (vale V1 e V2)
+- `prompt-configurar-ambiente-windows.md` — prompt de ambiente Windows
 - `OPENCODE.md` — guia completo de setup OpenCode
 
 ## Taxonomia de nomes

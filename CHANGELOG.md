@@ -20,7 +20,7 @@ O que não muda a forma de trabalhar de quem usa o repo (renomeação interna, r
 
 ### Novos recursos e melhorias
 
-- Instalação do Caveman no OpenCode V2: o prompt passou a usar a versão estável oficial (`v4.0.1`), que já instala o plugin no formato do V2 — junto com 9 skills, 8 comandos e 3 subagentes — sem precisar aplicar um port manual. Quem tinha a instalação manual antiga (`index.js`) migra com `--force`, que faz backup da pasta antes de substituir. O port que ficava em `v2/plugins/caveman/` foi removido.
+- Instalação do Caveman no OpenCode V2: o prompt passou a usar a versão estável oficial (`v4.0.1`), que já instala o plugin no formato do V2 — junto com 9 skills, 8 comandos e 3 subagentes — sem precisar aplicar um port manual. Quem tinha a instalação manual antiga (`index.js`) migra com `--force`, que faz backup da pasta antes de substituir. O port temporário do Caveman foi removido.
 - Rehydra: o prompt de instalação voltou a valer para o OpenCode V2. A partir da versão `0.15.0` o plugin publica os dois formatos no mesmo pacote e o V2 carrega sozinho, sem arquivo local `plugins/rehydra.ts`; o prompt agora exige `0.15.0` ou maior e orienta a conferir a versão instalada antes de concluir. Em máquina V1 nada muda. (8e80c4d)
 
 ### Soluções de problemas

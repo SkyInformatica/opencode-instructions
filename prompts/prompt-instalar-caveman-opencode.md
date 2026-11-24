@@ -8,7 +8,7 @@ O que o Caveman instala:
 - Skill `caveman` e variantes (`ultracave`, `megacave`, `caveman-commit`, `caveman-review`, `caveman-help`, `caveman-stats`, `caveman-compress`, `cavecrew`) em `%USERPROFILE%\.config\opencode\skills\`.
 - Comandos `/caveman`, `/ultracave`, `/megacave` e os de review/commit/compress/help/stats em `%USERPROFILE%\.config\opencode\commands\`.
 - Subagentes `cavecrew-*` em `%USERPROFILE%\.config\opencode\agents\`.
-- Plugin em `%USERPROFILE%\.config\opencode\plugins\caveman\` com `plugin.js` (OpenCode 1.x) e `server.js` (OpenCode 2.x).
+- Plugin em `%USERPROFILE%\.config\opencode\plugins\caveman\`; OpenCode V2 carrega `server.js`.
 - Bloco sempre-ativo entre `<!-- caveman-begin -->` e `<!-- caveman-end -->` no `AGENTS.md` global.
 
 Passos:
@@ -31,7 +31,7 @@ Passos:
    - `%USERPROFILE%\.config\opencode\skills\caveman\SKILL.md` existe?
    - `%USERPROFILE%\.config\opencode\plugins\caveman\` existe? Quais arquivos? Em especial, existe `server.js`?
    - `%USERPROFILE%\.config\opencode\AGENTS.md` já tem o bloco entre `<!-- caveman-begin -->` e `<!-- caveman-end -->`?
-   - `%USERPROFILE%\.config\opencode\opencode.json(c)` tem a chave `plugins` (V2) ou `plugin` (V1) com entrada do caveman?
+   - `%USERPROFILE%\.config\opencode\opencode.json(c)` já contém uma entrada do Caveman?
 
    - **Instalação manual antiga:** se a pasta do plugin tiver `index.js` e não tiver `server.js`, o instalador pode recusar a atualização por conflito de propriedade. Só use `--force` se confirmar que a pasta é a instalação manual antiga e autorizar a migração; o instalador cria backup em `.caveman-opencode-backups`. Se houver arquivos personalizados ou dúvida sobre a propriedade, pare e peça autorização.
 
@@ -67,7 +67,7 @@ Passos:
       - Se falhar, pare e me informe o erro. Não copie arquivos manualmente.
 
    d. Ajuste o `opencode.json(c)` (formato V2):
-      - O instalador pode adicionar `"./plugins/caveman"` à chave singular `plugin`, para compatibilidade com OpenCode 1.x.
+      - O instalador pode adicionar `"./plugins/caveman"` à chave legada `plugin`.
       - OpenCode V2 também descobre plugins na pasta global. Remova apenas essa entrada redundante de Caveman; preserve todas as outras entradas e configurações.
       - Não adicione outra entrada Caveman à chave plural `plugins`.
       - Faça backup do arquivo antes de editar e preserve `$schema`, `model`, `agents`, `mcp`, permissões e providers.
@@ -76,7 +76,7 @@ Passos:
    - `plugins\caveman\` contém `plugin.js`, `server.js`, `package.json`, `caveman-config.cjs` e `caveman-parse.cjs`.
    - `skills\caveman\SKILL.md` existe; `commands\caveman.md` existe; `agents\cavecrew-investigator.md` existe.
    - `AGENTS.md` contém o bloco caveman **uma única vez**.
-   - O `opencode.json(c)` continua válido e sem a entrada V1 do caveman.
+   - O `opencode.json(c)` continua válido e sem uma entrada redundante do Caveman.
    - Abra uma sessão nova e confirme que `/caveman` ou "caveman mode" ativa o plugin.
    - `opencode plugin list --builtin` deve listar `caveman` com origem em `plugins\caveman\...`. Se não listar, procure `loading plugin` no log e reinicie o serviço somente se necessário.
    - Confirme que o flag `%USERPROFILE%\.config\opencode\.caveman-active` foi criado com o modo ativo.

@@ -9,13 +9,13 @@ O que o plugin faz:
 - Bash — prefixa o comando com `[Console]::OutputEncoding = UTF8` para evitar mojibake na saída do Windows
 
 Requisitos (V2):
-- OpenCode **V2** instalado (comando `opencode2` ou `opencode` na versão 2). Este port NÃO roda no OpenCode V1.
+- OpenCode V2 instalado (`opencode --version` deve informar versão 2.x).
 - Node.js 18+ (verifique com `node -v`).
 
 Passos:
 
 1. Verifique os pré-requisitos:
-   - `opencode --version` (ou `opencode2 --version`) indica OpenCode 2.x? Se vetor V1, pare e me avise: o port é só V2.
+    - `opencode --version` informa versão 2.x? Se não, pare e me avise.
    - A pasta %USERPROFILE%\.config\opencode\plugins\ existe. Se não existir, crie-a.
    - A pasta %USERPROFILE%\.config\opencode\ exists. Se não existir, crie-a.
 
@@ -26,7 +26,7 @@ Passos:
 
 3. Instale o plugin:
    a. Baixe o port V2 do repositório Sky:
-      https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/v2/plugins/encoding-auto/index.ts
+       https://raw.githubusercontent.com/SkyInformatica/opencode-instructions/main/plugins/encoding-auto/index.ts
       Salve em: %USERPROFILE%\.config\opencode\plugins\encoding-auto\index.ts
       (crie a pasta encoding-auto se necessário)
 
